@@ -1,0 +1,12 @@
+# Artefacts Python (tests km-toolkit)
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS / éditeurs
+.DS_Store
+.idea/
+.vscode/
+
+# Local Claude / Copilot (ne pas committer les overrides locaux)
+.claude/settings.local.json

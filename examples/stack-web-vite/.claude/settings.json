@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm run preview)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:fix)",
+      "Bash(npm test *)",
+      "Bash(npm run test:*)",
+      "Bash(npm install *)",
+      "Bash(npm ci)",
+      "Bash(npm outdated)",
+      "Bash(npx *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git status)",
+      "Bash(git add *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(git commit *)",
+      "Bash(git show *)",
+      "Bash(git rev-parse *)",
+      "Bash(git pull *)",
+      "Bash(git push)",
+      "Bash(git push origin *)",
+      "Bash(gh pr *)",
+      "Bash(gh run *)",
+      "Bash(gh issue *)",
+      "Bash(gh api *)",
+      "Bash(rtk *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(sed -n *)",
+      "Bash(awk *)",
+      "Bash(wc *)",
+      "Bash(echo *)",
+      "Bash(pwd)",
+      "Bash(which *)",
+      "Bash(tree *)",
+      "Bash(jq *)",
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(curl * | bash)",
+      "Bash(git push --force *)",
+      "Bash(git push * --force *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -f *)",
+      "Bash(git branch -D *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.command // \"\"'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo \"[RAPPEL] Lance npm run lint && npm test && npm run build avant de committer.\"; fi; exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); case \"$FILE\" in *.jsx|*.tsx) echo \"[I18N] Composant React modifie — verifie que les nouvelles chaines sont dans src/i18n/locales.js (FR + EN).\";; esac"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'package[.]json$'; then echo \"[DEPS] package.json modifie — relance npm install et verifie le lockfile.\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE '/__tests__/|[.]test[.]jsx?$'; then echo \"[TEST] Fichier de test modifie — pense a lancer npm test.\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'public/(sw[.]js|manifest[.]json)$'; then echo \"[PWA] Manifest/SW modifie — incremente VERSION et verifie la liste ASSETS dans sw.js.\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'src/components/.*[.](jsx|css)$'; then echo \"[A11Y] Composant modifie — verifie aria-labels, contraste, zones 44x44px.\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

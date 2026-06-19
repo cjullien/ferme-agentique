@@ -1,0 +1,73 @@
+{
+  "_comment": "Socle de permissions + hooks NEUTRE, commun à tous les projets de la ferme. Les commandes liées au build/test/lint dépendent de la stack : compléter la section 'allow' avec les variantes du projet (voir examples/stack-*/.claude/settings.json).",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(sed -n *)",
+      "Bash(awk *)",
+      "Bash(wc *)",
+      "Bash(echo *)",
+      "Bash(pwd)",
+      "Bash(which *)",
+      "Bash(tree *)",
+      "Bash(jq *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git status)",
+      "Bash(git add *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(git commit *)",
+      "Bash(git show *)",
+      "Bash(git rev-parse *)",
+      "Bash(rtk *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(curl * | bash)",
+      "Bash(git push --force *)",
+      "Bash(git push * --force *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -f *)",
+      "Bash(git branch -D *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.command // \"\"'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo \"[RAPPEL] Lance les checks projet (lint + test + build) avant de committer/pusher.\"; fi; exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qiE '(package[.]json|requirements[.]txt|pyproject[.]toml|pom[.]xml|go[.]mod|Cargo[.]toml)$'; then echo \"[DEPS] Manifeste de dependances modifie — lance /dependencies.\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qiE '/tests?/|[.](test|spec)[.][a-z]+$'; then echo \"[TEST] Fichier de test modifie — pense a lancer /test.\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

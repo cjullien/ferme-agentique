@@ -1,0 +1,110 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uvicorn *)",
+      "Bash(python -m uvicorn *)",
+      "Bash(python -m pytest *)",
+      "Bash(docker-compose *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git status)",
+      "Bash(git add *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(git commit *)",
+      "Bash(git show *)",
+      "Bash(git rev-parse *)",
+      "Bash(ruff *)",
+      "Bash(alembic *)",
+      "Bash(ls *)",
+      "Bash(source *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(sed -n *)",
+      "Bash(awk *)",
+      "Bash(wc *)",
+      "Bash(echo *)",
+      "Bash(pwd)",
+      "Bash(which *)",
+      "Bash(tree *)",
+      "Bash(jq *)",
+      "Bash(python -c *)",
+      "Bash(python3 -c *)",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm run *)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm add *)",
+      "Bash(uv pip *)",
+      "Bash(uv venv *)",
+      "Bash(uv sync *)",
+      "Bash(uv run *)",
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(DROP *)",
+      "Bash(curl * | bash)",
+      "Bash(git push --force *)",
+      "Bash(git push * --force *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -f *)",
+      "Bash(git branch -D *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.command // \"\"'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo \"[RAPPEL] Lance /pre-commit avant de committer/pusher : tests + traductions + api-contract.\"; fi; exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'backend/.*[.]py$'; then cd \"$(git rev-parse --show-toplevel)\" && python -m py_compile \"$FILE\" 2>&1 || true; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE '[.]py$'; then cd \"$(git rev-parse --show-toplevel)\" && ruff check --fix --select I001,F401 \"$FILE\" 2>&1 || true; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE '/models/[^/]+[.]py$'; then echo \"[SCHEMA] Modele SQLAlchemy modifie - lance /schema-impact puis /migrate.\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE '/(routers|routes|controllers)/[^/]+[.]py$'; then echo \"[API] Route backend modifiee - lance /api-contract.\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); case \"$FILE\" in *.jsx|*.tsx) echo \"[I18N] Composant React modifie - lance /translations.\";; esac"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE '(requirements[.]txt|pyproject[.]toml|package[.]json)$'; then echo \"[DEPS] Dependances modifiees - lance /deps.\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE '/tests?/'; then echo \"[TEST] Fichier de test modifie - pense a lancer /test.\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
