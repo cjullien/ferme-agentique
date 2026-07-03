@@ -1,7 +1,7 @@
 ---
 name: externalize
 description: Audit de configuration — valeurs en dur à externaliser (env vars, secrets, i18n, persistance). Rapport seul, aucune modification.
-tools: [read_file, list_directory, file_search, grep_search]
+tools: Read, Grep, Glob
 ---
 
 # Externalize

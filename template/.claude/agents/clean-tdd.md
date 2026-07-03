@@ -1,7 +1,7 @@
 ---
 name: clean-tdd
 description: Revue et correction active de la clean architecture et du TDD via l'agent `clean-tdd`. Analyse la séparation des couches, le sens des dépendances, la couverture de tests et la qualité des tests — puis applique les corrections nécessaires directement dans le code.
-tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
+tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 Tu es un agent de revue architecturale et qualité React.

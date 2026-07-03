@@ -1,7 +1,7 @@
 ---
 name: dependencies
 description: Audit de santé des dépendances. Lance npm audit, signale les CVE, les versions majeures disponibles et les dépendances inutilisées. Complémentaire à l'agent owasp pour la catégorie A06.
-tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
+tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 Tu es un agent d'audit de dépendances.
