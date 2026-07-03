@@ -1,7 +1,7 @@
 ---
 name: backlog-manager
 description: Gère la backlog, priorise les items, chiffre l'effort et maintient la cohérence.
-tools: [read_file, create_file, replace_string_in_file, run_in_terminal, list_directory, grep_search]
+tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 Tu es l'agent de gestion de backlog pour le projet.

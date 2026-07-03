@@ -66,7 +66,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "CMD=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.command // \"\"'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo \"[RAPPEL] Lance npm run lint && npm test && npm run build avant de committer.\"; fi; exit 0"
+            "command": "CMD=$(cat | jq -r '.tool_input.command // \"\"'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo \"[RAPPEL] Lance npm run lint && npm test && npm run build avant de committer.\"; fi; exit 0"
           }
         ]
       }
@@ -77,23 +77,23 @@
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); case \"$FILE\" in *.jsx|*.tsx) echo \"[I18N] Composant React modifie — verifie que les nouvelles chaines sont dans src/i18n/locales.js (FR + EN).\";; esac"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // \"\"'); case \"$FILE\" in *.jsx|*.tsx) echo \"[I18N] Composant React modifie — verifie que les nouvelles chaines sont dans src/i18n/locales.js (FR + EN).\";; esac"
           },
           {
             "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'package[.]json$'; then echo \"[DEPS] package.json modifie — relance npm install et verifie le lockfile.\"; fi"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'package[.]json$'; then echo \"[DEPS] package.json modifie — relance npm install et verifie le lockfile.\"; fi"
           },
           {
             "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE '/__tests__/|[.]test[.]jsx?$'; then echo \"[TEST] Fichier de test modifie — pense a lancer npm test.\"; fi"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // \"\"'); if echo \"$FILE\" | grep -qE '/__tests__/|[.]test[.]jsx?$'; then echo \"[TEST] Fichier de test modifie — pense a lancer npm test.\"; fi"
           },
           {
             "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'public/(sw[.]js|manifest[.]json)$'; then echo \"[PWA] Manifest/SW modifie — incremente VERSION et verifie la liste ASSETS dans sw.js.\"; fi"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'public/(sw[.]js|manifest[.]json)$'; then echo \"[PWA] Manifest/SW modifie — incremente VERSION et verifie la liste ASSETS dans sw.js.\"; fi"
           },
           {
             "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'src/components/.*[.](jsx|css)$'; then echo \"[A11Y] Composant modifie — verifie aria-labels, contraste, zones 44x44px.\"; fi"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // \"\"'); if echo \"$FILE\" | grep -qE 'src/components/.*[.](jsx|css)$'; then echo \"[A11Y] Composant modifie — verifie aria-labels, contraste, zones 44x44px.\"; fi"
           }
         ]
       }
