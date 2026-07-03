@@ -50,7 +50,9 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 **Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan).
 
-> Alias = même intention, deux noms d'invocation hérités des projets. Garder un seul si redondant.
+> Alias historiques (`a11y`, `deps`, `perf`, `quick-push`) cités dans les projets d'origine : ils
+> n'existent plus dans le socle actuel, qui n'a qu'un seul nom d'invocation par skill
+> (`accessibility`, `dependencies`, `performance`, `push-force`).
 
 ---
 
@@ -67,6 +69,7 @@ Variantes adaptées au build Maven & natif : agents `ci`, `docs-update`, `produc
 `backlog-refinement` ; skills `ci`, `coverage` (JaCoCo), `docs-update`, `improve-architecture`.
 
 ### `stack-web-vite/` — frontend Vite + React (PWA)
+Agents : `agent-maintainer`, `externalize`.
 `settings.json` (permissions npm/git/gh + hooks i18n/PWA/a11y) et skills `backlog-feature`, `push-force`.
 
 ### `domain-immo/` — métier gestion immobilière
@@ -79,4 +82,5 @@ Agent `translations` (+ variante React/Python) ; skills `traduction`, `translati
 Chaîne complète (25 agents / 26 skills) : socle KM générique (`km-generator`, `adr-capture`,
 `session-digest`, `postmortem`, `faq-harvest`, `glossary-sync`…), contrôle qualité KB
 (`doc-coverage`, `spec-drift`, `km-audit`, `runbook-verify`, `onboarding-test`) et dispositif
-**mainframe COBOL** (`mf-*`). Moteur d'override MkDocs (`hooks.py`, testé par `test_hooks.py`). Voir `examples/km-toolkit/INSTALL.md`.
+**mainframe COBOL** (`mf-*`). Moteur d'override MkDocs (`hooks.py`, testé par `test_hooks.py`).
+Voir `examples/km-toolkit/INSTALL.md`.

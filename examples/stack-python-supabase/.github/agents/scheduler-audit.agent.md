@@ -1,7 +1,7 @@
 ---
 name: scheduler-audit
 description: Audit des tâches planifiées (scheduler) - détecte les erreurs silencieuses, sessions BDD non fermées, jobs orphelins, absence de retry, et vérifie la couverture de tests.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es un agent d'audit spécialisé dans les tâches planifiées (scheduler).

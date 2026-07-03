@@ -59,7 +59,7 @@ Si les éléments d'un écran ont un attribut "type", proposer un **filtre secon
 
 
 
-Lis toujours ces fichiers avant de travailler :
+Lis toujours ces fichiers avant de travailler (chemins par défaut — adapter si `CLAUDE.md` déclare une autre organisation) :
 - `docs/specs/README.md` - conventions de spec et index des domaines
 - `docs/specs/backlog.md` - idées fonctionnelles et dette technique
 - Le fichier spec concerné dans `docs/specs/details/` s'il existe déjà

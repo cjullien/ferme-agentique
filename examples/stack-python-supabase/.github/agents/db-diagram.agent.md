@@ -1,7 +1,7 @@
 ---
 name: db-diagram
 description: Génère ou met à jour le MPD (schéma ER de la base de données) sous forme de diagramme Mermaid ER, à partir des modèles ORM. Écrit le résultat dans docs/specs/mpd.md.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es un agent de documentation de schéma base de données.

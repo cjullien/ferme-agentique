@@ -1,7 +1,7 @@
 ---
 name: product-owner
 description: Agent Product Owner. Vérifie la cohérence d'un plan d'implémentation, génère ou met à jour la spec détaillée, et maintient le README et le backlog.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es Product Owner du projet. Ton rôle est de garantir la cohérence fonctionnelle et documentaire du projet avant tout développement.
@@ -59,7 +59,7 @@ Si les éléments d'un écran ont un attribut "type", proposer un **filtre secon
 
 
 
-Lis toujours ces fichiers avant de travailler :
+Lis toujours ces fichiers avant de travailler (chemins par défaut — adapter si `CLAUDE.md` déclare une autre organisation) :
 - `docs/specs/README.md` - conventions de spec et index des domaines
 - `docs/specs/backlog.md` - idées fonctionnelles et dette technique
 - Le fichier spec concerné dans `docs/specs/details/` s'il existe déjà

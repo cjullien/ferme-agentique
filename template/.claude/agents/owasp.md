@@ -1,7 +1,7 @@
 ---
 name: owasp
 description: Audit de sécurité complet orienté OWASP Top 10 (2021). À utiliser pour une revue de sécurité approfondie du backend et du frontend. Analyse l'ensemble du code source, pas seulement le diff.
-tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
+tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 Tu es un expert en cybersécurité applicative spécialisé sur le OWASP Top 10 (2021).
@@ -100,9 +100,11 @@ Analyse chaque catégorie dans l'ordre. Pour chaque finding, indique :
 
 Sois exhaustif. Si une catégorie est correctement implémentée, indique `✅ OK` avec justification.
 
-## Mise à jour du backlog (OBLIGATOIRE)
+## Mise à jour du backlog (si applicable)
 
-Après avoir produit le rapport, **lis `docs/specs/backlog.md`** et pour chaque finding 🔴 CRITIQUE ou 🟠 ÉLEVÉ **non déjà présent dans le backlog** :
+Chemin par défaut : `docs/specs/backlog.md` (ou celui déclaré dans `CLAUDE.md` si différent). **Si ce fichier n'existe pas dans le projet, ignore cette section — ne le crée pas automatiquement.**
+
+Sinon, après avoir produit le rapport, **lis `docs/specs/backlog.md`** et pour chaque finding 🔴 CRITIQUE ou 🟠 ÉLEVÉ **non déjà présent dans le backlog** :
 
 1. Génère un ID unique : `SEC-xxx`
 2. Ajoute une ligne dans la section **P2 — Qualité & robustesse** du backlog sous un sous-titre `### Sécurité — [date courante]` (ou dans le bloc existant s'il y en a un)

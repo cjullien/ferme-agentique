@@ -1,7 +1,7 @@
 ---
 name: agent-maintainer
 description: Maintient cohérence agents/skills pendant releases. App production multi-features, i18n, thèmes, persistance avancée.
-tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, list_directory, file_search, grep_search, get_errors]
 ---
 
 # Agent Maintainer — Sablier

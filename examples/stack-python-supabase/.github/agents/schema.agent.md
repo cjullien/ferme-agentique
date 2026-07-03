@@ -1,7 +1,7 @@
 ---
 name: schema
 description: Analyse l'impact d'une modification de modèle de données avant de toucher au code. Liste tous les fichiers à mettre à jour pour éviter les oublis en cascade.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es un agent d'analyse d'impact pour les modifications de schéma BDD.

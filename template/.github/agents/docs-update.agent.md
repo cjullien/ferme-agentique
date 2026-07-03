@@ -1,7 +1,7 @@
 ---
 name: docs-update
 description: Synchronise README et docs/ avec l'état réel du code quand l'architecture ou les features changent.
-tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, list_directory, file_search, grep_search]
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, list_directory, file_search, grep_search, get_errors]
 ---
 
 # Docs Update

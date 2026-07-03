@@ -34,12 +34,15 @@
     ],
     "deny": [
       "Bash(rm -rf *)",
-      "Bash(curl * | bash)",
-      "Bash(git push --force *)",
-      "Bash(git push * --force *)",
-      "Bash(git reset --hard *)",
-      "Bash(git clean -f *)",
-      "Bash(git branch -D *)"
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(git push --force*)",
+      "Bash(git push * --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f*)",
+      "Bash(git branch -D *)",
+      "Bash(git checkout -- *)",
+      "Bash(git checkout .)"
     ]
   },
   "hooks": {
@@ -49,7 +52,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "CMD=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.command // \"\"'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo \"[RAPPEL] Lance les checks projet (lint + test + build) avant de committer/pusher.\"; fi; exit 0"
+            "command": "CMD=$(cat | jq -r '.tool_input.command // \"\"'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo \"[RAPPEL] Lance les checks projet (lint + test + build) avant de committer/pusher.\"; fi; exit 0"
           }
         ]
       }
@@ -60,11 +63,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qiE '(package[.]json|requirements[.]txt|pyproject[.]toml|pom[.]xml|go[.]mod|Cargo[.]toml)$'; then echo \"[DEPS] Manifeste de dependances modifie — lance /dependencies.\"; fi"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // \"\"'); if echo \"$FILE\" | grep -qiE '(package[.]json|requirements[.]txt|pyproject[.]toml|pom[.]xml|go[.]mod|Cargo[.]toml)$'; then echo \"[DEPS] Manifeste de dependances modifie — lance /dependencies.\"; fi"
           },
           {
             "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // \"\"'); if echo \"$FILE\" | grep -qiE '/tests?/|[.](test|spec)[.][a-z]+$'; then echo \"[TEST] Fichier de test modifie — pense a lancer /test.\"; fi"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // \"\"'); if echo \"$FILE\" | grep -qiE '/tests?/|[.](test|spec)[.][a-z]+$'; then echo \"[TEST] Fichier de test modifie — pense a lancer /test.\"; fi"
           }
         ]
       }

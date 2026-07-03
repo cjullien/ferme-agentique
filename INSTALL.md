@@ -10,7 +10,7 @@
 Depuis la racine du projet cible :
 
 ```bash
-FERME=/Users/cjullien/workspaces/Claude/POC-NB/ferme_agentic
+FERME=/chemin/vers/votre/clone/de/ferme-agentique   # adapter à votre environnement
 
 mkdir -p .claude
 cp -R "$FERME/template/.claude/agents"   .claude/
@@ -49,7 +49,7 @@ Ajouter les commandes de build/test de la stack en s'inspirant des exemples :
 |---|---|
 | Web Vite/React | `examples/stack-web-vite/.claude/settings.json` |
 | Python/Supabase | `examples/stack-python-supabase/.claude/settings.json` |
-| Java/Spring | `examples/stack-java-spring/.claude/settings.local.json` |
+| Java/Spring | *(pas de `settings.json` fourni — s'inspirer des deux exemples ci-dessus pour ajouter les commandes Maven/JUnit)* |
 
 Compléter aussi les hooks `PostToolUse` (rappels i18n / migrations / PWA…) selon le besoin.
 
@@ -77,10 +77,8 @@ cp -R "$FERME/examples/stack-python-supabase/.github/skills/." .github/skills/
 Pour le **km-toolkit** (KB pilotée par agents / mainframe), suivre sa propre procédure :
 `examples/km-toolkit/INSTALL.md`.
 
-## 5. Nettoyer les alias et le hors-stack
+## 5. Nettoyer le hors-stack
 
-- Le socle inclut des **alias** (`a11y`≡`accessibility`, `deps`≡`dependencies`, `perf`≡`performance`,
-  `quick-push`≡`push-force`). Garder une seule variante par paire si la redondance gêne.
 - Supprimer les agents/skills sans objet sur le projet (ex : `design-system`, `ux-ui`,
   `accessibility` sur un projet purement backend).
 
