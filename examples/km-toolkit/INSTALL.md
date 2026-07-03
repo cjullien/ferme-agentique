@@ -7,12 +7,18 @@ les patrimoines COBOL/mainframe).
 
 ## Contenu
 
+Comme les autres modules `examples/`, deux versions miroir à contenu identique :
+
 ```
 km-toolkit/
-├── agents/        25 agents (.agent.md)  — la logique (procédure, format de sortie)
-├── skills/        26 skills (SKILL.md)   — les déclencheurs invocables
-├── hooks.py       hook MkDocs            — moteur d'override universel
-├── test_hooks.py  garde-fou du hook      — `python3 km-toolkit/test_hooks.py`
+├── .claude/
+│   ├── agents/    25 agents (.md)         — noms d'outils Claude Code (Read, Write, Edit, Bash, Grep, Glob)
+│   └── skills/    26 skills (SKILL.md)    — les déclencheurs invocables
+├── .github/
+│   ├── agents/    25 agents (.agent.md)   — noms d'outils Copilot (read_file, create_file...)
+│   └── skills/    26 skills (SKILL.md)    — identiques à .claude/skills/
+├── hooks.py       hook MkDocs             — moteur d'override universel
+├── test_hooks.py  garde-fou du hook       — `python3 km-toolkit/test_hooks.py`
 └── INSTALL.md     ce fichier
 ```
 
@@ -23,16 +29,16 @@ km-toolkit/
 ### 1. Copier agents et skills
 
 ```bash
-cp -r km-toolkit/agents/*   .github/agents/
-cp -r km-toolkit/skills/*   .github/skills/
+# Version Claude Code
+cp -R km-toolkit/.claude/agents/.   .claude/agents/
+cp -R km-toolkit/.claude/skills/.   .claude/skills/
+
+# Version Copilot
+cp -R km-toolkit/.github/agents/.   .github/agents/
+cp -R km-toolkit/.github/skills/.   .github/skills/
 ```
 
 (Adapter le chemin si votre orchestrateur d'agents utilise un autre répertoire.)
-
-> **Dépendance d'environnement.** Le front-matter `tools:` des agents emploie les
-> noms d'outils de GitHub Copilot dans VS Code (`read_file`, `create_file`,
-> `replace_string_in_file`, `run_in_terminal`…). Si votre orchestrateur utilise
-> d'autres identifiants d'outils, adaptez ces listes — sinon le champ est ignoré.
 
 ### 2. Brancher le moteur d'override dans MkDocs
 
