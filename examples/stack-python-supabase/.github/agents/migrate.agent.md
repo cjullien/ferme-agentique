@@ -1,7 +1,7 @@
 ---
 name: migrate
 description: Génère et vérifie la migration de base de données. À utiliser après `/schema-impact` pour passer de l'analyse à l'exécution. Produit le contenu de la migration, gère les données existantes et signale les risques destructifs.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es un agent assistant aux migrations de base de données.

@@ -39,20 +39,20 @@ Lancer uniquement ceux présents dans `.claude/agents/` (ou `.github/agents/`) :
 
 ### Phase 1 — Lancement parallèle
 
-Lancer les 16 agents en mode background simultanément :
+Lancer tous les agents des deux tableaux ci-dessus (socle + conditionnels effectivement installés) en mode background simultanément :
 
 **Copilot CLI :**
 ```
 task agent_type="audit" mode="background"
 task agent_type="owasp" mode="background"
-... (les 16)
+... (un par agent identifié)
 ```
 
 **Claude :**
 ```
 Agent subagent_type="audit"
 Agent subagent_type="owasp"
-... (les 16)
+... (un par agent identifié)
 ```
 
 ### Phase 2 — Collecte
@@ -80,7 +80,9 @@ Calculer selon la grille :
 | Accessibilité | 15 |
 | Performance | 15 |
 
-### Phase 5 — Mise à jour backlog
+### Phase 5 — Mise à jour backlog (si applicable)
+
+Chemin par défaut : `docs/specs/backlog.md` (ou celui déclaré dans `CLAUDE.md` si différent). Si ce fichier n'existe pas dans le projet, ignorer cette phase — ne pas le créer automatiquement.
 
 1. Ajouter chaque finding 🔴/🟡 non déjà présent dans `docs/specs/backlog.md`
 2. Préfixer les IDs : `SEC-`, `BUG-`, `A11Y-`, `PERF-`, `QUAL-`, `CI-`, `UX-`, `I18N-`, `LEGAL-`, `DEPS-`, `DEAD-`, `EXT-`, `SCHED-`, `DOC-`, `TEST-`

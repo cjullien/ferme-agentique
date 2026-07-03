@@ -1,7 +1,7 @@
 ---
 name: translations
 description: Synchronise les fichiers de traduction fr.js et en.js. Détecte les clés manquantes et les ajoute avec une valeur à compléter.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es un agent de synchronisation des traductions.

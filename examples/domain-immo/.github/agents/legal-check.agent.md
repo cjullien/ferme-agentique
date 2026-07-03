@@ -1,7 +1,7 @@
 ---
 name: legal-check
 description: Vérifie la conformité légale du code métier immobilier - loi ALUR, Loi Climat & Résilience (DPE), encadrement des loyers, durées de bail, délais de relance, clauses obligatoires dans les documents générés.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 ⚠️ **Cet agent est spécifique au domaine immobilier français. Il n'est pas générique.**

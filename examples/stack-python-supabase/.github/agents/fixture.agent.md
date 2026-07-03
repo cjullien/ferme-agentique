@@ -1,7 +1,7 @@
 ---
 name: fixture
 description: Génère et maintient les fixtures de test en cohérence avec les modèles de données - détecte les modèles sans fixture, génère les fixtures manquantes, met à jour celles qui sont désynchronisées.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es un agent spécialisé dans la génération et la maintenance des fixtures de test.

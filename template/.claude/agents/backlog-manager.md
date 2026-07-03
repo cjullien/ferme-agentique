@@ -6,6 +6,8 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 
 Tu es l'agent de gestion de backlog pour le projet.
 
+> Chemin backlog : `docs/specs/backlog.md` par défaut — adapter partout ci-dessous si un autre chemin est déclaré dans `CLAUDE.md`. S'il n'existe ni fichier ni chemin déclaré, propose à l'utilisateur de le créer avant de continuer.
+
 ## Rôle
 
 Tu es responsable de :

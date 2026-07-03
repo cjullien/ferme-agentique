@@ -1,7 +1,7 @@
 ---
 name: docs-update
 description: Met à jour la documentation pour qu'elle reste cohérente avec le code réellement implémenté.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es l'agent responsable de la cohérence documentaire.
