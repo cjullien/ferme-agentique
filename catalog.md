@@ -62,7 +62,11 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 Agents : `schema`, `migrate`, `db-diagram`, `fixture`, `seed`, `api-contract`, `scheduler-audit`,
 `km-generator`, `backlog-refinement`.
 Skills : `schema`/`schema-impact`, `migrate`, `db-diagram`/`mpd`, `db-reset`, `fixture`, `seed`,
-`api-contract`, `scheduler-audit`, `neon-postgres`, `km-generator`. + `settings.json` (hooks py/ruff/alembic).
+`api-contract`, `scheduler-audit`, `neon-postgres`, `km-generator`,
+`eda` (profil dataset : nulls, distributions, outliers → rapport markdown),
+`notebook` (audit notebooks Jupyter : ordre cellules, outputs stale, imports),
+`data-quality` (validation schémas Pydantic/Pandera, colonnes nullables, frontières système).
++ `settings.json` (hooks py/ruff/alembic).
 
 ### `stack-java-spring/` — backend Java / Spring Boot / Maven
 Variantes adaptées au build Maven & natif : agents `ci`, `docs-update`, `product-owner`,
@@ -70,7 +74,9 @@ Variantes adaptées au build Maven & natif : agents `ci`, `docs-update`, `produc
 
 ### `stack-web-vite/` — frontend Vite + React (PWA)
 Agents : `agent-maintainer`, `externalize`.
-`settings.json` (permissions npm/git/gh + hooks i18n/PWA/a11y) et skills `backlog-feature`, `push-force`.
+`settings.json` (permissions npm/git/gh + hooks i18n/PWA/a11y) et skills `backlog-feature`, `push-force`,
+`typescript` (audit strictness, `any`, assertions), `component` (génération composant + tests Vitest),
+`api-client` (audit appels réseau, React Query/SWR, typage réponses).
 
 ### `domain-immo/` — métier gestion immobilière
 Agent `legal-check` ; skills `legal-check`, `product-spec` (glossaire métier).

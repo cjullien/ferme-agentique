@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(chmod +x *)",
+      "Bash(rtk git *)",
+      "Bash(rtk find *)",
+      "Bash(rtk tree *)",
+      "Bash(rtk grep *)",
+      "Bash(rtk mvn *)",
+      "Bash(git check-ignore *)",
+      "Bash(rtk read *)",
+      "Bash(mvn test *)",
+      "Bash(file {{chemin/vers/ressources/test/*.ext}})",
+      "Bash(mvn spring-boot:run *)",
+      "Bash(rtk curl *)",
+      "Bash(pkill -f \"mvn spring-boot:run\")"
+    ]
+  }
+}
