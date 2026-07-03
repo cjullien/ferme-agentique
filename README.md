@@ -28,7 +28,12 @@ ferme_agentic/
 │   ├── domain-immo/           métier gestion immobilière (juridique…)
 │   ├── feature-i18n/          internationalisation
 │   └── km-toolkit/            Knowledge Management piloté par agents (+ mainframe COBOL)
+├── scripts/            ← outillage de maintenance de la ferme elle-même
+│   ├── validate_farm.py         détecte les régressions (miroirs désynchronisés, outils Copilot/Claude mélangés, JSON invalide)
+│   └── generate_github_mirror.py régénère `.github/` depuis `.claude/` (source de vérité) au lieu de dupliquer à la main
 ├── catalog.md         ← inventaire détaillé (rôle de chaque agent/skill)
+├── CHANGELOG.md        ← historique des versions de la ferme
+├── VERSION             ← version courante de la ferme
 └── INSTALL.md         ← procédure d'installation sur un nouveau projet
 ```
 
@@ -52,6 +57,15 @@ Chaque socle/module existe en **deux versions miroir**, à contenu identique :
   `lsp.json`, `copilot-instructions.template.md` (GitHub Copilot).
 
 Installer la version correspondant à l'outil utilisé (ou les deux). Voir `INSTALL.md`.
+
+**`.claude/` est la source de vérité.** `.github/` est dérivé automatiquement par
+`scripts/generate_github_mirror.py` (corps identique, seul le frontmatter `tools:` est traduit
+vers la syntaxe Copilot). Après toute modification d'un agent ou skill `.claude/`, lancer :
+
+```bash
+python3 scripts/generate_github_mirror.py --write   # régénère .github/
+python3 scripts/validate_farm.py                    # vérifie l'ensemble (miroirs, outils, JSON)
+```
 
 ## Démarrage rapide
 

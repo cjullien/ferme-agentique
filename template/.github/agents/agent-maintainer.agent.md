@@ -1,7 +1,7 @@
 ---
 name: agent-maintainer
 description: Maintient la cohérence des agents/skills avec l'état réel du projet — parité entre orchestrateurs, alignement sur CLAUDE.md, détection des références obsolètes.
-tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, list_directory, file_search, grep_search]
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, list_directory, file_search, grep_search, get_errors]
 ---
 
 # Agent Maintainer

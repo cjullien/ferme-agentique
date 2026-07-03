@@ -1,7 +1,7 @@
 ---
 name: km-generator
 description: Génère une base de Knowledge Management (KM) complète sous forme de wiki MkDocs Material, en reproduisant la démarche utilisée pour bootstrap docs/kb/ (5 audiences, ~34 pages, ADR, runbooks, script kb.sh). À utiliser pour créer la KB d'un projet ou refondre une KB existante.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es l'agent qui génère une **base de Knowledge Management** sous forme de wiki MkDocs Material, en reproduisant fidèlement la démarche éprouvée sur ce projet (voir `docs/kb/` comme référence vivante).

@@ -122,9 +122,11 @@ Repérer les endpoints qui retournent des collections sans limite :
 
 ✅ OK si une catégorie est propre. Justifie chaque finding avec fichier et ligne.
 
-## Mise à jour du backlog (OBLIGATOIRE)
+## Mise à jour du backlog (si applicable)
 
-Après avoir produit le rapport, **lis `docs/specs/backlog.md`** et pour chaque finding 🔴 ou 🟡 **non déjà présent dans le backlog** :
+Chemin par défaut : `docs/specs/backlog.md` (ou celui déclaré dans `CLAUDE.md` si différent). **Si ce fichier n'existe pas dans le projet, ignore cette section — ne le crée pas automatiquement.**
+
+Sinon, après avoir produit le rapport, **lis `docs/specs/backlog.md`** et pour chaque finding 🔴 ou 🟡 **non déjà présent dans le backlog** :
 
 1. Génère un ID unique : `PERF-xxx`
 2. Ajoute une ligne dans la section **P2 — Qualité & robustesse** du backlog (ou dans un bloc `### Performance — [date courante]` existant)

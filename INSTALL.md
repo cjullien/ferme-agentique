@@ -10,7 +10,7 @@
 Depuis la racine du projet cible :
 
 ```bash
-FERME=/Users/cjullien/workspaces/Claude/POC-NB/ferme_agentic
+FERME=/chemin/vers/votre/clone/de/ferme-agentique   # adapter à votre environnement
 
 mkdir -p .claude
 cp -R "$FERME/template/.claude/agents"   .claude/

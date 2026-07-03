@@ -1,7 +1,7 @@
 ---
 name: design-system
 description: Garant du design system frontend - détecte et corrige les dérives visuelles (tokens, espacements, composants, patterns datatable/toolbar/tabs) pour éviter les erreurs graphiques.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 # Agent Design System

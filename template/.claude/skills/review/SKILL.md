@@ -38,9 +38,11 @@ Synthèse finale :
 [Patterns récurrents identifiés via /insights — si pertinents]
 [Verdict : ✅ Prêt à merger / ⚠️ Points à corriger / 🚫 Bloquant]
 
-## Mise à jour du backlog (OBLIGATOIRE)
+## Mise à jour du backlog (si applicable)
 
-Après la synthèse, lire `docs/specs/backlog.md` et y ajouter les findings 🔴/🟠 non encore présents.
+Chemin par défaut : `docs/specs/backlog.md` (ou celui déclaré dans `CLAUDE.md` si différent). Si ce fichier n'existe pas dans le projet, ignorer cette section — ne pas le créer automatiquement.
+
+Sinon, après la synthèse, lire `docs/specs/backlog.md` et y ajouter les findings 🔴/🟠 non encore présents.
 Puis mettre à jour la section `## Note qualité globale` avec la note recalculée sur 100 et la date.
 
 Grille de notation :

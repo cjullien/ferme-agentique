@@ -51,12 +51,15 @@
     ],
     "deny": [
       "Bash(rm -rf *)",
-      "Bash(curl * | bash)",
-      "Bash(git push --force *)",
-      "Bash(git push * --force *)",
-      "Bash(git reset --hard *)",
-      "Bash(git clean -f *)",
-      "Bash(git branch -D *)"
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(git push --force*)",
+      "Bash(git push * --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f*)",
+      "Bash(git branch -D *)",
+      "Bash(git checkout -- *)",
+      "Bash(git checkout .)"
     ]
   },
   "hooks": {
