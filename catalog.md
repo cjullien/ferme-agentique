@@ -82,4 +82,6 @@ Agent `translations` (+ variante React/Python) ; skills `traduction`, `translati
 Chaîne complète (25 agents / 26 skills) : socle KM générique (`km-generator`, `adr-capture`,
 `session-digest`, `postmortem`, `faq-harvest`, `glossary-sync`…), contrôle qualité KB
 (`doc-coverage`, `spec-drift`, `km-audit`, `runbook-verify`, `onboarding-test`) et dispositif
-**mainframe COBOL** (`mf-*`). Moteur d'override MkDocs (`hooks.py`, testé par `test_hooks.py`). Voir `examples/km-toolkit/INSTALL.md`.
+**mainframe COBOL** (`mf-*`). Moteur d'override MkDocs (`hooks.py`, testé par `test_hooks.py`).
+**Copilot uniquement** — pas de version `.claude/` (`agents/`, `skills/` à plat, copiés dans
+`.github/` de la cible). Voir `examples/km-toolkit/INSTALL.md`.
