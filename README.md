@@ -50,13 +50,18 @@ dans `examples/`.
 
 ## Double version : Claude Code et Copilot
 
-Chaque socle/module existe en **deux versions miroir**, à contenu identique :
+`template/` et la plupart des modules `examples/` existent en **deux versions miroir**, à contenu
+identique :
 
 - **`.claude/`** — agents `*.md`, skills `*/SKILL.md`, `settings.json` (Claude Code).
 - **`.github/`** — agents `*.agent.md` (chargés par `extensions/agents-loader`), skills `*/SKILL.md`,
   `lsp.json`, `copilot-instructions.template.md` (GitHub Copilot).
 
 Installer la version correspondant à l'outil utilisé (ou les deux). Voir `INSTALL.md`.
+
+**Exception : `examples/km-toolkit`** n'existe qu'en version Copilot (`agents/`, `skills/` à plat,
+sans wrapper `.claude/`/`.github/` — voir son propre `INSTALL.md`). Pas de version Claude Code
+disponible pour ce module à ce jour.
 
 **`.claude/` est la source de vérité.** `.github/` est dérivé automatiquement par
 `scripts/generate_github_mirror.py` (corps identique, seul le frontmatter `tools:` est traduit

@@ -139,6 +139,30 @@ def compare_skill_mirrors(claude_dir: Path, github_dir: Path, report: Report) ->
             )
 
 
+def check_module_mirror_symmetry(module_dir: Path, report: Report) -> None:
+    """Un module qui n'a qu'une des deux versions (.claude/ ou .github/) casse la
+    promesse « deux versions miroir » du README — cas réel : examples/km-toolkit
+    n'a jamais eu de version .claude/, silencieusement ignoré par les checks
+    par-agent ci-dessus puisqu'ils ne s'exécutent que si les deux dossiers existent.
+    """
+    has_claude = (module_dir / ".claude").exists()
+    has_github = (module_dir / ".github").exists()
+    has_flat_content = (module_dir / "agents").exists() or (module_dir / "skills").exists()
+
+    if has_claude and not has_github:
+        report.warn(f"{module_dir.relative_to(ROOT)}: a une version .claude/ mais aucune .github/")
+    elif has_github and not has_claude:
+        report.warn(
+            f"{module_dir.relative_to(ROOT)}: a une version .github/ mais aucune .claude/ "
+            f"(le README annonce deux versions miroir pour chaque module — documenter l'exception ou combler l'écart)"
+        )
+    elif has_flat_content and not has_claude and not has_github:
+        report.warn(
+            f"{module_dir.relative_to(ROOT)}: agents/skills à plat, sans wrapper .claude/ ni .github/ "
+            f"(module Copilot-only par convention propre — vérifier que c'est documenté, cf. README « deux versions miroir »)"
+        )
+
+
 def check_settings_json(report: Report) -> None:
     for path in ROOT.rglob("settings*.json"):
         try:
@@ -168,6 +192,7 @@ def main() -> int:
     for example_dir in sorted((ROOT / "examples").iterdir()):
         if not example_dir.is_dir():
             continue
+        check_module_mirror_symmetry(example_dir, report)
         compare_agent_mirrors(example_dir / ".claude/agents", example_dir / ".github/agents", report)
         compare_skill_mirrors(example_dir / ".claude/skills", example_dir / ".github/skills", report)
 
