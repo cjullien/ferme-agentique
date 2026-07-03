@@ -150,16 +150,16 @@ def check_module_mirror_symmetry(module_dir: Path, report: Report) -> None:
     has_flat_content = (module_dir / "agents").exists() or (module_dir / "skills").exists()
 
     if has_claude and not has_github:
-        report.warn(f"{module_dir.relative_to(ROOT)}: a une version .claude/ mais aucune .github/")
+        report.error(f"{module_dir.relative_to(ROOT)}: a une version .claude/ mais aucune .github/")
     elif has_github and not has_claude:
-        report.warn(
+        report.error(
             f"{module_dir.relative_to(ROOT)}: a une version .github/ mais aucune .claude/ "
             f"(le README annonce deux versions miroir pour chaque module — documenter l'exception ou combler l'écart)"
         )
     elif has_flat_content and not has_claude and not has_github:
-        report.warn(
+        report.error(
             f"{module_dir.relative_to(ROOT)}: agents/skills à plat, sans wrapper .claude/ ni .github/ "
-            f"(module Copilot-only par convention propre — vérifier que c'est documenté, cf. README « deux versions miroir »)"
+            f"(module Copilot-only non migré — utiliser import_copilot_module.py ou ajouter les deux miroirs)"
         )
 
 
@@ -181,6 +181,19 @@ def check_catalog_consistency(report: Report) -> None:
     for name in template_agents:
         if f"`{name}`" not in catalog_text:
             report.warn(f"catalog.md : l'agent socle `{name}` n'est mentionné nulle part")
+
+    for example_dir in sorted((ROOT / "examples").iterdir()):
+        agents_dir = example_dir / ".claude/agents"
+        if not agents_dir.exists():
+            continue
+        module_name = example_dir.name
+        for agent_path in agents_dir.glob("*.md"):
+            name = agent_path.stem
+            if f"`{name}`" not in catalog_text and module_name not in catalog_text:
+                report.warn(
+                    f"catalog.md : l'agent `{name}` du module {module_name} "
+                    f"n'est mentionné nulle part (ni l'agent ni le module)"
+                )
 
 
 def main() -> int:

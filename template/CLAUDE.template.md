@@ -22,7 +22,7 @@
 
 ## Conventions
 
-- {{Convention de ncommage / structure de dossiers}}
+- {{Convention de nommage / structure de dossiers}}
 - {{Règles de commit, branches}}
 - {{Style : ne jamais …, toujours …}}
 

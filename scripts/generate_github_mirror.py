@@ -18,8 +18,8 @@ vérité :
   spécifique à une plateforme dans ces fichiers).
 
 Usage :
-    python3 scripts/generate_github_mirror.py --check   # affiche les diffs, ne modifie rien (défaut)
-    python3 scripts/generate_github_mirror.py --write    # applique les diffs
+    python3 scripts/generate_github_mirror.py           # affiche les diffs, ne modifie rien (défaut)
+    python3 scripts/generate_github_mirror.py --write   # applique les diffs
 
 Le script parcourt `template/` et chaque module de `examples/`.
 """
