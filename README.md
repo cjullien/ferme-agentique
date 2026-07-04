@@ -1,9 +1,11 @@
-# Ferme agentic — template
+# Ferme agentic — bootstrap
 
-Socle réutilisable d'**agents** et de **skills** Claude Code, extrait des projets POC-NB
-(`boulier-app`, `gestion-immo`, `ocr-spring-ai`, `petite-etoile`, `sablier_app_web`) et du
-`km-toolkit`. Objectif : démarrer tout nouveau projet avec la même boîte à outils agentique,
-sans repartir de zéro.
+**Bootstrap tech-agnostique** pour initialiser ou compléter une ferme agentique Claude Code /
+GitHub Copilot sur n'importe quel projet de développement, quelle que soit la stack.
+
+Le socle générique (`template/`) couvre les invariants de tout projet : qualité, tests, sécurité,
+documentation, git. Les modules `examples/` ajoutent des agents/skills spécifiques à une stack
+ou un domaine métier, copiables à la carte.
 
 ## Principe
 

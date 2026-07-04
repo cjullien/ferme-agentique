@@ -49,11 +49,21 @@ Ajouter les commandes de build/test de la stack en s'inspirant des exemples :
 |---|---|
 | Web Vite/React | `examples/stack-web-vite/.claude/settings.json` |
 | Python/Supabase | `examples/stack-python-supabase/.claude/settings.json` |
-| Java/Spring | *(pas de `settings.json` fourni — s'inspirer des deux exemples ci-dessus pour ajouter les commandes Maven/JUnit)* |
+| Java/Spring/Maven | `examples/stack-java-spring/.claude/settings.json` |
+| Autre stack | Ajouter manuellement : commandes de build/test/lint de la stack, git read, gh, rtk |
 
-Compléter aussi les hooks `PostToolUse` (rappels i18n / migrations / PWA…) selon le besoin.
+**Principe pour toute stack non listée** : identifier les commandes courantes du cycle dev
+(`build`, `test`, `lint`, `run`) et les ajouter à `permissions.allow`. Le socle couvre déjà
+git, gh, lecture (`ls`, `find`, `grep`, `rg`, `cat`, `head`, `tail`, `jq`), et `rtk`.
+
+Compléter aussi les hooks `PostToolUse` (rappels migrations / lint / tests…) selon le besoin.
 
 ## 4. Ajouter les modules optionnels
+
+Les modules `examples/` couvrent les stacks les plus courantes. Pour une stack absente des
+exemples, le socle seul suffit : ses 18 agents et 36 skills sont tech-agnostiques et couvrent
+qualité, tests, sécurité, documentation et git sur n'importe quelle techno. Les exemples sont
+des **points de départ**, pas des prérequis.
 
 Copier uniquement les dossiers `agents/` et `skills/` du module voulu :
 
@@ -100,3 +110,20 @@ Les agents/skills supposent par défaut : sources sous `src/` (et `backend/`, `f
 les projets séparés), tests sous `tests/` ou `__tests__/`, docs sous `docs/`. Si l'arborescence
 du projet diffère, ajuster les chemins **dans les fichiers concernés** — ce sont des conventions,
 pas du code en dur.
+
+## Ajouter un nouveau module à la ferme
+
+Quand un projet introduit des agents/skills non couverts par le socle (ex : nouvelle stack, nouveau
+domaine métier), les reverser dans la ferme plutôt que de les laisser dans le projet :
+
+1. Créer `examples/<nom-du-module>/.claude/` (agents + skills) et générer le miroir `.github/` :
+   ```bash
+   python3 scripts/generate_github_mirror.py --write
+   ```
+2. Valider :
+   ```bash
+   python3 scripts/validate_farm.py
+   ```
+3. Documenter le module dans `catalog.md` et committer.
+
+La ferme grandit ainsi avec chaque projet sans jamais perdre la connaissance accumulée.
