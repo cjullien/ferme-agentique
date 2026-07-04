@@ -1,79 +1,159 @@
 ---
 name: farm-init
-description: Vérifie qu'un projet est correctement configuré pour la ferme agentique — CLAUDE.md complet, agents/skills installés, settings.json adapté à la stack, hooks actifs. À lancer après installation du socle ou en début de session sur un projet repris.
-allowed-tools: Bash, Read, Glob
+description: Point d'entrée universel de la ferme — détecte si le socle est installé, guide l'installation si nécessaire, brainstorme les modules à ajouter selon le projet, puis audite la configuration. À lancer en tout premier sur un projet vierge ou repris.
+allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 ---
 
-# Farm Init — Diagnostic de configuration
+# Farm Init — Installation, brainstorm et audit
 
-Vérifie que la ferme agentique est correctement installée et configurée sur ce projet.
+Point d'entrée universel. Adapte son comportement selon l'état détecté.
 
-## Checks
+---
 
-### 1. CLAUDE.md
+## Phase 0 — Détecter l'état
 
 ```bash
-ls CLAUDE.md 2>/dev/null && echo "présent" || echo "absent"
-grep -c '{{' CLAUDE.md 2>/dev/null || echo "0"
+ls .claude/agents/ 2>/dev/null | wc -l
+ls .claude/skills/ 2>/dev/null | wc -l
+ls CLAUDE.md 2>/dev/null && echo "present" || echo "absent"
 ```
 
-- Fichier présent ?
-- Placeholders `{{...}}` non remplacés ? (chaque occurrence = configuration manquante)
+- **0 agents** → Mode A : installation guidée
+- **Agents présents + CLAUDE.md avec `{{`** → Mode B : configuration incomplète, reprendre à Phase 2
+- **Agents présents + CLAUDE.md propre** → Mode C : audit seul (Phase 4)
 
-### 2. Agents et skills
+---
+
+## Mode A — Installation guidée (ferme absente)
+
+### A1. Localiser la ferme
+
+Demander :
+> "La ferme agentique n'est pas encore installée sur ce projet. Quel est le chemin absolu vers votre clone de la ferme ? (ex: /Users/moi/ferme_agentic)"
+
+Vérifier que le chemin existe et contient `template/.claude/agents/`.
+
+### A2. Copier le socle
 
 ```bash
+mkdir -p .claude .github
+cp -R "<FERME>/template/.claude/agents"   .claude/
+cp -R "<FERME>/template/.claude/skills"   .claude/
+cp -n  "<FERME>/template/.claude/settings.json" .claude/settings.json
+cp -R "<FERME>/template/.github/agents"     .github/
+cp -R "<FERME>/template/.github/skills"     .github/
+cp -R "<FERME>/template/.github/extensions" .github/
+cp -n  "<FERME>/template/.github/lsp.json"  .github/lsp.json
+cp -n  "<FERME>/template/.github/copilot-instructions.template.md" .github/copilot-instructions.md
+cp -n  "<FERME>/template/CLAUDE.template.md" CLAUDE.md
+```
+
+Confirmer le résultat :
+```bash
+echo "Agents : $(ls .claude/agents/*.md 2>/dev/null | wc -l)"
+echo "Skills : $(ls .claude/skills/*/SKILL.md 2>/dev/null | wc -l)"
+```
+
+Enchaîner sur Phase 2.
+
+---
+
+## Phase 2 — Compléter CLAUDE.md
+
+Lire `CLAUDE.md` et identifier les placeholders `{{...}}` non remplacés.
+
+Pour chaque placeholder manquant, poser la question directement :
+
+- `{{NOM_DU_PROJET}}` → "Quel est le nom du projet ?"
+- Stack (langage, framework, tests, base de données, build) → "Quelle est votre stack ? (ex: Node 20 + Express, Python 3.12 + FastAPI, Java 21 + Spring Boot, Go 1.22 + Gin…)"
+- Commandes (`dev`, `build`, `lint`, `test`) → "Quelles sont les commandes de votre cycle de dev ?"
+- Conventions → "Y a-t-il des conventions particulières à retenir ? (nommage, branches, règles de commit…)"
+
+Remplir les placeholders dans `CLAUDE.md` au fur et à mesure des réponses.
+
+---
+
+## Phase 3 — Brainstorm modules
+
+> "Maintenant explorons les modules optionnels à ajouter. Je vais vous poser quelques questions sur votre projet pour vous recommander les plus utiles."
+
+### Questions de brainstorm
+
+Poser ces questions une par une, en attendant la réponse :
+
+1. **Base de données** : "Avez-vous une base de données ? Si oui, laquelle et quel ORM ?"
+   - PostgreSQL/Supabase + Python → suggérer `stack-python-supabase`
+   - PostgreSQL/MySQL + Java → suggérer `stack-java-spring`
+   - Prisma/TypeORM + Node → suggérer les skills `schema`, `migrate`, `db-diagram` du socle
+
+2. **Frontend** : "Y a-t-il un frontend ? Quel framework ?"
+   - React/Vite → suggérer `stack-web-vite`
+   - Autre → les skills `accessibility`, `design-system`, `ux-ui` du socle suffisent
+
+3. **Internationalisation** : "L'application est-elle multilingue ?"
+   - Oui → suggérer `feature-i18n`
+
+4. **Mémoire décisionnelle** : "Avez-vous des décisions architecturales importantes à capturer et à retrouver facilement ?"
+   - Oui → suggérer `feature-decision-index`
+   - Si km-toolkit déjà envisagé → proposer à la place
+
+5. **Documentation structurée / Knowledge Base** : "Avez-vous besoin d'une documentation pilotée par agents (wiki, ADR, runbooks) ?"
+   - Oui → suggérer `km-toolkit` avec lien vers son INSTALL.md
+
+6. **Coûts token** : "Travaillez-vous avec plusieurs agents en parallèle ou sur des tâches longues ?"
+   - Oui → suggérer `finops`
+
+### Pour chaque module recommandé
+
+Présenter un résumé en 2 lignes :
+> "`feature-decision-index` — capture vos décisions architecturales dans `.decisions/` et les injecte automatiquement en contexte. 3 skills : `/record`, `/recall`, `/harvest`. Voulez-vous l'ajouter ? (oui/non)"
+
+Si oui : copier agents + skills depuis `<FERME>/examples/<module>/` vers `.claude/` (et `.github/` si présent).
+
+### Récapitulatif des modules ajoutés
+
+Après le brainstorm, afficher la liste des modules installés.
+
+---
+
+## Phase 4 — Audit de configuration
+
+### Checks
+
+```bash
+# CLAUDE.md
+ls CLAUDE.md 2>/dev/null && echo "present" || echo "absent"
+grep -c '{{' CLAUDE.md 2>/dev/null
+
+# Agents / skills
 ls .claude/agents/*.md 2>/dev/null | wc -l
 ls .claude/skills/*/SKILL.md 2>/dev/null | wc -l
-```
 
-- Au moins 1 agent et 1 skill installés ?
-- Comparer au socle : le template contient 18 agents et 36 skills. Moins = installation partielle.
-
-### 3. settings.json
-
-```bash
-jq . .claude/settings.json 2>/dev/null && echo "JSON valide" || echo "JSON invalide ou absent"
-jq -r '.permissions.allow[]' .claude/settings.json 2>/dev/null | grep -iE "(npm|pip|mvn|cargo|go |make|gradle|pytest|jest|dotnet)" | head -5
+# settings.json
+jq . .claude/settings.json 2>/dev/null && echo "JSON valide" || echo "invalide ou absent"
+jq -r '.permissions.allow[]' .claude/settings.json 2>/dev/null | grep -iE "(npm|pip|mvn|cargo|go |make|gradle|pytest|jest|dotnet|ruff|alembic)" | head -5
 jq 'has("hooks")' .claude/settings.json 2>/dev/null
+
+# .gitignore
+grep -cE "^(node_modules|__pycache__|\.env|venv|\.venv|target/|dist/|build/)$" .gitignore 2>/dev/null
 ```
 
-- Fichier présent et JSON valide ?
-- Commandes de build/test de la stack présentes dans `permissions.allow` ?
-- Section `hooks` configurée ?
-
-### 4. Git
-
-```bash
-grep -E "^(node_modules|__pycache__|\.env|venv|\.venv|target/|dist/|build/)$" .gitignore 2>/dev/null | wc -l
-git ls-files --others --exclude-standard | grep -iE "\.(env|key|pem|p12|pfx|secret)" | head -5
-```
-
-- `.gitignore` couvre-t-il les répertoires sensibles courants ?
-- Fichiers potentiellement sensibles non ignorés ?
-
-## Output
-
-Produire un tableau récapitulatif :
+### Rapport final
 
 ```
-## Farm Init — Rapport de configuration
+## Farm Init — Configuration
 
 | Section        | Statut | Notes                                          |
 |----------------|--------|------------------------------------------------|
-| CLAUDE.md      | ✅/⚠️/❌ | [détail]                                      |
-| Agents         | ✅/⚠️/❌ | X agents installés (18 dans le socle complet) |
-| Skills         | ✅/⚠️/❌ | X skills installés (36 dans le socle complet) |
-| settings.json  | ✅/⚠️/❌ | [détail]                                      |
-| Hooks          | ✅/⚠️/❌ | [détail]                                      |
-| .gitignore     | ✅/⚠️/❌ | [détail]                                      |
+| CLAUDE.md      | ✅/⚠️/❌ |                                               |
+| Agents         | ✅/⚠️/❌ | X agents                                      |
+| Skills         | ✅/⚠️/❌ | X skills                                      |
+| settings.json  | ✅/⚠️/❌ |                                               |
+| Hooks          | ✅/⚠️/❌ |                                               |
+| .gitignore     | ✅/⚠️/❌ |                                               |
 
-Légende : ✅ OK  ⚠️ incomplet  ❌ absent ou invalide
+### Actions recommandées
+[uniquement les points ⚠️ et ❌, avec la correction concrète]
 ```
 
-Suivi de **Actions recommandées** listant uniquement les points ⚠️ et ❌, avec la correction concrète :
-
-- "CLAUDE.md absent → `cp <ferme>/template/CLAUDE.template.md ./CLAUDE.md`"
-- "3 placeholders `{{` non remplacés dans CLAUDE.md → compléter la stack et les commandes"  
-- "settings.json sans commandes stack → ajouter les commandes build/test (voir `examples/stack-*/`)"
-- "Hooks absents → copier la section `hooks` depuis `<ferme>/template/.claude/settings.json`"
+> Si tout est ✅ : "La ferme est correctement configurée. Lancez `/audit` pour un premier pre-flight sur le code."

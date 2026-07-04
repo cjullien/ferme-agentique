@@ -50,7 +50,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 **Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan).
 
-**Onboarding** : `farm-init` (vérifie la configuration de la ferme sur un projet — CLAUDE.md, settings.json, agents/skills, hooks).
+**Onboarding** : `farm-init` — point d'entrée universel : détecte si la ferme est installée, guide l'installation si nécessaire, brainstorme les modules optionnels à ajouter (dialogue interactif), puis audite la configuration finale.
 
 ---
 
