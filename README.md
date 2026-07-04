@@ -15,10 +15,10 @@ ferme_agentic/
 │   ├── .claude/                      version Claude Code
 │   │   ├── settings.json     permissions + hooks neutres (à compléter par stack)
 │   │   ├── agents/           18 agents génériques (.md)
-│   │   └── skills/           36 skills génériques (SKILL.md)
+│   │   └── skills/           46 skills génériques (SKILL.md)
 │   ├── .github/                      version Copilot (miroir)
 │   │   ├── agents/           18 agents génériques (.agent.md)
-│   │   ├── skills/           36 skills génériques (SKILL.md)
+│   │   ├── skills/           46 skills génériques (SKILL.md)
 │   │   ├── extensions/       agents-loader + accessibility
 │   │   ├── lsp.json          serveurs LSP (Python / TypeScript)
 │   │   └── copilot-instructions.template.md  squelette à remplir
@@ -29,6 +29,8 @@ ferme_agentic/
 │   ├── stack-java-spring/     backend Java/Spring/Maven
 │   ├── domain-immo/           métier gestion immobilière (juridique…)
 │   ├── feature-i18n/          internationalisation
+│   ├── feature-decision-index/ mémoire décisionnelle légère (ADR sans infrastructure)
+│   ├── finops/                contrôle des coûts token (cross-stack)
 │   └── km-toolkit/            Knowledge Management piloté par agents (+ mainframe COBOL)
 ├── scripts/            ← outillage de maintenance de la ferme elle-même
 │   ├── validate_farm.py         détecte les régressions (miroirs désynchronisés, outils Copilot/Claude mélangés, JSON invalide)
