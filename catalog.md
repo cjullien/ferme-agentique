@@ -37,22 +37,18 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 ### Skills
 
 **Qualité & audit** : `audit`, `audit-360`, `tech-debt`, `review`, `clean-tdd`, `test-quality`,
-`improve-architecture`, `owasp`, `accessibility` (alias `a11y`), `performance` (alias `perf`),
-`design-system`, `dead-code`, `externalize`, `dependencies` (alias `deps`), `ci`.
+`improve-architecture`, `owasp`, `accessibility`, `performance`, `design-system`, `dead-code`,
+`externalize`, `dependencies`, `ci`.
 
 **Tests** : `test`, `coverage`, `e2e`, `env-check`.
 
-**Git & flux** : `commit`, `pre-commit`, `push`, `push-force` (alias `quick-push`), `lint`.
+**Git & flux** : `commit`, `pre-commit`, `push`, `push-force`, `lint`.
 
 **Produit & backlog** : `product-spec`, `backlog-refinement`, `to-issues`, `triage`, `changelog`.
 
 **Docs & exploration** : `docs-update`, `instructions-update`, `zoom-out`, `diagnose`.
 
 **Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan).
-
-> Alias historiques (`a11y`, `deps`, `perf`, `quick-push`) cités dans les projets d'origine : ils
-> n'existent plus dans le socle actuel, qui n'a qu'un seul nom d'invocation par skill
-> (`accessibility`, `dependencies`, `performance`, `push-force`).
 
 ---
 
@@ -71,6 +67,7 @@ Skills : `schema`/`schema-impact`, `migrate`, `db-diagram`/`mpd`, `db-reset`, `f
 ### `stack-java-spring/` — backend Java / Spring Boot / Maven
 Variantes adaptées au build Maven & natif : agents `ci`, `docs-update`, `product-owner`,
 `backlog-refinement` ; skills `ci`, `coverage` (JaCoCo), `docs-update`, `improve-architecture`.
++ `settings.json` (permissions mvn/java/git/gh).
 
 ### `stack-web-vite/` — frontend Vite + React (PWA)
 Agents : `agent-maintainer`, `externalize`.
