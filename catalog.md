@@ -9,7 +9,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 ---
 
-## Socle générique — `template/` (18 agents · 46 skills, en versions `.claude/` et `.github/`)
+## Socle générique — `template/` (18 agents · 48 skills, en versions `.claude/` et `.github/`)
 
 ### Agents
 
@@ -50,7 +50,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 **Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan).
 
-**Onboarding** : `farm-init` — point d'entrée universel : détecte si la ferme est installée, guide l'installation si nécessaire, brainstorme les modules optionnels à ajouter (dialogue interactif), puis audite la configuration finale.
+**Onboarding** : `farm-init` — point d'entrée universel : détecte si la ferme est installée, guide l'installation (chemin local ou URL GitHub + clone auto), brainstorme les modules optionnels (dialogue interactif), audite la configuration finale. `farm-update` — synchronise les agents/skills du projet avec la ferme source après une mise à jour.
 
 ---
 

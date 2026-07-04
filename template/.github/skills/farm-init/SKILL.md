@@ -29,9 +29,18 @@ ls CLAUDE.md 2>/dev/null && echo "present" || echo "absent"
 ### A1. Localiser la ferme
 
 Demander :
-> "La ferme agentique n'est pas encore installée sur ce projet. Quel est le chemin absolu vers votre clone de la ferme ? (ex: /Users/moi/ferme_agentic)"
+> "La ferme agentique n'est pas encore installée sur ce projet. Fournissez :
+> - un chemin local : `/Users/moi/ferme_agentic`
+> - ou une URL GitHub : `https://github.com/org/ferme_agentic`"
 
-Vérifier que le chemin existe et contient `template/.claude/agents/`.
+**Si chemin local** : vérifier qu'il existe et contient `template/.claude/agents/`.
+
+**Si URL GitHub** : cloner dans `~/.claude/ferme_agentic` (ou demander le répertoire cible) :
+```bash
+git clone "<URL>" ~/.claude/ferme_agentic 2>/dev/null \
+  || git -C ~/.claude/ferme_agentic pull 2>/dev/null
+```
+Utiliser `~/.claude/ferme_agentic` comme `<FERME>`.
 
 ### A2. Copier le socle
 
@@ -46,6 +55,11 @@ cp -R "<FERME>/template/.github/extensions" .github/
 cp -n  "<FERME>/template/.github/lsp.json"  .github/lsp.json
 cp -n  "<FERME>/template/.github/copilot-instructions.template.md" .github/copilot-instructions.md
 cp -n  "<FERME>/template/CLAUDE.template.md" CLAUDE.md
+```
+
+Sauvegarder le chemin pour `/farm-update` :
+```bash
+echo "<FERME>" > .claude/.farm-source
 ```
 
 Confirmer le résultat :

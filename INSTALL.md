@@ -100,12 +100,31 @@ Coller le contenu de `examples/finops/CLAUDE.finops.md` à la fin du `CLAUDE.md`
 
 Ajouter `.claude/finops.log` au `.gitignore` du projet.
 
-## 5. Nettoyer le hors-stack
+## 5. Par où commencer — les 10 skills essentiels
+
+46 skills sont installés. Voici les 10 à maîtriser en premier, dans l'ordre d'utilisation naturel :
+
+| Priorité | Skill | Quand l'utiliser |
+|---|---|---|
+| 1 | `/farm-init` | Premier lancement sur un projet — installation, config, brainstorm |
+| 2 | `/zoom-out` | Découvrir une zone de code inconnue avant de toucher quoi que ce soit |
+| 3 | `/diagnose` | Dès qu'un bug résiste — boucle de feedback disciplinée |
+| 4 | `/pre-commit` | Avant chaque commit — lint + test + build + sécurité |
+| 5 | `/commit` | Créer un commit bien rédigé |
+| 6 | `/audit` | Pre-flight avant tout PR — qualité, conventions, sécurité sur le diff |
+| 7 | `/review` | Revue complète avant merge — adapte les agents aux fichiers modifiés |
+| 8 | `/owasp` | Sur tout code manipulant auth, sessions, inputs utilisateur |
+| 9 | `/docs-update` | Après toute refacto ou ajout de fonctionnalité |
+| 10 | `/farm-update` | Quand la ferme source a évolué — sync les agents/skills du projet |
+
+Les 36 autres skills sont disponibles via `/` dans Claude Code — les découvrir au besoin.
+
+## 6. Nettoyer le hors-stack
 
 - Supprimer les agents/skills sans objet sur le projet (ex : `design-system`, `ux-ui`,
   `accessibility` sur un projet purement backend).
 
-## 6. Vérifier
+## 7. Vérifier
 
 ```bash
 ls .claude/agents .claude/skills        # version Claude
