@@ -124,6 +124,7 @@ Après le brainstorm, afficher la liste des modules installés.
 # CLAUDE.md
 ls CLAUDE.md 2>/dev/null && echo "present" || echo "absent"
 grep -c '{{' CLAUDE.md 2>/dev/null
+wc -l < CLAUDE.md 2>/dev/null
 
 # Agents / skills
 ls .claude/agents/*.md 2>/dev/null | wc -l
@@ -145,7 +146,7 @@ grep -cE "^(node_modules|__pycache__|\.env|venv|\.venv|target/|dist/|build/)$" .
 
 | Section        | Statut | Notes                                          |
 |----------------|--------|------------------------------------------------|
-| CLAUDE.md      | ✅/⚠️/❌ |                                               |
+| CLAUDE.md      | ✅/⚠️/❌ | ⚠️ si > 200 lignes (instructions ignorées silencieusement au-delà) |
 | Agents         | ✅/⚠️/❌ | X agents                                      |
 | Skills         | ✅/⚠️/❌ | X skills                                      |
 | settings.json  | ✅/⚠️/❌ |                                               |

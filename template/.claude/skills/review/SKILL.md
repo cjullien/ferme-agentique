@@ -26,10 +26,11 @@ Procédure :
 6. Lancer SI des modèles de données sont modifiés :
    - Agent `schema` — analyse d'impact du changement de modèle
 
-7. **Toujours en dernier** — lancer la commande Claude Code `/insights` et lire son résultat :
+7. **Toujours en dernier** — si la commande `/insights` est disponible dans cette session Claude Code, la lancer et lire son résultat :
    - Identifier les patterns récurrents signalés (erreurs fréquentes, fichiers souvent modifiés, anti-patterns répétés)
    - Si des patterns correspondent aux findings de la revue → les mentionner dans la synthèse comme **tendance à corriger structurellement**
    - Si `/insights` suggère des améliorations de workflow ou de config → les appliquer dans `CLAUDE.md` ou les agents concernés
+   - Si `/insights` n'est pas disponible (commande inconnue) → ignorer cette étape, passer à la synthèse
 
 Synthèse finale :
 ## Résultat de la revue

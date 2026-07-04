@@ -2,6 +2,7 @@
 
 > Squelette de `CLAUDE.md`. Remplacer les `{{placeholders}}`, supprimer les sections inutiles.
 > Les instructions ici sont **prioritaires** et doivent rester courtes et actionnables.
+> **Limite critique : garder ce fichier sous 200 lignes.** Au-delà, Claude ignore silencieusement les instructions de fin de fichier.
 
 ## Stack
 
@@ -51,5 +52,18 @@ Modules optionnels ajoutés à ce projet :
 - [ ] DB / migrations (`examples/stack-python-supabase` ou `examples/stack-java-spring`)
 - [ ] Frontend React/Vite (`examples/stack-web-vite`)
 - [ ] i18n (`examples/feature-i18n`)
+- [ ] Mémoire décisionnelle (`examples/feature-decision-index`)
 - [ ] KM / documentation pilotée par agents (`examples/km-toolkit`)
 - [ ] Métier : {{ex: `examples/domain-immo`}}
+
+## Vocabulaire métier (optionnel)
+
+Si le projet a un domaine métier avec des termes spécifiques, créer un fichier `CONTEXT.md` à la racine :
+
+```markdown
+# Contexte métier — {{NOM_DU_PROJET}}
+Glossaire des termes du domaine utilisés dans le code et les specs.
+- **Terme** : définition
+```
+
+Les agents `diagnose` et `zoom-out` le lisent automatiquement pour adapter leur vocabulaire.
