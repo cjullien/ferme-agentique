@@ -1,0 +1,17 @@
+{
+  "_comment": "Hook FinOps — log chaque appel Agent/Task dans .claude/finops.log pour télémétrie locale. Aucune dépendance externe. Fusionner l'entrée PostToolUse dans le tableau hooks.PostToolUse du settings.json du projet (ne pas remplacer les entrées existantes).",
+  "_install": "Ajouter .claude/finops.log au .gitignore du projet.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); TOOL=$(echo \"$INPUT\" | jq -r '.tool_name // \"unknown\"'); MODEL=$(echo \"$INPUT\" | jq -r '.tool_input.model // \"unknown\"'); TOKENS_IN=$(echo \"$INPUT\" | jq -r '.tool_response.usage.input_tokens // 0'); TOKENS_OUT=$(echo \"$INPUT\" | jq -r '.tool_response.usage.output_tokens // 0'); LOG=\"$(git rev-parse --show-toplevel 2>/dev/null || echo .)/.claude/finops.log\"; echo \"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\") tool=$TOOL model=$MODEL in=$TOKENS_IN out=$TOKENS_OUT\" >> \"$LOG\"; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

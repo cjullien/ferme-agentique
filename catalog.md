@@ -9,7 +9,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 ---
 
-## Socle générique — `template/` (18 agents · 36 skills, en versions `.claude/` et `.github/`)
+## Socle générique — `template/` (18 agents · 37 skills, en versions `.claude/` et `.github/`)
 
 ### Agents
 
@@ -50,6 +50,8 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 **Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan).
 
+**Onboarding** : `farm-init` (vérifie la configuration de la ferme sur un projet — CLAUDE.md, settings.json, agents/skills, hooks).
+
 ---
 
 ## Modules optionnels — `examples/`
@@ -64,6 +66,13 @@ Skills : `schema`/`schema-impact`, `migrate`, `db-diagram`/`mpd`, `db-reset`, `f
 `data-quality` (validation schémas Pydantic/Pandera, colonnes nullables, frontières système).
 + `settings.json` (hooks py/ruff/alembic).
 
+### `finops/` — contrôle des coûts token (cross-stack)
+
+Skills : `token-budget` (burn rate + recommandation modèle), `cost-check` (verdict continuer/résumer),
+`model-pick` (sélecteur interactif coût/qualité).
+Hook `PostToolUse` : log léger des appels Agent/Task dans `.claude/finops.log` (aucune dépendance externe).
+Snippet `CLAUDE.finops.md` : routage modèle par défaut, hygiène prompt, grille fork-vs-inline, checklist pré-sous-agent.
+
 ### `stack-java-spring/` — backend Java / Spring Boot / Maven
 Variantes adaptées au build Maven & natif : agents `ci`, `docs-update`, `product-owner`,
 `backlog-refinement` ; skills `ci`, `coverage` (JaCoCo), `docs-update`, `improve-architecture`.
@@ -77,6 +86,13 @@ Agents : `agent-maintainer`, `externalize`.
 
 ### `domain-immo/` — métier gestion immobilière
 Agent `legal-check` ; skills `legal-check`, `product-spec` (glossaire métier).
+
+### `feature-decision-index/` — mémoire décisionnelle légère (opt-in)
+Alternative légère à `km-toolkit/adr-capture` pour les projets sans besoin de KB complète.
+Agents : `decision-record` (capture une décision), `decision-harvest` (détecte les décisions implicites dans le codebase).
+Skills : `record`, `recall` (recherche par mot-clé), `harvest`.
+Constitution : `.decisions/CONSTITUTION.md` injectée via `@` dans `CLAUDE.md` à chaque session.
+Voir `examples/feature-decision-index/INSTALL.md`.
 
 ### `feature-i18n/` — internationalisation (opt-in)
 Agent `translations` (+ variante React/Python) ; skills `traduction`, `translations`.

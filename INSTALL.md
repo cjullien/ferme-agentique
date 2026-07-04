@@ -87,6 +87,19 @@ cp -R "$FERME/examples/stack-python-supabase/.github/skills/." .github/skills/
 Pour le **km-toolkit** (KB pilotée par agents / mainframe), suivre sa propre procédure :
 `examples/km-toolkit/INSTALL.md`.
 
+### FinOps — contrôle des coûts token (recommandé sur tout projet)
+
+```bash
+cp -R "$FERME/examples/finops/.claude/skills/." .claude/skills/
+```
+
+Merger ensuite l'entrée `PostToolUse` de `examples/finops/settings.finops.json` dans le tableau
+`hooks.PostToolUse` de votre `settings.json` (ne pas remplacer les entrées existantes).
+
+Coller le contenu de `examples/finops/CLAUDE.finops.md` à la fin du `CLAUDE.md` du projet.
+
+Ajouter `.claude/finops.log` au `.gitignore` du projet.
+
 ## 5. Nettoyer le hors-stack
 
 - Supprimer les agents/skills sans objet sur le projet (ex : `design-system`, `ux-ui`,
