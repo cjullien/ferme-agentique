@@ -1,0 +1,43 @@
+name: Feature request
+description: Proposer un ajout ou une amélioration de la ferme agentic
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Décrivez le besoin et la valeur attendue pour les projets qui installent la ferme.
+  - type: input
+    id: area
+    attributes:
+      label: Zone concernée
+      description: Socle ou module example concerné.
+      placeholder: "template/.claude, template/.github, examples/stack-python-supabase, ..."
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème à résoudre
+      description: Qu'est-ce qui manque aujourd'hui ?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposition
+      description: Solution envisagée (agent/skill/doc/script/etc.).
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères d'acceptation
+      description: Comment vérifier que la feature est terminée ?
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+

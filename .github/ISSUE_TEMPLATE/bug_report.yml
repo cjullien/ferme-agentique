@@ -1,0 +1,52 @@
+name: Bug report
+description: Signaler un dysfonctionnement de la ferme agentic
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de décrire précisément le problème rencontré.
+  - type: input
+    id: scope
+    attributes:
+      label: Périmètre
+      description: Où se situe le bug ?
+      placeholder: "template/.claude/agents, template/.github/skills, scripts/validate_farm.py, ..."
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description du bug
+      description: Comportement observé et attendu.
+      placeholder: "Observé: ... / Attendu: ..."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Étapes de reproduction
+      description: Commandes et étapes minimales pour reproduire.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / sortie console
+      description: Coller les extraits utiles (validate_farm, generate_github_mirror, etc.).
+      render: shell
+  - type: input
+    id: version
+    attributes:
+      label: Version de la ferme
+      description: Valeur du fichier VERSION
+      placeholder: "ex: 1.1.0"
+    validations:
+      required: true
+

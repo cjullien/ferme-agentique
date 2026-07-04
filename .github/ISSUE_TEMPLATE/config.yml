@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions d'utilisation
+    url: https://github.com/cjullien/ferme-agentique/blob/main/CONTRIBUTING.md
+    about: Vérifier CONTRIBUTING.md avant de créer une issue.
