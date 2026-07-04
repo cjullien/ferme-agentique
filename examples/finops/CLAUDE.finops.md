@@ -2,9 +2,12 @@
 
 > Coller cette section à la fin du `CLAUDE.md` du projet après installation du module `examples/finops/`.
 
-### Routage modèle par défaut
+### Conventions de routage modèle (manuel)
 
-| Type de tâche | Modèle par défaut | Escalader vers |
+> Ces règles s'appliquent quand tu choisis explicitement un modèle ou que tu rédiges un prompt de
+> sous-agent — aucun mécanisme ne les applique automatiquement. Utilise `/model-pick` pour être guidé.
+
+| Type de tâche | Modèle à utiliser | Escalader vers |
 |---|---|---|
 | Explorer / lire / grep / classifier | `claude-haiku-4-5-20251001` | Sonnet si raisonnement complexe |
 | Générer / corriger / refactoriser / tester | `claude-sonnet-4-6` | — |
@@ -40,7 +43,7 @@ Avant de spawner un Agent ou Task :
 - [ ] Le prompt est-il < 500 mots et exclut-il les fichiers déjà en contexte ?
 - [ ] Le tier de modèle est-il approprié ? (Explorer → Haiku, Générer → Sonnet, Architecturer → Opus)
 - [ ] La sortie sera-t-elle réutilisée pour plusieurs décisions aval ? (Oui → Opus ; Non → Sonnet ou Haiku)
-- [ ] La session a-t-elle déjà > 10 appels Agent/Task ? (Oui → lancer `/cost-check` d'abord)
+- [ ] La session a-t-elle déjà > 5 appels Agent/Task ? (Oui → lancer `/cost-check` d'abord)
 
 ### Skills FinOps installés
 

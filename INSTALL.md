@@ -61,7 +61,7 @@ Compléter aussi les hooks `PostToolUse` (rappels migrations / lint / tests…) 
 ## 4. Ajouter les modules optionnels
 
 Les modules `examples/` couvrent les stacks les plus courantes. Pour une stack absente des
-exemples, le socle seul suffit : ses 18 agents et 36 skills sont tech-agnostiques et couvrent
+exemples, le socle seul suffit : ses 18 agents et 46 skills sont tech-agnostiques et couvrent
 qualité, tests, sécurité, documentation et git sur n'importe quelle techno. Les exemples sont
 des **points de départ**, pas des prérequis.
 

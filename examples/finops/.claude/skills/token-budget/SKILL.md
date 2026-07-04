@@ -16,12 +16,12 @@ Produit un rapport d'état de la session courante pour piloter les coûts LLM en
    # Télémétrie locale
    LOG="$(git rev-parse --show-toplevel 2>/dev/null || echo .)/.claude/finops.log"
    if [ -f "$LOG" ]; then
-     echo "=== Derniers appels Agent/Task ==="
+     echo "=== Derniers appels Agent/Task (cumulatif toutes sessions) ==="
      tail -20 "$LOG"
      echo "=== Total appels ==="
-     wc -l < "$LOG"
+     wc -l "$LOG"
    else
-     echo "finops.log absent (hook PostToolUse non installé ou 0 appel Agent/Task)"
+     echo "finops.log absent (hook PostToolUse non installé)"
    fi
 
    # Économies RTK
@@ -55,10 +55,9 @@ Produit un rapport d'état de la session courante pour piloter les coûts LLM en
 
    Afficher : `Tâche inférée : <type> → Recommandation : <model-id>`
 
-5. **Alerte si session chargée** (> 10 appels Agent/Task dans le log) :
+5. **Alerte si journal chargé** — appliquer la même grille que `/cost-check` :
+   - < 5 appels → ✅ CONTINUE
+   - 5–15 appels → ⚠️ CAUTION — envisager `/cost-check` avant la prochaine tâche longue
+   - > 15 appels → 🛑 STOP — lancer `/cost-check` pour obtenir le handoff
 
-   ```
-   ⚠️  Session chargée détectée.
-   → Envisager /caveman pour réduire les tokens de sortie (~75 %)
-   → Ou /cost-check pour décider de résumer et redémarrer
-   ```
+   Note : les colonnes `in=` / `out=` peuvent afficher `0` si Claude Code ne peuple pas `tool_response.usage` pour les appels Agent/Task — le comptage des appels reste fiable.

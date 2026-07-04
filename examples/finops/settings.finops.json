@@ -1,6 +1,7 @@
 {
   "_comment": "Hook FinOps — log chaque appel Agent/Task dans .claude/finops.log pour télémétrie locale. Aucune dépendance externe. Fusionner l'entrée PostToolUse dans le tableau hooks.PostToolUse du settings.json du projet (ne pas remplacer les entrées existantes).",
-  "_install": "Ajouter .claude/finops.log au .gitignore du projet.",
+  "_install": "Ajouter .claude/finops.log au .gitignore du projet (voir .gitignore.snippet).",
+  "_token_counts": "Les champs in=/out= peuvent afficher 0 si Claude Code ne peuple pas tool_response.usage pour les appels Agent/Task — la version de Claude Code peut varier. Le comptage des appels (nb de lignes) reste fiable dans tous les cas.",
   "hooks": {
     "PostToolUse": [
       {
@@ -8,7 +9,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "INPUT=$(cat); TOOL=$(echo \"$INPUT\" | jq -r '.tool_name // \"unknown\"'); MODEL=$(echo \"$INPUT\" | jq -r '.tool_input.model // \"unknown\"'); TOKENS_IN=$(echo \"$INPUT\" | jq -r '.tool_response.usage.input_tokens // 0'); TOKENS_OUT=$(echo \"$INPUT\" | jq -r '.tool_response.usage.output_tokens // 0'); LOG=\"$(git rev-parse --show-toplevel 2>/dev/null || echo .)/.claude/finops.log\"; echo \"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\") tool=$TOOL model=$MODEL in=$TOKENS_IN out=$TOKENS_OUT\" >> \"$LOG\"; exit 0"
+            "command": "INPUT=$(cat); read -r TOOL MODEL TOKENS_IN TOKENS_OUT < <(echo \"$INPUT\" | jq -r '[.tool_name//\"unknown\",.tool_input.model//\"unknown\",.tool_response.usage.input_tokens//0,.tool_response.usage.output_tokens//0]|@tsv'); LOG=\"$(git rev-parse --show-toplevel 2>/dev/null || echo .)/.claude/finops.log\"; echo \"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\") tool=$TOOL model=$MODEL in=$TOKENS_IN out=$TOKENS_OUT\" >> \"$LOG\"; if [ \"$(wc -l < \"$LOG\")\" -gt 1000 ]; then tail -500 \"$LOG\" > \"$LOG.tmp\" && mv \"$LOG.tmp\" \"$LOG\"; fi; exit 0"
           }
         ]
       }

@@ -49,6 +49,9 @@ Socle générique installé depuis la **ferme agentic** (`template/.github/`). C
 - `.github/lsp.json` configure les serveurs LSP (Python / TypeScript par défaut).
 
 Modules optionnels ajoutés à ce projet :
+- [ ] DB / migrations (`examples/stack-python-supabase` ou `examples/stack-java-spring`)
+- [ ] Frontend React/Vite (`examples/stack-web-vite`)
 - [ ] i18n (`examples/feature-i18n`)
-- [ ] DB/migrations (`examples/stack-python-supabase`)
+- [ ] Mémoire décisionnelle (`examples/feature-decision-index`)
 - [ ] KM / documentation pilotée par agents (`examples/km-toolkit`)
+- [ ] Métier : {{ex: `examples/domain-immo`}}

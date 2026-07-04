@@ -10,15 +10,17 @@ allowed-tools: Bash
 
 1. **Lire la télémétrie locale** :
    ```bash
-   # Compter les appels Agent/Task loggés
+   # Compter les appels Agent/Task loggés (cumulatif toutes sessions)
    LOG="$(git rev-parse --show-toplevel 2>/dev/null || echo .)/.claude/finops.log"
    if [ -f "$LOG" ]; then
-     wc -l < "$LOG"
+     wc -l "$LOG"
      tail -5 "$LOG"
    else
-     echo "finops.log absent — hook PostToolUse non installé ou première session"
+     echo "finops.log absent — hook PostToolUse non installé"
    fi
    ```
+
+   Si `finops.log` est absent, afficher : "Verdict indisponible — installer le hook PostToolUse de `settings.finops.json` pour activer la télémétrie." et s'arrêter là.
 
 2. **Économies RTK** :
    ```bash
@@ -28,8 +30,8 @@ allowed-tools: Bash
 3. **Afficher la matrice de décision** avec les valeurs réelles collectées :
 
    ```
-   Appels Agent/Task cette session : <N>
-   Économies RTK rapportées        : <X tokens / ~$Y>
+   Appels Agent/Task (cumulatif toutes sessions) : <N>
+   Économies RTK rapportées                      : <X tokens / ~$Y>
 
    Verdict :
    ─────────────────────────────────────────────────────
@@ -41,8 +43,8 @@ allowed-tools: Bash
 
 4. **Si verdict STOP**, générer un handoff prêt-à-coller pour la prochaine session :
    ```bash
-   git --no-pager status --short
-   git --no-pager log --oneline -5
+   git status
+   git log --oneline -5
    ```
 
    Puis produire :
