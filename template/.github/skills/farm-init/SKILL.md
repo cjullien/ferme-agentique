@@ -124,9 +124,58 @@ Présenter un résumé en 2 lignes :
 
 Si oui : copier agents + skills depuis `<FERME>/examples/<module>/` vers `.claude/` (et `.github/` si présent).
 
+### Question finale — stack non couverte
+
+Après les 6 questions, vérifier si la stack du projet correspond à un module existant de la ferme.
+
+**Stacks couvertes** : Python/FastAPI/Django, Java/Spring, Node/Vite/React, domaine immo.
+**Stacks non couvertes** : Go, .NET, Ruby/Rails, PHP, mobile (React Native, Flutter), Rust, Scala, Elixir, etc.
+
+Si la stack du projet n'est pas couverte par un module existant :
+
+> "Votre stack ({{stack}}) n'a pas encore de module dédié dans la ferme. Voulez-vous en créer un ? Cela prend ~10 minutes et permettra aux prochains projets sur cette stack de bénéficier de vos agents/skills dès le départ."
+
+**Si oui** — lancer le sous-processus de création de module (voir ci-dessous).
+**Si non** — passer au récapitulatif. Le socle générique est suffisant pour démarrer.
+
+#### Sous-processus : créer un module pour une nouvelle stack
+
+1. Identifier ce qui est spécifique à cette stack dans le projet :
+   - Commandes de build/test/lint propres à la stack
+   - Outils de migration / gestion de dépendances
+   - Patterns de test spécifiques
+   - Agents utiles au-delà du socle (ex : agent `rails-migration`, `flutter-build`, `dotnet-publish`)
+
+2. Créer la structure dans `<FERME>/examples/stack-<nom>/` :
+   ```bash
+   mkdir -p "<FERME>/examples/stack-<nom>/.claude/agents"
+   mkdir -p "<FERME>/examples/stack-<nom>/.claude/skills"
+   ```
+
+3. Générer a minima :
+   - `settings.json` avec les permissions build/test/lint de la stack
+   - 1-2 skills spécifiques (ex : `coverage` adapté à l'outil de la stack)
+   - Optionnellement 1 agent si un workflow récurrent mérite d'être capturé
+
+4. Générer le miroir `.github/` :
+   ```bash
+   python3 "<FERME>/scripts/generate_github_mirror.py" --write
+   python3 "<FERME>/scripts/validate_farm.py"
+   ```
+
+5. Documenter dans `<FERME>/catalog.md` et proposer un commit dans la ferme :
+   > "Module `stack-<nom>` créé. Voulez-vous committer ce module dans la ferme pour que les prochains projets en bénéficient ?"
+
+   Si oui :
+   ```bash
+   cd "<FERME>" && git add examples/stack-<nom>/ catalog.md && git commit -m "feat: ajoute module stack-<nom> depuis projet {{NOM_DU_PROJET}}"
+   ```
+
 ### Récapitulatif des modules ajoutés
 
-Après le brainstorm, afficher la liste des modules installés.
+Après le brainstorm, afficher :
+- Modules installés sur ce projet
+- Si un nouveau module a été créé dans la ferme : "✅ Module `stack-<nom>` ajouté à la ferme — les prochains projets sur cette stack en bénéficieront directement."
 
 ---
 
