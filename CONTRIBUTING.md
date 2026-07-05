@@ -53,7 +53,15 @@ python3 scripts/validate_farm.py
 
 ## CI
 
-Le workflow `.github/workflows/validate-farm.yml` vérifie à chaque push/PR :
+Le workflow `.github/workflows/ci.yml` vérifie à chaque push/PR :
 - que `.github/` est synchronisé avec `.claude/`
 - qu'aucun fichier ne mélange les noms d'outils des deux plateformes
 - que tous les `settings.json` sont du JSON valide
+
+## Release
+
+Le workflow `.github/workflows/release.yml` est déclenché manuellement et :
+- relance les validations du dépôt
+- crée le tag `vX.Y.Z` à partir de `VERSION`
+- publie la GitHub Release
+- incrémente `VERSION` selon `patch/minor/major`

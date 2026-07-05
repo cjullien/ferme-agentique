@@ -1,4 +1,4 @@
-name: Validate farm
+name: CI
 
 # CI de ce dépôt (ferme-agentique) lui-même — à ne pas confondre avec
 # template/.github/ et examples/*/.github/, qui sont les fichiers Copilot
@@ -6,12 +6,21 @@ name: Validate farm
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
+    name: Validate mirrors and settings
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
