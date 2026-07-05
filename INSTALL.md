@@ -61,7 +61,7 @@ Compléter aussi les hooks `PostToolUse` (rappels migrations / lint / tests…) 
 ## 4. Ajouter les modules optionnels
 
 Les modules `examples/` couvrent les stacks les plus courantes. Pour une stack absente des
-exemples, le socle seul suffit : ses 18 agents et 46 skills sont tech-agnostiques et couvrent
+exemples, le socle seul suffit : ses 18 agents et 47 skills sont tech-agnostiques et couvrent
 qualité, tests, sécurité, documentation et git sur n'importe quelle techno. Les exemples sont
 des **points de départ**, pas des prérequis.
 
@@ -102,7 +102,7 @@ Ajouter `.claude/finops.log` au `.gitignore` du projet.
 
 ## 5. Par où commencer — les 10 skills essentiels
 
-46 skills sont installés. Voici les 10 à maîtriser en premier, dans l'ordre d'utilisation naturel :
+47 skills sont installés. Voici les 10 à maîtriser en premier, dans l'ordre d'utilisation naturel :
 
 | Priorité | Skill | Quand l'utiliser |
 |---|---|---|

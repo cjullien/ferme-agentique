@@ -9,7 +9,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 ---
 
-## Socle générique — `template/` (18 agents · 48 skills, en versions `.claude/` et `.github/`)
+## Socle générique — `template/` (18 agents · 47 skills, en versions `.claude/` et `.github/`)
 
 ### Agents
 
