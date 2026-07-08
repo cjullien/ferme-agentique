@@ -11,8 +11,8 @@ Lance en séquence les agents suivants et synthétise les résultats :
 
 1. Utilise l'outil Agent avec `subagent_type: audit` — revue du diff courant
 2. Utilise l'outil Agent avec `subagent_type: clean-tdd` — violations architecture et tests manquants (phase analyse uniquement, sans corrections automatiques pour ce rapport)
-3. Utilise l'outil Agent avec `subagent_type: perf` — problèmes de performance
-4. Utilise l'outil Agent avec `subagent_type: deps` — vulnérabilités et dépendances obsolètes
+3. Utilise l'outil Agent avec `subagent_type: performance` — problèmes de performance
+4. Utilise l'outil Agent avec `subagent_type: dependencies` — vulnérabilités et dépendances obsolètes
 5. Utilise l'outil Agent avec `subagent_type: externalize` — valeurs en dur
 
 Après avoir collecté tous les résultats, produis un rapport consolidé :

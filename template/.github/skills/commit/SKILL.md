@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Prépare et crée un commit git en conventional commits format (type, scope, description en français)
+description: Prépare et crée un commit git en conventional commits format (type, scope, description dans la langue du projet)
 disable-model-invocation: true
 ---
 
@@ -29,6 +29,6 @@ Procédure :
 
 Règles :
 
-- Description en français, max 72 caractères
+- Description dans la langue du projet (voir `CLAUDE.md` — français par défaut si non précisé), max 72 caractères
 - Impératif présent : "ajoute" pas "ajouté" ni "ajout de"
 - Ne jamais committer : .env, fichiers de credentials, fichiers générés (migrations auto, dist/)
