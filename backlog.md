@@ -2,71 +2,64 @@
 
 Issu d'un audit de cohérence de `template/` (18 agents · 47 skills) mené le 2026-07-08.
 Les bugs mécaniques (références `subagent_type` cassées, appels à des agents absents du
-socle) ont été corrigés directement. Les items ci-dessous demandent un arbitrage de contenu
-ou d'architecture — ils ne sont pas appliqués automatiquement.
+socle) ont été corrigés directement. FERME-1/2/3 ont ensuite été résolus en appliquant la
+règle : tout ce qui n'est pas générique va dans `examples/`, et le socle ne garde qu'un
+squelette générique explicite (voir détail sous chaque item). Les items restants demandent
+un arbitrage plus léger, non appliqué automatiquement.
 
 ## Table des items
 
-| ID | Titre | Priorité | Effort | Fichiers concernés |
+| ID | Titre | Priorité | Statut | Fichiers concernés |
 |----|-------|----------|--------|---------------------|
-| FERME-1 | `design-system.md` / `ux-ui.md` non génériques (contenu Tailwind/shadcn d'une appli immo) | P1 | XL | `template/.claude/agents/design-system.md`, `template/.claude/agents/ux-ui.md`, `template/.claude/skills/design-system/SKILL.md`, `template/.claude/skills/ux-ui/SKILL.md` |
-| FERME-2 | Section "Exigences IHM" de `product-owner.md` hardcodée au même produit immo | P2 | M | `template/.claude/agents/product-owner.md` |
-| FERME-3 | Chevauchement `design-system` / `ux-ui` (~40% de contenu dupliqué) | P2 | M | dépend de FERME-1 |
-| FERME-4 | Incohérence de nommage `backlog-manager` (socle) vs `backlog-refinement` (agents spécifiques aux modules stack-java-spring / stack-python-supabase) | P2 | S/M | `catalog.md`, `examples/stack-java-spring/.claude/agents/backlog-refinement.md`, `examples/stack-python-supabase/.claude/agents/backlog-refinement.md` |
-| FERME-5 | Règle non documentée : quand créer un agent dédié vs un skill autonome | P3 | S | `README.md` ou `catalog.md` |
-| FERME-6 | Hiérarchie non documentée entre `audit` / `tech-debt` / `audit-360` | P3 | S | `catalog.md` |
-| FERME-7 | Alias `name:` de skill différents du répertoire/catalog (`a11y`, `deps`, `perf`, `stale`, `check`) | P3 | S | `catalog.md`, skills concernés |
+| FERME-1 | `design-system.md` / `ux-ui.md` non génériques (contenu Tailwind/shadcn d'une appli immo) | P1 | ✅ Résolu | `template/.claude/agents/design-system.md`, `ux-ui.md`, `examples/domain-immo/.claude/agents/` |
+| FERME-2 | Section "Exigences IHM" de `product-owner.md` hardcodée au même produit immo | P2 | ✅ Résolu | `template/.claude/agents/product-owner.md` |
+| FERME-3 | Chevauchement `design-system` / `ux-ui` (~40% de contenu dupliqué) | P3 | 🟡 Partiel | `examples/domain-immo/.claude/agents/design-system.md`, `ux-ui.md` |
+| FERME-4 | Incohérence de nommage `backlog-manager` (socle) vs `backlog-refinement` (agents spécifiques aux modules stack-java-spring / stack-python-supabase) | P2 | Ouvert | `catalog.md`, `examples/stack-java-spring/.claude/agents/backlog-refinement.md`, `examples/stack-python-supabase/.claude/agents/backlog-refinement.md` |
+| FERME-5 | Règle non documentée : quand créer un agent dédié vs un skill autonome | P3 | Ouvert | `README.md` ou `catalog.md` |
+| FERME-6 | Hiérarchie non documentée entre `audit` / `tech-debt` / `audit-360` | P3 | Ouvert | `catalog.md` |
+| FERME-7 | Alias `name:` de skill différents du répertoire/catalog (`a11y`, `deps`, `perf`, `stale`, `check`) | P3 | Ouvert | `catalog.md`, skills concernés |
 
 ---
 
-## FERME-1 — `design-system.md` / `ux-ui.md` non génériques
+## FERME-1 — `design-system.md` / `ux-ui.md` non génériques — ✅ Résolu
 
-**Constat.** Les deux agents (226 et 125 lignes) sont repris tels quels d'une application
-immobilière React/Tailwind/shadcn précise : classes `bg-card border-border rounded-xl`,
-composants `TipButton`/`StatusBadge`/`NavBadgesContext`, fichiers `pages/Tenants.jsx`,
-`pages/Leases.jsx`, spec `docs/specs/details/TECHNIQUE/F-081-datatable-regles.md`. Aucune
-découverte via `CLAUDE.md`, contrairement au reste du socle. Un projet qui n'est pas en
-React+Tailwind+shadcn hérite d'un agent inutilisable ou trompeur (checklist qui n'a aucun
-sens pour sa stack).
+**Ce qui a été fait :**
+- Le contenu original (Tailwind/shadcn, `pages/Tenants.jsx`, `pages/Leases.jsx`, spec
+  `F-081-datatable-regles.md`…) a été déplacé tel quel dans
+  `examples/domain-immo/.claude/agents/{design-system,ux-ui}.md` (+ skills associés), comme
+  illustration concrète et complète.
+- Les versions du socle (`template/.claude/agents/{design-system,ux-ui}.md`) ont été
+  remplacées par un **squelette générique** : rôle générique, section "Périmètre à
+  instancier" volontairement vide, et une procédure explicite pour la compléter avec l'IA
+  (lire `CLAUDE.md` + 3-5 composants représentatifs, en déduire les tokens/conventions
+  réelles du projet) en s'appuyant sur l'exemple de `examples/domain-immo/`.
+- Les skills `design-system`/`ux-ui` du socle renvoient vers cette procédure plutôt que
+  d'imposer des règles Tailwind.
+- `catalog.md` documente cette nature de squelette pour les deux agents.
 
-**Pourquoi ce n'est pas un fix mécanique.** Réécrire ces agents en version générique suppose
-de trancher : quelle portion du contenu actuel est un vrai principe stack-agnostique (ex.
-"pas de couleur en dur", "cohérence des tailles d'icônes", "touch target ≥ 44px") vs une
-règle purement projet (ex. tailles Lucide exactes, tirets ASCII, `PAGE_SIZE`) ? Une réécriture
-hâtive risque soit de perdre la valeur du contenu existant, soit de le diluer au point de le
-rendre inutile.
+## FERME-2 — Section "Exigences IHM" de `product-owner.md` — ✅ Résolu
 
-**Options à trancher :**
-1. Déplacer le contenu actuel tel quel vers `examples/domain-immo/` (ou un nouveau module
-   `examples/stack-web-vite-shadcn/`), et écrire deux nouvelles versions génériques pour le
-   socle (découverte des tokens/conventions via `CLAUDE.md` et lecture de composants
-   existants, sans rien présupposer du framework CSS).
-2. Fusionner `design-system` + `ux-ui` en un seul agent générique (voir FERME-3) plutôt que
-   deux.
+La section a été retirée du socle et son contenu déplacé en annexe de
+`examples/domain-immo/.claude/agents/design-system.md`. Le socle garde une section générique
+courte : "vérifie les conventions IHM **si le projet en a documenté**, n'en invente aucune".
 
-## FERME-2 — Section "Exigences IHM" de `product-owner.md`
+## FERME-3 — Chevauchement `design-system` / `ux-ui` — 🟡 Partiellement résolu
 
-Même famille de problème que FERME-1 mais localisée : la section impose l'ordre des colonnes
-de tableau, un badge `NavBadgesContext`, un fichier `api/client.js` — spécifique au même
-produit. À déplacer vers `examples/domain-immo/` (ou le module produit concerné) et retirer
-du socle, ou généraliser en "si votre projet a des tableaux avec statut, vérifier que la
-convention de la codebase est respectée" sans imposer un design précis.
-
-## FERME-3 — Chevauchement `design-system` / `ux-ui`
-
-Une fois FERME-1 tranché, évaluer si les deux agents doivent rester séparés (ex. `design-system`
-= conformité stricte aux tokens, `ux-ui` = audit ergonomique plus large) avec une frontière
-documentée, ou fusionner en un seul agent pour éviter la double maintenance des checklists
-(tailles d'icônes, `aria-hidden`, i18n obligatoire actuellement dupliquées dans les deux).
+Résolu côté **socle** : les deux squelettes génériques sont courts et ne dupliquent plus
+aucune checklist concrète. Reste présent côté **exemple** : les fichiers copiés dans
+`examples/domain-immo/` gardent le chevauchement d'origine (tailles d'icônes, tokens,
+`aria-hidden`, i18n mentionnés dans les deux). Acceptable en l'état — un seul module
+d'illustration, pas le socle propagé partout — mais à nettoyer si `examples/domain-immo/`
+est un jour utilisé comme référence à copier ailleurs.
 
 ## FERME-4 — `backlog-manager` vs `backlog-refinement`
 
-Le socle a un agent `backlog-manager` (audit + priorisation + chiffrage). Les modules
-`stack-java-spring` et `stack-python-supabase` ont chacun un agent `backlog-refinement`
-(probablement un vestige d'un renommage `backlog-refinement` → `backlog-manager` fait dans le
-socle mais jamais répercuté dans les modules). Le skill socle `backlog-refinement` a été
-repointé vers `backlog-manager` avec une note invitant à préférer l'agent du module s'il est
-installé (fix immédiat appliqué), mais la duplication de nom et de mission entre les deux
+Inchangé depuis le dernier audit. Le socle a un agent `backlog-manager` (audit + priorisation
++ chiffrage). Les modules `stack-java-spring` et `stack-python-supabase` ont chacun un agent
+`backlog-refinement` (probablement un vestige d'un renommage `backlog-refinement` →
+`backlog-manager` fait dans le socle mais jamais répercuté dans les modules). Le skill socle
+`backlog-refinement` a été repointé vers `backlog-manager` avec une note invitant à préférer
+l'agent du module s'il est installé, mais la duplication de nom et de mission entre les deux
 agents mérite d'être nettoyée à la source :
 - soit renommer les agents des deux modules en `backlog-manager` (variante stack-spécifique
   qui *surcharge* celui du socle),

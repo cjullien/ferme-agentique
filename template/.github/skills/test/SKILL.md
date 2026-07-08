@@ -8,7 +8,7 @@ Lance les tests backend et frontend en parallèle (commandes identifiées via CL
 
 Si un argument est fourni, cibler uniquement ce fichier ou module : $ARGUMENTS
 
-Exemples : `/test tests/test_leases.py`, `/test backend`, `/test frontend`
+Exemples : `/test tests/test_users.py`, `/test backend`, `/test frontend`
 
 Sans argument, lance simultanément :
 - Commande de test backend (identifiée via CLAUDE.md)

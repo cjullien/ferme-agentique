@@ -24,7 +24,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 | `clean-tdd` | Revue **et correction** clean architecture + TDD |
 | `dead-code` | Détecte/supprime code mort, imports, clés i18n orphelines |
 | `dependencies` | Santé des dépendances — CVE, majeures, inutilisées |
-| `design-system` | Garant du design system frontend (tokens, patterns) |
+| `design-system` | Garant du design system frontend — **squelette générique à compléter avec l'IA pour ce projet** (voir l'exemple complété dans `examples/domain-immo/`) |
 | `docs-update` | Synchronise README et docs avec le code |
 | `e2e` | Génère/maintient les tests end-to-end des flux critiques |
 | `externalize` | Audit config — env vars, i18n, thèmes, persistance |
@@ -32,7 +32,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 | `performance` | N+1, index, pagination, re-renders, bundle |
 | `product-owner` | Cohérence plan/spec, maintient README + backlog |
 | `test-quality` | Audit qualité des tests (rapport seul) |
-| `ux-ui` | Audit/amélioration UX/UI frontend |
+| `ux-ui` | Audit/amélioration UX/UI frontend — **squelette générique à compléter avec l'IA pour ce projet** (voir l'exemple complété dans `examples/domain-immo/`) |
 
 ### Skills
 
@@ -86,6 +86,11 @@ Agents : `agent-maintainer`, `externalize`.
 
 ### `domain-immo/` — métier gestion immobilière
 Agent `legal-check` ; skills `legal-check`, `product-spec` (glossaire métier).
+
+Contient aussi l'**exemple concret et complet** des agents `design-system` et `ux-ui` du
+socle (React + Tailwind + shadcn/ui, conventions IHM de tableaux/statuts incluses) : à
+consulter comme modèle pour compléter, avec l'IA, les squelettes génériques du socle sur
+n'importe quelle stack.
 
 ### `feature-decision-index/` — mémoire décisionnelle légère (opt-in)
 Alternative légère à `km-toolkit/adr-capture` pour les projets sans besoin de KB complète.

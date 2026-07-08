@@ -19,7 +19,7 @@ Investis un effort disproportionné ici. **Sois agressif. Sois créatif. Refuse 
 ### Moyens de construire une boucle — dans cet ordre
 
 1. **Test en échec** au niveau approprié — unit, intégration, e2e (frameworks identifiés via CLAUDE.md).
-2. **Curl / script HTTP** contre le serveur dev (`http://localhost:8000/api/...`).
+2. **Curl / script HTTP** contre le serveur dev (URL et port identifiés via CLAUDE.md).
 3. **Invocation CLI** avec fixture, diff stdout contre snapshot connu.
 4. **Script e2e** headless — drive l'UI, assertions DOM/console/réseau.
 5. **Replay de trace.** Sauver une requête réseau / payload / log, la rejouer en isolation.

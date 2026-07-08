@@ -13,7 +13,7 @@ Procédure :
 3. Analyser les changements et déterminer :
 
    - **Type** : `feat` (nouvelle fonctionnalité) | `fix` (correction de bug) | `refactor` (refactoring sans changement fonctionnel) | `test` (ajout/modification de tests) | `docs` (documentation) | `chore` (maintenance, dépendances) | `perf` (performance) | `style` (formatage)
-   - **Scope** : module ou domaine fonctionnel principal impacté (ex: `leases`, `auth`, `frontend`, `deps`)
+   - **Scope** : module ou domaine fonctionnel principal impacté (ex: `users`, `auth`, `frontend`, `deps`)
    - **Breaking change** : y a-t-il un changement incompatible avec les versions précédentes ?
 4. Proposer un message de commit au format :
 

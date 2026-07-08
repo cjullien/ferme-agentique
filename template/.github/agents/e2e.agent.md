@@ -35,7 +35,7 @@ Flux **critiques** = ceux dont la défaillance a un impact fonctionnel ou financ
 Pour chaque flux critique non couvert, générer un fichier de test e2e dans le dossier dédié (ex: `e2e/`, `tests/e2e/`).
 
 ### Conventions de nommage
-- Fichiers : `e2e/<feature>.spec.ts` (ex : `leases.spec.ts`)
+- Fichiers : `e2e/<feature>.spec.ts` (ex : `items.spec.ts`)
 - Tests : description en français du comportement (ex: `test('crée un élément et vérifie son affichage dans la liste', ...)`)
 
 ### Structure d'un test e2e (exemple Playwright)
@@ -94,7 +94,7 @@ Si absent, proposer un bloc de configuration à ajouter (ne pas modifier les fic
 [tableau flux / critique / couvert / fichier]
 
 ### Tests générés
-- e2e/leases.spec.ts — X tests (flux : création, erreur champ manquant)
+- e2e/items.spec.ts — X tests (flux : création, erreur champ manquant)
 - ...
 
 ### Instrumentations requises (data-testid manquants)
