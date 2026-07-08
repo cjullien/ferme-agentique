@@ -17,7 +17,10 @@ Tu garantis la cohérence **documentation ↔ code**.
    - Lien contributing
 
 2. **docs/** (adapter aux fichiers réellement présents)
-   - `ARCHITECTURE.md` — structure, flux de données, modules clés
+   - `ARCHITECTURE.md` — structure, flux de données, modules clés. Si ce fichier a été généré
+     par l'agent `architect`, ne faire ici que des mises à jour incrémentales (nouvel endpoint,
+     nouveau module dans une couche existante) — repasser par `/architect` pour toute nouvelle
+     décision technique structurante.
    - `API.md` — points d'entrée publics (endpoints, hooks, utils)
    - `CONTRIBUTING.md` — setup dev, process PR
    - `DEPLOYING.md` — build, hébergement, checklist de mise en prod

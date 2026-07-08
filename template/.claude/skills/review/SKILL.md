@@ -39,6 +39,10 @@ Synthèse finale :
 [Patterns récurrents identifiés via /insights — si pertinents]
 [Verdict : ✅ Prêt à merger / ⚠️ Points à corriger / 🚫 Bloquant]
 
+> Cette revue reste volontairement légère et systématique (à lancer avant chaque merge). Pour
+> un gate formel avec traçabilité critères d'acceptation ↔ tests et profil de risque sur une
+> story ou une feature à enjeu (auth, paiement, données), lancer `/qa-gate` après cette revue.
+
 ## Mise à jour du backlog (si applicable)
 
 Chemin par défaut : `docs/specs/backlog.md` (ou celui déclaré dans `CLAUDE.md` si différent). Si ce fichier n'existe pas dans le projet, ignorer cette section — ne pas le créer automatiquement.

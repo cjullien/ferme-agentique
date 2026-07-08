@@ -9,7 +9,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 ---
 
-## Socle générique — `template/` (18 agents · 47 skills, en versions `.claude/` et `.github/`)
+## Socle générique — `template/` (21 agents · 51 skills, en versions `.claude/` et `.github/`)
 
 ### Agents
 
@@ -17,6 +17,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 |---|---|
 | `accessibility` | Audit WCAG 2.2 AA approfondi du frontend |
 | `agent-maintainer` | Maintient la cohérence agents/skills pendant les releases |
+| `architect` | Conçoit/documente `docs/ARCHITECTURE.md` — nouveau projet, extension, ou rétro-documentation d'un existant |
 | `audit` | Pre-flight : revue qualité, conventions et cohérence du diff |
 | `backlog-manager` | Gère/priorise/chiffre la backlog |
 | `changelog` | Release notes non-techniques pour utilisateurs |
@@ -31,26 +32,42 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 | `owasp` | Audit sécurité OWASP Top 10 (2021) back + front |
 | `performance` | N+1, index, pagination, re-renders, bundle |
 | `product-owner` | Cohérence plan/spec, maintient README + backlog |
+| `qa-gate` | Gate qualité formel — traçabilité critères d'acceptation ↔ tests, profil de risque, verdict PASS/CONCERNS/FAIL/WAIVED |
+| `story-writer` | Découpe un item de backlog/spec en stories auto-suffisantes (contexte spec + architecture embarqué) |
 | `test-quality` | Audit qualité des tests (rapport seul) |
 | `ux-ui` | Audit/amélioration UX/UI frontend — **squelette générique à compléter avec l'IA pour ce projet** (voir l'exemple complété dans `examples/domain-immo/`) |
+
+`architect`, `story-writer` et `qa-gate` s'inspirent du pipeline planning → stories → gate
+qualité de BMAD-METHOD, adaptés au principe stack-agnostique de la ferme (tout est découvert
+via `CLAUDE.md`/`docs/ARCHITECTURE.md`, rien n'est codé en dur pour une stack donnée).
 
 ### Skills
 
 **Qualité & audit** : `audit`, `audit-360`, `tech-debt`, `review`, `clean-tdd`, `test-quality`,
 `improve-architecture`, `owasp`, `accessibility`, `performance`, `design-system`, `dead-code`,
-`externalize`, `dependencies`, `ci`.
+`externalize`, `dependencies`, `ci`, `qa-gate`.
 
 **Tests** : `test`, `coverage`, `e2e`, `env-check`.
 
 **Git & flux** : `commit`, `pre-commit`, `push`, `push-force`, `lint`.
 
-**Produit & backlog** : `product-spec`, `backlog-refinement`, `to-issues`, `triage`, `changelog`.
+**Produit & backlog** : `product-spec`, `backlog-refinement`, `to-issues`, `story-writer`, `triage`, `changelog`.
+
+**Architecture** : `architect` — génère/documente `docs/ARCHITECTURE.md` (nouveau projet, extension, ou rétro-documentation).
 
 **Docs & exploration** : `docs-update`, `instructions-update`, `zoom-out`, `diagnose`.
 
-**Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan).
+**Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan), `farm-guide` (recommande la séquence d'agents/skills selon l'étape du projet).
 
 **Onboarding** : `farm-init` — point d'entrée universel : détecte si la ferme est installée, guide l'installation (chemin local ou URL GitHub + clone auto), brainstorme les modules optionnels (dialogue interactif), audite la configuration finale. `farm-update` — synchronise les agents/skills du projet avec la ferme source après une mise à jour.
+
+### Quand utiliser quoi (audit) : `audit` / `tech-debt` / `audit-360` / `qa-gate`
+
+- `audit` : revue légère et systématique du diff courant, avant chaque commit.
+- `review` : comme `audit`, mais déclenche aussi les agents spécialisés pertinents selon les fichiers modifiés (a11y, sécurité, contrat API...).
+- `tech-debt` : bilan de dette technique sur tout le code (hors diff), à lancer périodiquement.
+- `audit-360` : tous les agents d'audit installés (socle + conditionnels) + note qualité /100, pour un état des lieux complet.
+- `qa-gate` : verdict engageant (PASS/CONCERNS/FAIL/WAIVED) sur une story ou feature précise avant de la considérer terminée — plus lourd que `review`, à réserver aux zones à risque.
 
 ---
 

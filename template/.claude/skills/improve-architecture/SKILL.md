@@ -9,7 +9,9 @@ allowed-tools: Agent, Read, Grep, Glob, Bash, Write, Edit
 Surface les frictions architecturales et propose des **opportunités d'approfondissement** — refactorings qui transforment des modules shallow en modules profonds.
 
 Commence par lire `CLAUDE.md` à la racine pour identifier la stack et les conventions.
-Si un `CONTEXT.md` existe, utiliser son vocabulaire de domaine.
+Si un `CONTEXT.md` existe, utiliser son vocabulaire de domaine. Si `docs/ARCHITECTURE.md`
+existe (généré par `/architect`), l'utiliser comme référence de la cible visée plutôt que de
+déduire l'architecture attendue uniquement de l'organisation actuelle du code.
 
 ## Vocabulaire
 

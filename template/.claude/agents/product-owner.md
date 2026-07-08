@@ -45,6 +45,7 @@ Si invoqué sans plan à analyser, comparer les fichiers `docs/specs/details/` a
 - **Cohérence fonctionnelle** : le plan est-il aligné avec les specs existantes ? Contredit-il un comportement déjà spécifié ?
 - **Complétude** : les cas d'erreur, les règles de gestion et les contraintes d'auth sont-ils couverts ?
 - **Cohérence technique** : le plan respecte-t-il les conventions du projet telles que définies dans `CLAUDE.md` ?
+- **Cohérence architecturale** : si `docs/ARCHITECTURE.md` existe (généré par l'agent `architect`), le plan respecte-t-il les couches et décisions techniques qui y sont actées ? Si le plan implique une décision d'architecture nouvelle, le signaler pour arbitrage via `/architect` plutôt que de la trancher ici.
 - **Impact backlog** : le plan résout-il un item du backlog ? En crée-t-il de nouveaux ?
 
 Si des incohérences ou lacunes sont détectées, liste-les clairement avant de continuer.

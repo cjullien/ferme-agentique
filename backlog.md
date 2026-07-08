@@ -16,7 +16,7 @@ un arbitrage plus léger, non appliqué automatiquement.
 | FERME-3 | Chevauchement `design-system` / `ux-ui` (~40% de contenu dupliqué) | P3 | 🟡 Partiel | `examples/domain-immo/.claude/agents/design-system.md`, `ux-ui.md` |
 | FERME-4 | Incohérence de nommage `backlog-manager` (socle) vs `backlog-refinement` (agents spécifiques aux modules stack-java-spring / stack-python-supabase) | P2 | Ouvert | `catalog.md`, `examples/stack-java-spring/.claude/agents/backlog-refinement.md`, `examples/stack-python-supabase/.claude/agents/backlog-refinement.md` |
 | FERME-5 | Règle non documentée : quand créer un agent dédié vs un skill autonome | P3 | Ouvert | `README.md` ou `catalog.md` |
-| FERME-6 | Hiérarchie non documentée entre `audit` / `tech-debt` / `audit-360` | P3 | Ouvert | `catalog.md` |
+| FERME-6 | Hiérarchie non documentée entre `audit` / `tech-debt` / `audit-360` | P3 | ✅ Résolu | `catalog.md` |
 | FERME-7 | Alias `name:` de skill différents du répertoire/catalog (`a11y`, `deps`, `perf`, `stale`, `check`) | P3 | Ouvert | `catalog.md`, skills concernés |
 
 ---
@@ -89,6 +89,10 @@ Trois niveaux de synthèse qui se chevauchent partiellement :
 L'articulation est cohérente une fois qu'on lit les trois fichiers, mais rien ne l'explique à
 l'utilisateur qui découvre la ferme. Ajouter un paragraphe dans `catalog.md` clarifiant quand
 utiliser lequel.
+
+**Résolu** : section "Quand utiliser quoi" ajoutée dans `catalog.md`, complétée avec `qa-gate`
+(nouvel agent de gate qualité formel, inspiré de BMAD — voir agents `architect`/`story-writer`/
+`qa-gate` ajoutés au socle).
 
 ## FERME-7 — Alias `name:` de skills divergents du répertoire
 

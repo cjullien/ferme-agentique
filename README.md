@@ -14,11 +14,11 @@ ferme_agentic/
 ├── template/          ← LE socle générique (stack-agnostique) à poser sur chaque projet
 │   ├── .claude/                      version Claude Code
 │   │   ├── settings.json     permissions + hooks neutres (à compléter par stack)
-│   │   ├── agents/           18 agents génériques (.md)
-│   │   └── skills/           47 skills génériques (SKILL.md)
+│   │   ├── agents/           21 agents génériques (.md)
+│   │   └── skills/           51 skills génériques (SKILL.md)
 │   ├── .github/                      version Copilot (miroir)
-│   │   ├── agents/           18 agents génériques (.agent.md)
-│   │   ├── skills/           47 skills génériques (SKILL.md)
+│   │   ├── agents/           21 agents génériques (.agent.md)
+│   │   ├── skills/           51 skills génériques (SKILL.md)
 │   │   ├── extensions/       agents-loader + accessibility
 │   │   ├── lsp.json          serveurs LSP (Python / TypeScript)
 │   │   └── copilot-instructions.template.md  squelette à remplir

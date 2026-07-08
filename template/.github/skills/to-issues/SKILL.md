@@ -26,3 +26,8 @@ Liste numérotée : Titre · Type HITL/AFK · Bloqué par · Stories couvertes.
 
 ### 4. Publier
 Créer une issue par slice avec : description, critères d'acceptation, blockers.
+
+> Ce skill publie rapidement des issues courtes sur le tracker. Si l'implémentation doit
+> pouvoir se faire sans redérivation de contexte (relecture de spec, d'architecture...), utiliser
+> `/story-writer` à la place : il produit des fichiers locaux auto-suffisants (spec + architecture
+> embarquées) plutôt que de courtes descriptions d'issue.
