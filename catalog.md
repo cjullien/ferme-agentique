@@ -9,65 +9,110 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 ---
 
-## Socle générique — `template/` (21 agents · 51 skills, en versions `.claude/` et `.github/`)
+## Socle générique — `template/` (21 agents · 49 skills, en versions `.claude/` et `.github/`)
 
-### Agents
+Le socle est organisé autour du cycle de vie d'une feature — trois phases — plus une couche
+d'**audits globaux périodiques** qui balaient tout le code, sur le même principe que les audits
+de connaissance de `km-toolkit` (`km-audit`, `doc-coverage`, `spec-drift`...) appliqué à la
+qualité du code :
 
-| Agent | Rôle |
+```
+Backlog & specs  →  Implémentation TDD  →  Audit de la feature
+      ↑                                          │
+      └───────────── Audits globaux ─────────────┘   (périodique, tout le code)
+```
+
+Volontairement plus léger qu'un pipeline complet à la BMAD-METHOD : trois agents empruntent son
+vocabulaire (`architect`, `story-writer`, `qa-gate`) mais restent optionnels dans le flux — un
+item de backlog simple peut aller directement de `product-owner` à `tdd` sans passer par
+`architect` ni `story-writer` si l'équipe n'en a pas besoin.
+
+### Phase 1 — Backlog & specs
+
+| Agent / Skill | Rôle |
 |---|---|
+| `backlog-manager` (agent) | Audit, priorisation et chiffrage de la backlog |
+| `backlog-refinement` (skill) | Refinement backlog — mode simple (brainstorm) ou avancé (réévaluation par le code) |
+| `product-owner` (agent) | Cohérence du plan, génère la spec Given/When/Then, maintient backlog + README |
+| `product-spec` (skill) | `product-owner` enrichi d'une session de questionnement (grill) |
+| `architect` (agent + skill) | Conçoit/documente `docs/ARCHITECTURE.md` — nouveau projet, extension, ou rétro-documentation d'un existant. *Optionnel* : seulement si une décision structurante est en jeu. |
+| `story-writer` (agent + skill) | Découpe un item de backlog/spec en stories auto-suffisantes (contexte spec + architecture embarqué). *Optionnel* : `to-issues` suffit pour du travail simple. |
+| `to-issues` (skill) | Publie rapidement des issues sur le tracker via vertical slices, sans contexte embarqué |
+| `triage` (skill) | Triage des issues entrantes (bug/enhancement, prêt pour agent ou humain) |
+| `grill-me` (skill) | Stress-test d'un plan par questionnement systématique |
+
+### Phase 2 — Implémentation TDD
+
+| Agent / Skill | Rôle |
+|---|---|
+| `tdd` (agent + skill) | Rétro-ingénierie des tests manquants, cycle red-green-refactor, correction des tests fragiles/redondants |
+| `improve-architecture` (skill) | Opportunités d'approfondissement architectural (modules shallow, violations de couches) — trouve, discute, **applique** |
+| `e2e` (agent + skill) | Génère/maintient les tests end-to-end des flux critiques |
+| `diagnose` (skill) | Boucle de diagnostic disciplinée pour bugs et régressions |
+| `schema`, `migrate`, `db-diagram` (skills) | Impact d'un changement de modèle, génération de migration, diagramme ER |
+| `ui-component`, `api-client`, `typing` (skills) | Génération de composant UI, audit des appels réseau, audit de typage statique |
+
+### Phase 3 — Audit de la feature
+
+| Agent / Skill | Rôle |
+|---|---|
+| `audit` (agent + skill) | Pre-flight léger et systématique sur le diff courant, avant chaque commit |
+| `review` (skill) | Revue avant merge — déclenche en plus les agents spécialisés pertinents selon les fichiers modifiés (a11y, sécurité, contrat API...) |
+| `qa-gate` (agent + skill) | Gate formel — traçabilité critères d'acceptation ↔ tests, profil de risque, verdict PASS/CONCERNS/FAIL/WAIVED. *Optionnel* : à réserver aux zones à risque (auth, paiement, données) |
+
+### Audits globaux (périodiques, tout le code)
+
+| Agent / Skill | Rôle |
+|---|---|
+| `audit-360` (skill) | Lance tous les agents d'audit installés, note qualité /100, **plan de remédiation priorisé** |
+| `owasp` | Sécurité OWASP Top 10 (2021) back + front |
 | `accessibility` | Audit WCAG 2.2 AA approfondi du frontend |
-| `agent-maintainer` | Maintient la cohérence agents/skills pendant les releases |
-| `architect` | Conçoit/documente `docs/ARCHITECTURE.md` — nouveau projet, extension, ou rétro-documentation d'un existant |
-| `audit` | Pre-flight : revue qualité, conventions et cohérence du diff |
-| `backlog-manager` | Gère/priorise/chiffre la backlog |
-| `changelog` | Release notes non-techniques pour utilisateurs |
-| `ci` | Revue CI/CD — jobs obsolètes, actions non pinnées, secrets |
-| `clean-tdd` | Revue **et correction** clean architecture + TDD |
-| `dead-code` | Détecte/supprime code mort, imports, clés i18n orphelines |
-| `dependencies` | Santé des dépendances — CVE, majeures, inutilisées |
-| `design-system` | Garant du design system frontend — **squelette générique à compléter avec l'IA pour ce projet** (voir l'exemple complété dans `examples/domain-immo/`) |
-| `docs-update` | Synchronise README et docs avec le code |
-| `e2e` | Génère/maintient les tests end-to-end des flux critiques |
-| `externalize` | Audit config — env vars, i18n, thèmes, persistance |
-| `owasp` | Audit sécurité OWASP Top 10 (2021) back + front |
 | `performance` | N+1, index, pagination, re-renders, bundle |
-| `product-owner` | Cohérence plan/spec, maintient README + backlog |
-| `qa-gate` | Gate qualité formel — traçabilité critères d'acceptation ↔ tests, profil de risque, verdict PASS/CONCERNS/FAIL/WAIVED |
-| `story-writer` | Découpe un item de backlog/spec en stories auto-suffisantes (contexte spec + architecture embarqué) |
-| `test-quality` | Audit qualité des tests (rapport seul) |
-| `ux-ui` | Audit/amélioration UX/UI frontend — **squelette générique à compléter avec l'IA pour ce projet** (voir l'exemple complété dans `examples/domain-immo/`) |
+| `dependencies` | Santé des dépendances — CVE, majeures, inutilisées |
+| `test-quality` | Pyramide de tests, anti-patterns, couverture fonctionnelle (rapport seul, sur toute la suite) |
+| `ci` | Revue CI/CD — jobs obsolètes, actions non pinnées, secrets |
+| `dead-code` | Détecte/supprime code mort, imports, clés i18n orphelines |
+| `externalize` | Config à externaliser — env vars, i18n, thèmes, persistance |
+| `docs-update` | Synchronise README et docs avec le code |
+| `design-system`, `ux-ui` | Design system et UX/UI frontend — **squelettes génériques à compléter avec l'IA pour ce projet** (exemple complété dans `examples/domain-immo/`) |
+| `agent-maintainer` | Maintient la cohérence agents/skills de la ferme elle-même |
 
 `architect`, `story-writer` et `qa-gate` s'inspirent du pipeline planning → stories → gate
 qualité de BMAD-METHOD, adaptés au principe stack-agnostique de la ferme (tout est découvert
-via `CLAUDE.md`/`docs/ARCHITECTURE.md`, rien n'est codé en dur pour une stack donnée).
+via `CLAUDE.md`/`docs/ARCHITECTURE.md`, rien n'est codé en dur pour une stack donnée) et gardés
+optionnels pour rester plus léger que BMAD.
 
-### Skills
+### Git & flux
+`commit`, `pre-commit`, `push` (inclut `--skip-tests` pour committer/pousser sans lancer les
+tests), `lint`, `test`, `coverage`, `env-check`.
 
-**Qualité & audit** : `audit`, `audit-360`, `tech-debt`, `review`, `clean-tdd`, `test-quality`,
-`improve-architecture`, `owasp`, `accessibility`, `performance`, `design-system`, `dead-code`,
-`externalize`, `dependencies`, `ci`, `qa-gate`.
+### Docs & exploration
+`docs-update`, `instructions-update`, `zoom-out`.
 
-**Tests** : `test`, `coverage`, `e2e`, `env-check`.
+### Release
+`changelog` (agent) — résumé non-technique des nouveautés pour utilisateurs, à lancer avant
+publication (voir séquence "Avant une release" ci-dessus : `audit-360` → `changelog` →
+`docs-update`).
 
-**Git & flux** : `commit`, `pre-commit`, `push`, `push-force`, `lint`.
+### Méta / interaction
+`caveman` (mode concis), `farm-guide` (recommande la séquence d'agents/skills selon l'étape du
+projet — nouveau projet, feature, bugfix, release).
 
-**Produit & backlog** : `product-spec`, `backlog-refinement`, `to-issues`, `story-writer`, `triage`, `changelog`.
+### Onboarding
+`farm-init` — point d'entrée universel : détecte si la ferme est installée, guide
+l'installation (chemin local ou URL GitHub + clone auto), brainstorme les modules optionnels
+(dialogue interactif), audite la configuration finale. `farm-update` — synchronise les
+agents/skills du projet avec la ferme source après une mise à jour.
 
-**Architecture** : `architect` — génère/documente `docs/ARCHITECTURE.md` (nouveau projet, extension, ou rétro-documentation).
+### Pourquoi `tech-debt` et `push-force` n'existent plus
 
-**Docs & exploration** : `docs-update`, `instructions-update`, `zoom-out`, `diagnose`.
-
-**Méta / interaction** : `caveman` (mode concis), `grill-me` (stress-test d'un plan), `farm-guide` (recommande la séquence d'agents/skills selon l'étape du projet).
-
-**Onboarding** : `farm-init` — point d'entrée universel : détecte si la ferme est installée, guide l'installation (chemin local ou URL GitHub + clone auto), brainstorme les modules optionnels (dialogue interactif), audite la configuration finale. `farm-update` — synchronise les agents/skills du projet avec la ferme source après une mise à jour.
-
-### Quand utiliser quoi (audit) : `audit` / `tech-debt` / `audit-360` / `qa-gate`
-
-- `audit` : revue légère et systématique du diff courant, avant chaque commit.
-- `review` : comme `audit`, mais déclenche aussi les agents spécialisés pertinents selon les fichiers modifiés (a11y, sécurité, contrat API...).
-- `tech-debt` : bilan de dette technique sur tout le code (hors diff), à lancer périodiquement.
-- `audit-360` : tous les agents d'audit installés (socle + conditionnels) + note qualité /100, pour un état des lieux complet.
-- `qa-gate` : verdict engageant (PASS/CONCERNS/FAIL/WAIVED) sur une story ou feature précise avant de la considérer terminée — plus lourd que `review`, à réserver aux zones à risque.
+`tech-debt` était un sous-ensemble strict d'`audit-360` (5 agents contre tout le socle + note
+/100) ; son unique valeur ajoutée — le plan de remédiation priorisé — a été absorbée dans
+`audit-360` (Phase 5). `push-force` ne différait de `push` que par un flag (sauter les tests) ;
+`push` accepte maintenant `--skip-tests`, cohérent avec la convention déjà utilisée par
+`backlog-refinement --avancé`. `clean-tdd` a été scindé : sa partie TDD devient l'agent `tdd`
+(Phase 2), sa partie audit de couches est absorbée par `improve-architecture`, qui applique
+désormais aussi le refactoring choisi (il ne faisait auparavant que le proposer).
 
 ---
 

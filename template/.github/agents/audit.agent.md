@@ -85,4 +85,4 @@ Suggestion: lancer `agent-name` pour correction
 2. `audit` agent passe (pre-flight)
 3. Si 🔴 findings → FIX et re-audit
 4. Si 🟠/🟡 → note pour audits spécialisés
-5. Puis lance `clean-tdd`, `performance`, `e2e`, `accessibility`, etc.
+5. Puis lance `tdd`, `performance`, `e2e`, `accessibility`, etc.

@@ -82,7 +82,7 @@ Pour chaque job qui utilise une session BDD (`SessionLocal()`) :
   - `get_status` : retourne la bonne structure
   - `trigger_job` : job connu et job inconnu
 
-Pour chaque comportement non couvert : signaler sans corriger (couverture assurée par l'agent `clean-tdd`).
+Pour chaque comportement non couvert : signaler sans corriger (couverture assurée par l'agent `tdd`).
 
 ## Format de rapport
 

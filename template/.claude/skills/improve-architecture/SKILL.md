@@ -1,6 +1,6 @@
 ---
 name: improve-architecture
-description: Trouve les opportunités d'approfondissement architectural dans le codebase. Identifie les modules shallow, les seams manquants, les couplages excessifs. Propose des refactorings pour améliorer la testabilité et la navigabilité.
+description: Trouve les opportunités d'approfondissement architectural dans le codebase (modules shallow, seams manquants, couplages excessifs, violations de couches) et applique le refactoring choisi après validation.
 allowed-tools: Agent, Read, Grep, Glob, Bash, Write, Edit
 ---
 
@@ -29,6 +29,10 @@ Explorer le codebase organiquement. Noter les frictions :
 - Fonctions pures extraites juste pour la testabilité
 - Couplages qui fuient entre les seams
 - Parties non testées ou difficiles à tester
+- **Si le projet suit une architecture en couches** (domain/application/services/routers ou
+  équivalent, identifiée via `docs/ARCHITECTURE.md` ou l'arborescence réelle) : violations du
+  sens de dépendance autorisé, logique métier dans la couche transport (routers/controllers),
+  services "fourre-tout" mêlant règle métier + accès BDD + I/O externe
 
 ### 2. Présenter les candidats
 Liste numérotée : Fichiers · Problème · Solution · Bénéfices (localité + levier + tests).
@@ -40,3 +44,10 @@ Quand l'utilisateur choisit, engager une conversation :
 - Contraintes, dépendances, forme du module approfondi
 - Mise à jour de `CONTEXT.md` si nouveau concept
 - Proposition d'ADR si choix important rejeté avec raison durable
+
+### 4. Appliquer
+
+Une fois la forme du refactoring validée par l'utilisateur : appliquer chirurgicalement,
+respecter les conventions de lint/format du projet (identifiées via `CLAUDE.md`), vérifier que
+les tests existants passent toujours après coup. Si le refactoring implique un changement de
+schéma BDD ou une rupture d'API, signaler sans appliquer.

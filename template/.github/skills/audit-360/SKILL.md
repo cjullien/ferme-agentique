@@ -1,6 +1,6 @@
 ---
 name: audit-360
-description: Audit 360° — lance tous les agents d'audit installés en parallèle, consolide les résultats et produit une note qualité /100.
+description: Audit 360° — lance tous les agents d'audit installés en parallèle, consolide les résultats, produit une note qualité /100 et un plan de remédiation priorisé.
 ---
 
 # Skill : Audit 360°
@@ -17,7 +17,7 @@ Lance un audit complet du projet en invoquant **tous les agents d'audit install�
 | `performance` | N+1, index, pagination, re-renders, bundle |
 | `dependencies` | CVE, versions obsolètes, deps inutilisées |
 | `test-quality` | Pyramide, anti-patterns, couverture |
-| `clean-tdd` | Clean architecture + TDD |
+| `tdd` | Tests manquants/fragiles (rétro-ingénierie, phase d'analyse uniquement pour ce rapport) |
 | `dead-code` | Code mort, imports inutilisés, docs obsolètes |
 | `ci` | Pipelines CI/CD |
 | `externalize` | Valeurs hardcodées à externaliser |
@@ -80,7 +80,24 @@ Calculer selon la grille :
 | Accessibilité | 15 |
 | Performance | 15 |
 
-### Phase 5 — Mise à jour backlog (si applicable)
+### Phase 5 — Plan de remédiation priorisé
+
+À partir des findings consolidés, produire :
+
+```markdown
+## Plan de remédiation priorisé
+
+**Semaine 1 — Bloquant**
+1. [Finding 🔴 le plus urgent + agent qui le corrige]
+
+**Semaine 2-3 — Important**
+[Findings 🟡 à fort impact]
+
+**Backlog technique**
+[Findings 🔵 ou de fond, sans urgence]
+```
+
+### Phase 6 — Mise à jour backlog (si applicable)
 
 Chemin par défaut : `docs/specs/backlog.md` (ou celui déclaré dans `CLAUDE.md` si différent). Si ce fichier n'existe pas dans le projet, ignorer cette phase — ne pas le créer automatiquement.
 
