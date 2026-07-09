@@ -1,7 +1,7 @@
 ---
-name: backlog-refinement
-description: Refinement du backlog - deux modes : simple (brainstorming + repriorisation MoSCoW) ou avancé (réévaluation des chiffrages et items en fonction de l'état réel du code).
-tools: Read, Write, Edit, Bash, Grep, Glob
+name: backlog-manager
+description: Refinement du backlog (variante Python/ORM/Postgres) - deux modes : simple (brainstorming + repriorisation MoSCoW) ou avancé (réévaluation des chiffrages et items en fonction de l'état réel du code).
+tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es Product Owner technique du projet.

@@ -114,15 +114,50 @@ agents/skills du projet avec la ferme source après une mise à jour.
 (Phase 2), sa partie audit de couches est absorbée par `improve-architecture`, qui applique
 désormais aussi le refactoring choisi (il ne faisait auparavant que le proposer).
 
+### Convention — agent dédié ou skill autonome ?
+
+Les deux formes coexistent volontairement dans le socle. Règle de décision pour ajouter un
+nouveau module (notamment via `/farm-init`, qui en crée pour des stacks non couvertes) :
+
+- **Agent dédié + skill fine (8-20 lignes) qui le déclenche** — quand la tâche est une analyse
+  longue, potentiellement multi-fichiers, qui doit produire un rapport structuré ou appliquer
+  des corrections étendues (ex : `audit`, `owasp`, `tdd`, `architect`). Le skill se contente
+  d'invoquer l'agent avec `subagent_type:` et de préciser le périmètre.
+- **Skill autonome, sans agent** — quand la procédure est courte, déterministe et ne nécessite
+  pas d'isolement de contexte (ex : `commit`, `test`, `schema`, `migrate`, `ui-component`,
+  `env-check`). Toute la logique tient directement dans `SKILL.md`.
+
+Dans les deux cas, le frontmatter `name:` du skill peut différer du nom de répertoire pour
+exposer un alias de commande plus court (voir ci-dessous) — mais le `subagent_type:` utilisé
+dans le corps doit toujours correspondre au `name:` **de l'agent réel**, jamais à l'alias du
+skill lui-même.
+
+### Convention — alias de commandes courtes
+
+Quelques skills exposent une commande slash plus courte que leur nom de répertoire, via un
+`name:` frontmatter différent :
+
+| Répertoire | Commande (`name:`) |
+|---|---|
+| `accessibility/` | `/a11y` |
+| `dependencies/` | `/deps` |
+| `performance/` | `/perf` |
+| `pre-commit/` | `/check` |
+
+Le répertoire garde le nom long (cohérent avec le nom de l'agent et la documentation), la
+commande slash reste courte pour un usage fréquent au clavier. Les deux fonctionnent de façon
+identique.
+
 ---
 
 ## Modules optionnels — `examples/`
 
 ### `stack-python-supabase/` — backend Python + ORM + Postgres/Supabase
 Agents : `schema`, `migrate`, `db-diagram`, `fixture`, `seed`, `api-contract`, `scheduler-audit`,
-`km-generator`, `backlog-refinement`.
+`km-generator`, `backlog-manager` (variante Python/ORM/Postgres — surcharge automatiquement
+celui du socle à l'installation, même nom, pas de skill dédiée nécessaire).
 Skills : `schema`, `migrate`, `db-diagram` (sortie `docs/specs/mpd.md`), `db-reset`, `fixture`,
-`seed`, `api-contract`, `scheduler-audit`, `backlog-refinement`, `neon-postgres`, `km-generator`,
+`seed`, `api-contract`, `scheduler-audit`, `neon-postgres`, `km-generator`,
 `eda` (profil dataset : nulls, distributions, outliers → rapport markdown),
 `notebook` (audit notebooks Jupyter : ordre cellules, outputs stale, imports),
 `data-quality` (validation schémas Pydantic/Pandera, colonnes nullables, frontières système).
@@ -137,7 +172,9 @@ Snippet `CLAUDE.finops.md` : routage modèle par défaut, hygiène prompt, grill
 
 ### `stack-java-spring/` — backend Java / Spring Boot / Maven
 Variantes adaptées au build Maven & natif : agents `ci`, `docs-update`, `product-owner`,
-`backlog-refinement` ; skills `ci`, `coverage` (JaCoCo), `docs-update`, `improve-architecture`.
+`backlog-manager` (variante Java/Spring/Maven — surcharge automatiquement celui du socle à
+l'installation, même nom, pas de skill dédiée nécessaire) ; skills `ci`, `coverage` (JaCoCo),
+`docs-update`, `improve-architecture`.
 + `settings.json` (permissions mvn/java/git/gh).
 
 ### `stack-web-vite/` — frontend Vite + React (PWA)

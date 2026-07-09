@@ -20,4 +20,7 @@ Demander à l'agent `backlog-manager` de dérouler l'intégralité de son workfl
 
 Utilise l'outil Agent avec `subagent_type: backlog-manager` en transmettant le mode et les arguments fournis par l'utilisateur.
 
-> Note : les modules `stack-java-spring` et `stack-python-supabase` embarquent chacun leur propre agent `backlog-refinement`, adapté à leur stack (chiffrage informé par les modèles/migrations). S'il est installé dans `.claude/agents/backlog-refinement.md`, l'utiliser à la place de `backlog-manager` — il est plus spécialisé pour ce projet.
+> Les modules `stack-java-spring` et `stack-python-supabase` embarquent chacun une variante de
+> `backlog-manager` adaptée à leur stack (chiffrage informé par les modèles/migrations/build).
+> Comme ils portent le même nom, ils **surchargent automatiquement** la version générique du
+> socle à l'installation — aucune action supplémentaire n'est nécessaire.
