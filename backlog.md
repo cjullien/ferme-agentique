@@ -1,10 +1,10 @@
 # Backlog — cohérence agents/skills de la ferme
 
 Issu d'un audit de cohérence de `template/` mené le 2026-07-08, complété par un passage de
-consolidation de la granularité (fusions/scissions FERME-8/9/10) et par l'ajout d'un pipeline
-Backlog & specs → Implémentation TDD → Audit de la feature + audits globaux, inspiré de
-BMAD-METHOD mais gardé plus léger (voir `catalog.md`). Les items restants demandent un
-arbitrage plus léger, non appliqué automatiquement.
+consolidation de la granularité (fusions/scissions FERME-8/9/10), par l'ajout d'un pipeline
+Backlog & specs → Implémentation TDD → Audit de la feature + audits globaux inspiré de
+BMAD-METHOD mais gardé plus léger (voir `catalog.md`), puis par un audit de cohérence et
+d'agnosticisme de tous les modules `examples/`. Les 23 items identifiés sont tous résolus.
 
 ## Table des items
 
@@ -12,7 +12,7 @@ arbitrage plus léger, non appliqué automatiquement.
 |----|-------|----------|--------|---------------------|
 | FERME-1 | `design-system.md` / `ux-ui.md` non génériques (contenu Tailwind/shadcn d'une appli immo) | P1 | ✅ Résolu | `template/.claude/agents/design-system.md`, `ux-ui.md`, `examples/domain-immo/.claude/agents/` |
 | FERME-2 | Section "Exigences IHM" de `product-owner.md` hardcodée au même produit immo | P2 | ✅ Résolu | `template/.claude/agents/product-owner.md` |
-| FERME-3 | Chevauchement `design-system` / `ux-ui` (~40% de contenu dupliqué) | P3 | 🟡 Partiel | `examples/domain-immo/.claude/agents/design-system.md`, `ux-ui.md` |
+| FERME-3 | Chevauchement `design-system` / `ux-ui` (~40% de contenu dupliqué) | P3 | ✅ Résolu | `examples/domain-immo/.claude/agents/design-system.md`, `ux-ui.md` |
 | FERME-4 | Incohérence de nommage `backlog-manager` (socle) vs `backlog-refinement` (agents spécifiques aux modules stack-java-spring / stack-python-supabase) | P2 | ✅ Résolu | `catalog.md`, `examples/stack-java-spring/.claude/agents/backlog-refinement.md`, `examples/stack-python-supabase/.claude/agents/backlog-refinement.md` |
 | FERME-5 | Règle non documentée : quand créer un agent dédié vs un skill autonome | P3 | ✅ Résolu | `README.md` ou `catalog.md` |
 | FERME-6 | Hiérarchie non documentée entre `audit` / `tech-debt` / `audit-360` | P3 | ✅ Résolu | `catalog.md` |
@@ -58,14 +58,17 @@ La section a été retirée du socle et son contenu déplacé en annexe de
 `examples/domain-immo/.claude/agents/design-system.md`. Le socle garde une section générique
 courte : "vérifie les conventions IHM **si le projet en a documenté**, n'en invente aucune".
 
-## FERME-3 — Chevauchement `design-system` / `ux-ui` — 🟡 Partiellement résolu
+## FERME-3 — Chevauchement `design-system` / `ux-ui` — ✅ Résolu
 
 Résolu côté **socle** : les deux squelettes génériques sont courts et ne dupliquent plus
-aucune checklist concrète. Reste présent côté **exemple** : les fichiers copiés dans
-`examples/domain-immo/` gardent le chevauchement d'origine (tailles d'icônes, tokens,
-`aria-hidden`, i18n mentionnés dans les deux). Acceptable en l'état — un seul module
-d'illustration, pas le socle propagé partout — mais à nettoyer si `examples/domain-immo/`
-est un jour utilisé comme référence à copier ailleurs.
+aucune checklist concrète. Résolu côté **exemple** (`examples/domain-immo/`) : `design-system`
+reste l'unique source de vérité pour les tokens/tailles d'icônes/arrondis/typographie/i18n de
+base ; `ux-ui.md` a été récrit pour renvoyer vers `design-system` sur ces points au lieu de les
+redupliquer, et ne garde que ce qui lui est propre (ergonomie mobile, composants
+d'interaction — `ConfirmDialog`/`Toast`, micro-interactions, navigation/breadcrumbs, nuance
+i18n sur les ternaires de langue). La section "Skeleton de chargement" de `ux-ui.md` est
+explicitement présentée comme une variante (liste) qui complète celle de `design-system`
+(bloc unique) plutôt qu'un doublon.
 
 ## FERME-4 — `backlog-manager` vs `backlog-refinement` — ✅ Résolu
 

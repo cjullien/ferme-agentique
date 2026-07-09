@@ -19,12 +19,12 @@ Adapte toute ta procédure à ce que tu y trouves.
 ## Périmètre d'analyse
 
 ### Cohérence visuelle
-- Palette de couleurs cohérente (tokens Tailwind — `primary`, `muted`, `accent`, `destructive`)
-- Typographie hiérarchique (`text-[11px]` labels, `text-[13px]` body, `text-[15px]` titres)
-- Espacements uniformes (multiples de 0.5rem)
-- Icônes Lucide cohérentes en taille (`size={13}` inline, `size={15}` nav, `size={16}` boutons, `size={20}` topbar)
-- Arrondis cohérents (`rounded-xl` pour cartes/tables/modales, `rounded-md` pour boutons — voir l'agent `design-system` pour la liste complète des conteneurs et anti-patterns)
+Les tokens de couleur, tailles d'icônes, arrondis, espacements et échelle typographique sont
+définis et audités par l'agent `design-system` (source de vérité) — ne pas les redupliquer
+ici. Ce que `ux-ui` vérifie en plus, propre à la cohérence perçue (pas aux classes CSS) :
 - Classes `sidebar-glass` pour les surfaces translucides
+- Absence de rupture visuelle entre écrans similaires (même famille de composant traitée
+  différemment d'une page à l'autre)
 
 ### Ergonomie mobile (< 768px)
 - Touch targets min 44×44px (utiliser `min-h-11 min-w-11`)
@@ -75,27 +75,20 @@ Adapte toute ta procédure à ce que tu y trouves.
 ## Checklist pré-commit UX
 
 - [ ] Touch targets ≥ 44×44px sur mobile
-- [ ] Pas de texte hardcodé (toujours `t.xxx.yyy`)
-- [ ] Icônes décoratives avec `aria-hidden="true"`
-- [ ] États de chargement visibles
-- [ ] Pas de couleurs sans fallback dark mode
+- [ ] États de chargement visibles (skeleton ou `aria-live`)
 - [ ] Formulaires : labels, erreurs, états required visibles
 - [ ] Tables : scrollables sur mobile
+- [ ] Pas de ternaire de langue en dur en JSX (voir Règles i18n UX ci-dessous)
+
+Checklist tokens/tables/icônes/i18n de base : voir la checklist de `design-system` — ne pas la
+redupliquer ici.
 
 ## Règles i18n UX
 
-Toute chaîne visible par l'utilisateur DOIT passer par `t.xxx.yyy` (jamais de ternaire `lang === 'fr' ? ... : ...` directement en JSX).  
-Ajouter simultanément dans tous les fichiers de traduction du projet (identifiés via CLAUDE.md).
-
-## Tokens de design à respecter
-
-```
-Surfaces:    bg-background / bg-card / bg-muted / bg-accent
-Texte:       text-foreground / text-muted-foreground / text-primary-foreground
-Bordures:    border-border
-Primaire:    bg-primary text-primary-foreground
-Danger:      text-destructive / bg-destructive
-```
+La règle de base (toute chaîne visible → `t.xxx.yyy`, clés dans tous les fichiers de
+traduction) est définie par `design-system` — ne pas la redupliquer. Nuance propre à l'UX :
+jamais de ternaire `lang === 'fr' ? ... : ...` directement en JSX, même en dépannage rapide —
+ça contourne la clé i18n et casse la 3e langue le jour où elle arrive.
 
 ## Patterns UX courants du projet
 
@@ -117,7 +110,10 @@ Danger:      text-destructive / bg-destructive
 )}
 ```
 
-### Skeleton de chargement
+### Skeleton de chargement — variante liste
+
+Complète la variante bloc unique de `design-system` (une seule zone `h-96`) : ici pour une
+liste de lignes.
 ```jsx
 if (loading) return (
   <div role="status" aria-label={t.common.loading} className="animate-pulse space-y-3">
