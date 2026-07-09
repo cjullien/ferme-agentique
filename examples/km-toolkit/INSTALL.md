@@ -13,16 +13,17 @@ Comme les autres modules `examples/`, deux versions miroir à contenu identique 
 km-toolkit/
 ├── .claude/
 │   ├── agents/    24 agents (.md)         — noms d'outils Claude Code (Read, Write, Edit, Bash, Grep, Glob)
-│   └── skills/    25 skills (SKILL.md)    — les déclencheurs invocables
+│   └── skills/    24 skills (SKILL.md)    — les déclencheurs invocables
 ├── .github/
 │   ├── agents/    24 agents (.agent.md)   — noms d'outils Copilot (read_file, create_file...)
-│   └── skills/    25 skills (SKILL.md)    — identiques à .claude/skills/
+│   └── skills/    24 skills (SKILL.md)    — identiques à .claude/skills/
 ├── hooks.py       hook MkDocs             — moteur d'override universel
 ├── test_hooks.py  garde-fou du hook       — `python3 km-toolkit/test_hooks.py`
 └── INSTALL.md     ce fichier
 ```
 
-`zoom-out` est une skill autonome (sans agent dédié) → 25 skills pour 24 agents.
+Chaque agent a exactement une skill fine qui l'invoque (`/zoom-out` du socle couvre déjà le
+besoin de recadrage générique — km-toolkit ne le redéfinit pas).
 
 ## Installation (3 étapes)
 
@@ -106,11 +107,6 @@ socle `template/` est utilisé tel quel.)*
 `onboarding-test`. Génériques par construction (langage/écosystème découvert via `CLAUDE.md`),
 avec des exemples illustrés pour COBOL quand le dispositif mainframe est installé.
 
-*(+ `zoom-out` : skill autonome sans agent dédié.)*
-
-**Contrôle qualité KB (5)** : `doc-coverage`, `spec-drift`, `km-audit`, `runbook-verify`,
-`onboarding-test`.
-
 ## Principe d'override (rappel)
 
 > L'humain n'écrit que des `*.override.*`. Les agents n'écrivent que le `.md` généré.
@@ -118,6 +114,7 @@ avec des exemples illustrés pour COBOL quand le dispositif mainframe est instal
 
 ## Note sur les exemples
 
-4 agents (`mf-data-lineage`, `mf-modernization-bridge`, `km-audit`, `onboarding-test`)
-contiennent des exemples illustratifs issus du projet d'origine (noms de champs, de fichiers).
-Ce sont des exemples, pas de la logique — ils n'empêchent pas l'usage sur un autre patrimoine.
+7 agents (`mf-data-lineage`, `mf-modernization-bridge`, `km-audit`, `onboarding-test`,
+`doc-coverage`, `faq-harvest`, `postmortem`) contiennent des exemples illustratifs issus du
+projet d'origine (noms de champs, de fichiers, cas d'usage). Ce sont des exemples, pas de la
+logique — ils n'empêchent pas l'usage sur un autre patrimoine.

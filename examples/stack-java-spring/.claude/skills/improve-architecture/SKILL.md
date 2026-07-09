@@ -20,3 +20,4 @@ Lire `CLAUDE.md` pour découvrir les modules Maven du projet (multi-module Sprin
 1. **Explorer** le code, noter les frictions : modules shallow, classes extraites juste pour la testabilité, couplages qui fuient entre modules, zones difficiles à tester, beans Spring eager fragiles (instanciés au démarrage alors qu'ils dépendent d'une config ou d'un service externe).
 2. **Présenter les candidats** : liste numérotée — Fichiers · Problème · Solution · Bénéfices (localité + levier + testabilité). Ne PAS imposer d'interface. Demander : « Lequel approfondir ? »
 3. **Session de questionnement** sur le choix : contraintes, dépendances, forme cible. Proposer un ADR si un choix structurant est tranché.
+4. **Appliquer** le refactoring choisi une fois la forme validée.

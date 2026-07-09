@@ -4,7 +4,10 @@ Issu d'un audit de cohérence de `template/` mené le 2026-07-08, complété par
 consolidation de la granularité (fusions/scissions FERME-8/9/10), par l'ajout d'un pipeline
 Backlog & specs → Implémentation TDD → Audit de la feature + audits globaux inspiré de
 BMAD-METHOD mais gardé plus léger (voir `catalog.md`), puis par un audit de cohérence et
-d'agnosticisme de tous les modules `examples/`. Les 23 items identifiés sont tous résolus.
+d'agnosticisme de tous les modules `examples/`, puis par un audit dédié à la **granularité**
+(taille/périmètre correct de chaque agent/skill, généricité du socle vs contextualisation
+réelle des exemples) mené le 2026-07-09 sur les 174 fichiers de la ferme via 5 revues
+parallèles. Les 45 items identifiés sont tous résolus (sauf FERME-46, décision documentée).
 
 ## Table des items
 
@@ -33,6 +36,29 @@ d'agnosticisme de tous les modules `examples/`. Les 23 items identifiés sont to
 | FERME-21 | stack-python-supabase : `settings.json` mélange des hooks frontend (pnpm, `.jsx/.tsx`) dans un module documenté backend-only | P3 | ✅ Résolu | `examples/stack-python-supabase/.claude/settings.json` |
 | FERME-22 | stack-java-spring : agent `backlog-refinement` spécialisé Maven sans skill dédié → `/backlog-refinement` invoque l'agent générique du socle à la place | P3 | ✅ Résolu | `examples/stack-java-spring/` |
 | FERME-23 | Fuites domaine mineures : `fixture.md` (stack-python-supabase) utilise un modèle d'exemple `Lease` ; chevauchement partiel `postmortem`/`session-digest` (km-toolkit) | P3 | ✅ Résolu | `examples/stack-python-supabase/.claude/agents/fixture.md`, `examples/km-toolkit/` |
+| FERME-24 | `accessibility.md` impose un appel à l'outil Copilot `a11y_audit`/`a11y_check_file` comme geste obligatoire, inexistant côté Claude Code | P1 | ✅ Résolu | `template/.claude/agents/accessibility.md`, `.claude/skills/accessibility/SKILL.md` |
+| FERME-25 | stack-web-vite : `push-force` réintroduit le skill que FERME-10 a fusionné dans `push --skip-tests` et documenté comme supprimé | P1 | ✅ Résolu | `examples/stack-web-vite/.claude/skills/push-force/` (supprimé), `catalog.md` |
+| FERME-26 | stack-web-vite : `agent-maintainer.md`/`externalize.md` 100% spécifiques à un produit fictif ("Sablier") présentés comme la spécialisation générique Vite/React, sans l'avertissement "exemple concret" donné à `domain-immo` | P1 | ✅ Résolu | `examples/stack-web-vite/.claude/agents/{agent-maintainer,externalize}.md`, `catalog.md` |
+| FERME-27 | km-toolkit : `mf-modernization-bridge.md` écrit "CobolCraft" (projet d'origine) en dur dans le titre du template de rapport généré | P1 | ✅ Résolu | `examples/km-toolkit/.claude/agents/mf-modernization-bridge.md` |
+| FERME-28 | km-toolkit : `mf-km-generator.md` référence une commande `/mf-freshness` qui n'existe dans aucun agent/skill du module | P1 | ✅ Résolu | `examples/km-toolkit/.claude/agents/mf-km-generator.md` |
+| FERME-29 | domain-immo : `product-spec/SKILL.md` byte-identique au socle alors que `catalog.md` promet un "glossaire métier" | P1 | ✅ Résolu | `examples/domain-immo/.claude/skills/product-spec/SKILL.md` |
+| FERME-30 | stack-java-spring : `docs-update/SKILL.md` gardait "profils `tika`/`native`" en dur, fuite résiduelle non couverte par FERME-20 | P2 | ✅ Résolu | `examples/stack-java-spring/.claude/skills/docs-update/SKILL.md` |
+| FERME-31 | stack-web-vite : `component`/`typescript` dupliquent `ui-component`/`typing` du socle sans les surcharger (noms différents) — deux commandes redondantes coexistent | P2 | ✅ Résolu | renommés `ui-component/`, `typing/` |
+| FERME-32 | `pre-commit`/`check` : la description promet lint, jamais exécuté dans le corps | P2 | ✅ Résolu | `template/.claude/skills/pre-commit/SKILL.md` |
+| FERME-33 | `owasp.md` : vocabulaire Python/FastAPI (`Depends`, `secrets.compare_digest`, `subprocess`, `requests`/`httpx`) codé en dur sans équivalents multi-stack | P2 | ✅ Résolu | `template/.claude/agents/owasp.md` |
+| FERME-34 | `dependencies.md` : audit CVE limité à `pip-audit`/`npm audit`, aucun écosystème Java/Go/Rust/Ruby | P2 | ✅ Résolu | `template/.claude/agents/dependencies.md` |
+| FERME-35 | km-toolkit : `zoom-out/SKILL.md` doublon du socle avec frontmatter divergent non justifié (perd la restriction d'outils) | P2 | ✅ Résolu | supprimé, `examples/km-toolkit/INSTALL.md` mis à jour |
+| FERME-36 | finops : `token-budget/SKILL.md` réimplémente verbatim la grille de verdict de `cost-check` | P2 | ✅ Résolu | `examples/finops/.claude/skills/token-budget/SKILL.md` |
+| FERME-37 | finops : tableau de routage modèle dupliqué sur 3 fichiers sans source unique | P2 | ✅ Résolu | `examples/finops/CLAUDE.finops.md`, `token-budget/SKILL.md` (renvoie désormais à `CLAUDE.md`/`model-pick`) |
+| FERME-38 | km-toolkit : `INSTALL.md` — bloc "Contrôle qualité KB" dupliqué, disclosure des exemples incomplète (3 agents non listés) | P2/P3 | ✅ Résolu | `examples/km-toolkit/INSTALL.md` |
+| FERME-39 | `performance.md` : mention isolée "INSEE" (fuite de domaine résiduelle) | P3 | ✅ Résolu | `template/.claude/agents/performance.md` |
+| FERME-40 | `test-quality.md` : seul agent du socle sans frontmatter `tools:` malgré son contrat "rapport seul" | P3 | ✅ Résolu | `template/.claude/agents/test-quality.md` |
+| FERME-41 | `backlog-manager.md` (`console.warn/error` non généralisé) et `product-owner.md` (wording README ambigu avec `docs-update`) | P3 | ✅ Résolu | `template/.claude/agents/{backlog-manager,product-owner}.md` |
+| FERME-42 | stack-java-spring : `improve-architecture/SKILL.md` régresse vs le socle post-FERME-9 (étape "Appliquer" manquante) | P3 | ✅ Résolu | `examples/stack-java-spring/.claude/skills/improve-architecture/SKILL.md` |
+| FERME-43 | feature-i18n : `traduction`/`translations` sont deux fichiers complets dupliqués (pas un alias `name:` sur un seul fichier) — exposés au même risque de dérive que FERME-18 | P3 | ✅ Résolu | avertissement de synchronisation ajouté aux deux fichiers |
+| FERME-44 | stack-python-supabase : module nommé "supabase" mais seul skill Postgres présent est `neon-postgres` (produit alternatif) | P3 | ✅ Résolu | `catalog.md` clarifié |
+| FERME-45 | `farm-init/SKILL.md` : 223 lignes, mélangeait bootstrap/brainstorm/scaffolding/audit | P2 | ✅ Résolu | sous-processus de scaffolding extrait en skill `farm-new-module` |
+| FERME-46 | stack-python-supabase : `km-generator` (agent+skill) a peu de spécificité Python réelle, quasi-doublon de celui de km-toolkit | P3 | 🟡 Accepté | non modifié — permet le KM sans installer tout `km-toolkit`, voir détail |
 
 ---
 
@@ -290,3 +316,196 @@ n'est nécessaire.
 exemple neutre (`User`). `examples/km-toolkit/` : note de distinction ajoutée dans
 `postmortem.md` et `session-digest.md` (incident avec impact identifiable → `postmortem` ;
 session complexe sans incident → `session-digest`).
+
+---
+
+# Audit granularité — 2026-07-09
+
+Audit dédié à la granularité (bon découpage agent/skill) et à la généricité socle vs
+contextualisation réelle des exemples, mené sur les 174 fichiers de la ferme (21 agents +
+49 skills du socle, 76 agents/skills répartis sur les 8 modules `examples/`) via 5 revues
+parallèles. L'hypothèse de départ la plus probable — que les 12 fichiers `mf-*` de km-toolkit
+se chevauchent — s'est révélée fausse : ce sont 4 axes orthogonaux (programme / job batch /
+donnée / ressource), pas une fragmentation artificielle. Les vrais problèmes se sont
+concentrés dans `stack-web-vite` et quelques fuites/doublons isolés.
+
+## FERME-24 — `accessibility.md` : dépendance à un outil Copilot-only — ✅ Résolu
+
+L'agent imposait comme "premier geste obligatoire" l'appel à `a11y_audit`/`a11y_check_file`,
+des outils fournis uniquement par l'extension Copilot (`template/.github/extensions/
+accessibility/extension.mjs`) — aucun MCP server équivalent côté `.claude/`. Le corps
+interdisait même le repli `Glob`+`Read`. **Résolu** : l'appel à `a11y_audit` est maintenant
+conditionnel ("si disponible"), avec repli explicite sur `Glob`+`Read` sinon (comportement par
+défaut côté Claude Code).
+
+## FERME-25 — stack-web-vite : `push-force` réintroduit — ✅ Résolu
+
+Le socle a fusionné `push`/`push-force` en un seul skill avec `--skip-tests` (FERME-10),
+documenté dans `catalog.md` comme définitivement abandonné. Ce module réinstallait pourtant un
+`push-force/SKILL.md` séparé, strictement identique à l'ancien skill supprimé — et `catalog.md`
+le listait encore pour ce module. **Résolu** : skill supprimé, `catalog.md` renvoie vers
+`/push --skip-tests`.
+
+## FERME-26 — stack-web-vite : `agent-maintainer`/`externalize` mal étiquetés — ✅ Résolu
+
+Ces deux fichiers sont 100% spécifiques à un produit fictif ("Sablier", minuteur multi-modes
+Pomodoro/méditation/yoga) — légitime en tant qu'exemple concret (le squelette du socle y
+renvoie déjà), mais `catalog.md` les présentait comme la spécialisation générique "frontend
+Vite + React" du module sans avertissement, contrairement au traitement donné à
+`domain-immo`/design-system+ux-ui (FERME-1). Un utilisateur installant le module tel quel sur
+un vrai projet Vite héritait d'un agent cherchant des "modes Pomodoro" inexistants chez lui.
+**Résolu** : bandeau "Exemple concret, à adapter" ajouté en tête des deux fichiers (même
+formulation que `domain-immo`), `catalog.md` mis à jour avec le même avertissement. Au passage,
+un caractère mal encodé (`ÌŒ`) corrigé dans `externalize.md`.
+
+## FERME-27 — km-toolkit : "CobolCraft" en dur dans un template généré — ✅ Résolu
+
+`mf-modernization-bridge.md` écrivait littéralement `# Vue modernisation — CobolCraft` dans le
+template du rapport généré, alors que tous les autres champs du même bloc sont des
+placeholders — un agent suivant le template à la lettre aurait produit ce titre figé sur
+n'importe quel projet. **Résolu** : remplacé par `{PROJET}`.
+
+## FERME-28 — km-toolkit : référence cassée `/mf-freshness` — ✅ Résolu
+
+`mf-km-generator.md` recommandait en sortie `/mf-freshness`, une commande qui n'existe dans
+aucun des 24 agents/25 skills du module. **Résolu** : remplacé par `/km-audit`, qui joue
+effectivement ce rôle de vérification de fraîcheur.
+
+## FERME-29 — domain-immo : `product-spec` non spécialisé — ✅ Résolu
+
+`examples/domain-immo/.claude/skills/product-spec/SKILL.md` était byte-identique au skill
+générique du socle (vérifié par diff), alors que `catalog.md` promettait explicitement un
+"glossaire métier" — promesse non tenue, et aucun `CONTEXT.md` n'était livré dans le module
+pour la tenir indirectement. **Résolu** : un glossaire métier (bail, bailleur, locataire,
+loyer, IRL, dépôt de garantie, DPE, quittance, artisan — avec les confusions à éviter et le
+renvoi vers `/legal-check` pour la conformité légale) est désormais embarqué directement dans
+le skill, utilisé même en l'absence de `CONTEXT.md`.
+
+## FERME-30 — stack-java-spring : fuite résiduelle "profils tika/native" — ✅ Résolu
+
+FERME-20 avait généricisé l'agent `docs-update.md` mais oublié le skill correspondant, qui
+citait encore "commandes Maven (profils `tika`/`native`)" — nom de profil Maven d'un projet
+réel précis. **Résolu** : remplacé par une découverte via `CLAUDE.md`.
+
+## FERME-31 — stack-web-vite : `component`/`typescript` ne surchargent pas le socle — ✅ Résolu
+
+Ces deux skills dupliquent en grande partie `ui-component`/`typing` du socle (mêmes structures,
+mêmes anti-patterns TS) mais portaient un nom différent — donc ne les surchargeaient pas comme
+le fait `backlog-manager`. Résultat après installation : deux commandes qui font presque la
+même chose coexistent (`/component` et `/ui-component`, `/typescript` et `/typing`).
+**Résolu** : renommés `ui-component/` et `typing/` (répertoire + frontmatter `name:`), pour
+surcharger proprement le socle comme les autres variantes stack-spécifiques.
+
+## FERME-32 — `pre-commit`/`check` : lint promis, jamais exécuté — ✅ Résolu
+
+La description annonçait "tests, lint et checks du projet" mais le corps n'exécutait que les
+tests + 2 agents conditionnels. **Résolu** : ajout d'une étape "Lance le lint (comme /lint)".
+
+## FERME-33 — `owasp.md` : vocabulaire Python/FastAPI codé en dur — ✅ Résolu
+
+Plusieurs vérifications étaient rédigées en idiomes Python sans généralisation ni marquage
+"ex:" (`Depends(verify_token)`, `secrets.compare_digest`, `subprocess`/`os.system`/`eval()`,
+`requests`/`httpx`), contrairement à `performance.md`/`tdd.md` qui listent systématiquement des
+équivalents multi-stack. **Résolu** : chaque mention généralisée avec des équivalents Java/Node
+(ex: `MessageDigest.isEqual` Java, `crypto.timingSafeEqual` Node, `ProcessBuilder` Java,
+`RestTemplate`/`WebClient` Java, `axios`/`fetch` Node).
+
+## FERME-34 — `dependencies.md` : audit CVE limité à Python/JS — ✅ Résolu
+
+L'audit de vulnérabilités ne couvrait que `pip-audit`/`safety` (Python) et `npm audit`
+(frontend), sans aucun équivalent Java/Go/Rust/Ruby — problématique car cet agent n'est
+surchargé par aucun module stack. **Résolu** : identification des fichiers de dépendances et
+table d'outils étendues à Java/Kotlin (Maven/Gradle + OWASP Dependency-Check), Go
+(`govulncheck`), Rust (`cargo audit`), Ruby (`bundle audit`).
+
+## FERME-35 — km-toolkit : `zoom-out` doublon non justifié — ✅ Résolu
+
+Même nom que le skill générique du socle (donc le surcharge silencieusement à l'installation),
+mais avec un frontmatter divergent non documenté : perd la restriction `allowed-tools: Read,
+Grep, Glob` du socle, gagne `disable-model-invocation: true`. Aucune valeur KM/mainframe
+ajoutée. **Résolu** : skill supprimé du module (le `/zoom-out` du socle suffit),
+`examples/km-toolkit/INSTALL.md` mis à jour (comptages, disclosure).
+
+## FERME-36 — finops : `token-budget` duplique la grille de `cost-check` — ✅ Résolu
+
+`token-budget/SKILL.md` réimplémentait verbatim les mêmes seuils (`<5`/`5-15`/`>15` appels) que
+`cost-check`, au lieu d'y renvoyer — même classe de risque que FERME-18 (règle dupliquée,
+dérive silencieuse possible). **Résolu** : remplacé par un renvoi explicite vers `/cost-check`.
+
+## FERME-37 — finops : tableau de routage modèle triplé — ✅ Résolu
+
+Le mapping Haiku/Sonnet/Opus était répété sur 3 fichiers indépendants (`CLAUDE.finops.md`,
+`model-pick/SKILL.md`, `token-budget/SKILL.md`), sans source unique. **Résolu** :
+`token-budget` ne redéfinit plus sa propre table, il affiche celle de la section FinOps de
+`CLAUDE.md` (source canonique pour le mapping) et renvoie vers `/model-pick` pour la version
+détaillée avec les prix (qui reste la source légitime pour cette information, absente
+ailleurs). Dépendance `rtk` documentée au passage (absente de toute doc jusqu'ici).
+
+## FERME-38 — km-toolkit : `INSTALL.md` — bloc dupliqué + disclosure incomplète — ✅ Résolu
+
+Le bloc "Contrôle qualité KB (5)" apparaissait deux fois. La section "Note sur les exemples"
+listait 4 agents avec des traces du projet d'origine mais en omettait 3 (`doc-coverage`,
+`faq-harvest`, `postmortem`). **Résolu** : bloc dupliqué retiré, disclosure étendue aux 7
+agents concernés, comptages mis à jour suite à FERME-35 (24 agents / 24 skills).
+
+## FERME-39 — `performance.md` : mention isolée "INSEE" — ✅ Résolu
+
+Fuite de domaine résiduelle (immo/France) non couverte par FERME-23. **Résolu** : retirée.
+
+## FERME-40 — `test-quality.md` : frontmatter `tools:` manquant — ✅ Résolu
+
+Seul agent du socle sans champ `tools:`, alors que son corps revendique un contrat "rapport
+uniquement, aucune modification de fichier" et utilise `Bash` pour des décomptes agrégés.
+**Résolu** : `tools: Read, Grep, Glob, Bash` ajouté (aligné sur `externalize.md`, même contrat).
+
+## FERME-41 — Formulations ambiguës mineures — ✅ Résolu
+
+`backlog-manager.md` : `console.warn/error` généralisé en "logs de debug (`console.warn/error`,
+`print`, `logger.debug` — selon le langage)". `product-owner.md` : description clarifiée pour
+ne plus dire "maintient le README" (ambigu avec `docs-update`) mais "l'index des specs
+(docs/specs/README.md)", ce qui correspond à ce que le corps fait réellement.
+
+## FERME-42 — stack-java-spring : `improve-architecture` régresse vs le socle — ✅ Résolu
+
+FERME-20 avait généricisé ce skill (modules Maven découverts via `CLAUDE.md`) mais sa
+surcharge s'arrêtait à l'étape 3 ("proposer un ADR"), omettant l'étape 4 "Appliquer" que le
+socle porte depuis la fusion FERME-9 — installer ce module faisait donc régresser le
+comportement (propose seulement, au lieu de proposer et appliquer). **Résolu** : étape 4
+"Appliquer le refactoring choisi" ajoutée.
+
+## FERME-43 — feature-i18n : `traduction`/`translations` structurellement dupliqués — ✅ Résolu
+
+Contrairement à la convention "alias de commande courte" du socle (un seul fichier, un
+`name:` différent), ce module utilise deux fichiers complets identiques pour exposer deux
+commandes (`/traduction` FR, `/translations` EN) — nécessaire ici car un fichier ne peut porter
+qu'un seul `name:`, mais cela expose structurellement au même bug que FERME-18 (édition d'un
+seul fichier, dérive silencieuse). **Résolu** : avertissement de synchronisation ajouté en tête
+des deux fichiers, pointant explicitement l'un vers l'autre.
+
+## FERME-44 — stack-python-supabase : flou de nommage "supabase" — ✅ Résolu
+
+Le module s'appelle "stack-python-**supabase**" mais son seul skill Postgres géré est
+`neon-postgres` (Neon, une alternative/un complément à Supabase, pas Supabase lui-même) —
+aucun skill Supabase dédié. Pas un bug fonctionnel, mais prêtait à confusion. **Résolu** :
+précision ajoutée dans `catalog.md`.
+
+## FERME-45 — `farm-init` : skill surchargé (223 lignes, 4-5 procédures) — ✅ Résolu
+
+Mélangeait bootstrap d'installation, complétion de `CLAUDE.md`, brainstorm de modules, un
+sous-processus complet de scaffolding d'un nouveau module de stack, et un audit de config
+final. Le bootstrap doit rester dans `farm-init` (aucun agent installé au démarrage, contrainte
+œuf-et-poule), et le mode "audit seul" (Mode C) était déjà atteignable indépendamment via la
+détection d'état en Phase 0. Le sous-processus de scaffolding, lui, n'a pas besoin du contexte
+des phases précédentes et est utile même hors onboarding (stack qui apparaît en cours de
+projet). **Résolu** : extrait en skill dédié `farm-new-module` (nouveau, socle), `farm-init`
+délègue en une ligne. Comptages mis à jour (50 skills du socle).
+
+## FERME-46 — stack-python-supabase : `km-generator` peu spécifique — 🟡 Accepté, non modifié
+
+L'agent/skill `km-generator` de ce module a peu de spécificité Python/ORM/Postgres réelle
+(générateur de KB MkDocs quasi générique) et fait doublon partiel avec celui de `km-toolkit`.
+**Décision** : conservé tel quel — il permet de générer une KB minimale sans installer tout le
+dispositif `km-toolkit` (24 agents), ce qui est un choix d'ergonomie légitime pour un projet qui
+ne veut qu'une doc générée sans le volet mainframe/qualité KB complet. Pas une fuite de
+généricité (le contenu reste agnostique), donc pas un problème de granularité au sens strict —
+à surveiller si les deux versions divergent un jour sur le même besoin.

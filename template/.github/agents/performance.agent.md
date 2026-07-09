@@ -44,7 +44,7 @@ Repérer les endpoints qui retournent des collections sans limite :
 ### 1.4 Calculs répétés
 
 - Calculs identiques effectués à chaque requête sans cache
-- Appels à des services externes (API tierces, INSEE) dans des boucles
+- Appels à des services externes (API tierces) dans des boucles
 - Agrégations SQL recalculées sans mise en cache
 - Accès aux objets ORM après commit sans refresh — génère des requêtes silencieuses supplémentaires (ex: `expire_on_commit` dans l'ORM)
 - Schémas de réponse qui sérialisent des relations complètes (listes imbriquées) inutilement exposées par l'endpoint

@@ -4,6 +4,11 @@ description: Maintient cohérence agents/skills pendant releases. App production
 tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, list_directory, file_search, grep_search, get_errors]
 ---
 
+> Exemple concret et complet, spécifique à un produit fictif ("Sablier", minuteur multi-modes
+> Pomodoro/méditation/yoga). Sert de modèle pour compléter la version générique du socle :
+> `template/.claude/agents/agent-maintainer.md`. Adapter au vrai produit du projet cible avant
+> usage — ne pas installer tel quel en attendant d'y trouver des features Sablier.
+
 # Agent Maintainer — Sablier
 
 Tu es l'agent de maintenance de la couche orchestration Copilot pour l'app production.

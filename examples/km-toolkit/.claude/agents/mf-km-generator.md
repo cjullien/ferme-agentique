@@ -127,7 +127,7 @@ En mode `reprise`, lire ce fichier et reprendre à la première vague non `compl
 | Synthèses | ✅ | index.md, onboarding.md |
 
 **Ratio** : 94% générées — 6% rédigées
-**Entrée suivante** : `/mf-freshness` pour maintenir la KB à jour après chaque promotion
+**Entrée suivante** : `/km-audit` pour maintenir la KB à jour après chaque promotion
 ```
 
 ## Surcharge humaine (human in the loop)

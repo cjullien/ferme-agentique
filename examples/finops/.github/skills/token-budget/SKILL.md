@@ -38,15 +38,10 @@ Produit un rapport d'état de la session courante pour piloter les coûts LLM en
    Économies RTK cumulées   : <sortie rtk gain ou "rtk non disponible">
    ```
 
-3. **Tableau de routage modèle** (toujours affiché) :
-
-   ```
-   | Type de tâche              | Modèle recommandé           | Ratio coût |
-   |----------------------------|-----------------------------|------------|
-   | Explorer / grep / classify | claude-haiku-4-5-20251001   | 1×         |
-   | Générer / coder / corriger | claude-sonnet-4-6           | ~5×        |
-   | Architecturer / planifier  | claude-opus-4-8             | ~15×       |
-   ```
+3. **Tableau de routage modèle** : afficher celui de la section FinOps de `CLAUDE.md` (ajoutée
+   par ce module à l'installation, sous "Conventions de routage modèle"). Ne pas le redéfinir
+   ici — s'il n'y est plus, renvoyer vers `/model-pick` qui porte la version détaillée avec
+   les prix.
 
 4. **Inférer le type de tâche** depuis le dernier message utilisateur (déjà en contexte) :
    - Mots-clés "explore", "trouve", "lit", "liste", "qu'est-ce", "cherche", "grep" → **Haiku**
@@ -55,9 +50,6 @@ Produit un rapport d'état de la session courante pour piloter les coûts LLM en
 
    Afficher : `Tâche inférée : <type> → Recommandation : <model-id>`
 
-5. **Alerte si journal chargé** — appliquer la même grille que `/cost-check` :
-   - < 5 appels → ✅ CONTINUE
-   - 5–15 appels → ⚠️ CAUTION — envisager `/cost-check` avant la prochaine tâche longue
-   - > 15 appels → 🛑 STOP — lancer `/cost-check` pour obtenir le handoff
+5. **Alerte si journal chargé** — ne pas redéfinir de seuils ici : si le nombre d'appels loggés dépasse 5, lancer `/cost-check`, qui porte la grille de verdict (CONTINUE/CAUTION/STOP) et le handoff. Ce skill se limite au rapport de burn rate et à la recommandation de modèle.
 
    Note : les colonnes `in=` / `out=` peuvent afficher `0` si Claude Code ne peuple pas `tool_response.usage` pour les appels Agent/Task — le comptage des appels reste fiable.

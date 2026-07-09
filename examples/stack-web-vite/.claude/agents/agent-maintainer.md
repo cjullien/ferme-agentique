@@ -4,6 +4,11 @@ description: Maintient cohérence agents/skills pendant releases. App production
 tools: Read, Write, Edit, Grep, Glob
 ---
 
+> Exemple concret et complet, spécifique à un produit fictif ("Sablier", minuteur multi-modes
+> Pomodoro/méditation/yoga). Sert de modèle pour compléter la version générique du socle :
+> `template/.claude/agents/agent-maintainer.md`. Adapter au vrai produit du projet cible avant
+> usage — ne pas installer tel quel en attendant d'y trouver des features Sablier.
+
 # Agent Maintainer — Sablier
 
 Tu es l'agent de maintenance de la couche orchestration Copilot pour l'app production.

@@ -1,6 +1,6 @@
 ---
-name: typescript
-description: Audit TypeScript strictness — détecte `any`, assertions de type, `ts-ignore`, types manquants sur les props et return values. À utiliser pour durcir le typage d'un projet React/TypeScript.
+name: typing
+description: Audit TypeScript strictness — détecte `any`, assertions de type, `ts-ignore`, types manquants sur les props et return values React. Variante Vite/React du skill générique `typing` du socle (surcharge automatiquement à l'installation, même nom).
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 

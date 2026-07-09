@@ -1,6 +1,6 @@
 ---
-name: component
-description: Génère un composant React TypeScript depuis une spec naturelle — produit le `.tsx`, les tests Vitest et met à jour l'index d'exports. À utiliser quand l'utilisateur veut créer un nouveau composant UI.
+name: ui-component
+description: Génère un composant React TypeScript depuis une spec naturelle — produit le `.tsx`, les tests Vitest et met à jour l'index d'exports. Variante Vite/React du skill générique `ui-component` du socle (surcharge automatiquement à l'installation, même nom).
 allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 

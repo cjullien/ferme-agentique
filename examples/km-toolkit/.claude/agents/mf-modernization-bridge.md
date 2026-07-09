@@ -47,7 +47,7 @@ Un bon candidat strangler pattern est :
 Génère `docs/kb/docs/mf/modernization-bridge.md` :
 
 ```markdown
-# Vue modernisation — CobolCraft
+# Vue modernisation — {PROJET}
 
 > Générée le {date} depuis la KB existante. Prérequis : mf-callgraph, mf-program-card, mf-business-rules.
 

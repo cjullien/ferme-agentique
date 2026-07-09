@@ -52,3 +52,10 @@ Avant de spawner un Agent ou Task :
 | `/token-budget` | Vérification mid-session : burn rate + recommandation modèle |
 | `/cost-check` | Avant une tâche longue : verdict continuer vs résumer |
 | `/model-pick` | Sélection interactive modèle avec tableau coût/qualité |
+
+### Dépendance optionnelle : `rtk`
+
+`/cost-check` et `/token-budget` appellent `rtk gain` pour rapporter les économies de tokens.
+`rtk` est un outil externe optionnel, non fourni par ce module — s'il n'est pas installé sur la
+machine, les deux skills dégradent proprement (`rtk non disponible`) et le reste du rapport
+s'affiche normalement.

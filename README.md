@@ -15,10 +15,10 @@ ferme_agentic/
 │   ├── .claude/                      version Claude Code
 │   │   ├── settings.json     permissions + hooks neutres (à compléter par stack)
 │   │   ├── agents/           21 agents génériques (.md)
-│   │   └── skills/           49 skills génériques (SKILL.md)
+│   │   └── skills/           50 skills génériques (SKILL.md)
 │   ├── .github/                      version Copilot (miroir)
 │   │   ├── agents/           21 agents génériques (.agent.md)
-│   │   ├── skills/           49 skills génériques (SKILL.md)
+│   │   ├── skills/           50 skills génériques (SKILL.md)
 │   │   ├── extensions/       agents-loader + accessibility
 │   │   ├── lsp.json          serveurs LSP (Python / TypeScript)
 │   │   └── copilot-instructions.template.md  squelette à remplir

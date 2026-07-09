@@ -1,6 +1,6 @@
 ---
 name: product-owner
-description: Agent Product Owner. Vérifie la cohérence d'un plan d'implémentation, génère ou met à jour la spec détaillée, et maintient le README et le backlog.
+description: Agent Product Owner. Vérifie la cohérence d'un plan d'implémentation, génère ou met à jour la spec détaillée, et maintient l'index des specs (docs/specs/README.md) et le backlog.
 tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 

@@ -9,7 +9,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 ---
 
-## Socle générique — `template/` (21 agents · 49 skills, en versions `.claude/` et `.github/`)
+## Socle générique — `template/` (21 agents · 50 skills, en versions `.claude/` et `.github/`)
 
 Le socle est organisé autour du cycle de vie d'une feature — trois phases — plus une couche
 d'**audits globaux périodiques** qui balaient tout le code, sur le même principe que les audits
@@ -101,8 +101,10 @@ projet — nouveau projet, feature, bugfix, release).
 ### Onboarding
 `farm-init` — point d'entrée universel : détecte si la ferme est installée, guide
 l'installation (chemin local ou URL GitHub + clone auto), brainstorme les modules optionnels
-(dialogue interactif), audite la configuration finale. `farm-update` — synchronise les
-agents/skills du projet avec la ferme source après une mise à jour.
+(dialogue interactif), audite la configuration finale. Délègue à `farm-new-module` le
+scaffolding d'un module pour une stack non couverte (peut aussi s'invoquer seul, en dehors
+d'un onboarding). `farm-update` — synchronise les agents/skills du projet avec la ferme source
+après une mise à jour.
 
 ### Pourquoi `tech-debt` et `push-force` n'existent plus
 
@@ -157,7 +159,9 @@ Agents : `schema`, `migrate`, `db-diagram`, `fixture`, `seed`, `api-contract`, `
 `km-generator`, `backlog-manager` (variante Python/ORM/Postgres — surcharge automatiquement
 celui du socle à l'installation, même nom, pas de skill dédiée nécessaire).
 Skills : `schema`, `migrate`, `db-diagram` (sortie `docs/specs/mpd.md`), `db-reset`, `fixture`,
-`seed`, `api-contract`, `scheduler-audit`, `neon-postgres`, `km-generator`,
+`seed`, `api-contract`, `scheduler-audit`, `neon-postgres` (guide Postgres serverless Neon —
+alternative/complément à Supabase, pas un doublon : à ignorer si le projet utilise Supabase
+directement sans Neon), `km-generator`,
 `eda` (profil dataset : nulls, distributions, outliers → rapport markdown),
 `notebook` (audit notebooks Jupyter : ordre cellules, outputs stale, imports),
 `data-quality` (validation schémas Pydantic/Pandera, colonnes nullables, frontières système).
@@ -178,10 +182,16 @@ l'installation, même nom, pas de skill dédiée nécessaire) ; skills `ci`, `co
 + `settings.json` (permissions mvn/java/git/gh).
 
 ### `stack-web-vite/` — frontend Vite + React (PWA)
-Agents : `agent-maintainer`, `externalize`.
-`settings.json` (permissions npm/git/gh + hooks i18n/PWA/a11y) et skills `backlog-feature`, `push-force`,
-`typescript` (audit strictness, `any`, assertions), `component` (génération composant + tests Vitest),
-`api-client` (audit appels réseau, React Query/SWR, typage réponses).
+Agents `agent-maintainer`, `externalize` (variantes Vite/React — surchargent automatiquement les
+squelettes génériques du socle à l'installation, même nom). ⚠️ Ce sont aussi les **exemples
+concrets et complets** référencés par `template/.claude/agents/{agent-maintainer,externalize}.md` :
+ils décrivent un produit fictif précis ("Sablier", un minuteur multi-modes) pour illustrer le
+niveau de détail attendu — à adapter au vrai produit du projet cible, pas à copier tel quel.
+`settings.json` (permissions npm/git/gh + hooks i18n/PWA/a11y) et skills `backlog-feature`,
+`typing` (variante React du skill générique, `any`, assertions, props), `ui-component` (variante
+React/Vitest du skill générique — génération composant + tests), `api-client` (audit appels
+réseau, React Query/SWR, typage réponses). Pour committer sans lancer les tests, utiliser
+`/push --skip-tests` (socle) — pas de skill dédié dans ce module.
 
 ### `domain-immo/` — métier gestion immobilière
 Agent `legal-check` ; skills `legal-check`, `product-spec` (glossaire métier).
@@ -203,7 +213,7 @@ Agent `translations` ; skills `traduction` (commande FR) et `translations` (comm
 deux alias vers le même agent.
 
 ### `km-toolkit/` — Knowledge Management piloté par agents
-Chaîne complète (24 agents / 25 skills) : socle KM générique (`km-generator`, `newsletter`,
+Chaîne complète (24 agents / 24 skills) : socle KM générique (`km-generator`, `newsletter`,
 `adr-capture`, `session-digest`, `postmortem`, `faq-harvest`, `glossary-sync`…), contrôle qualité KB
 (`doc-coverage`, `spec-drift`, `km-audit`, `runbook-verify`, `onboarding-test`) et dispositif
 **mainframe COBOL** (`mf-*`). Moteur d'override MkDocs (`hooks.py`, testé par `test_hooks.py`).

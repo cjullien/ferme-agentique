@@ -4,6 +4,11 @@ description: Audit complet configuration — i18n multi-langue, thèmes extensib
 tools: [read_file, list_directory, file_search, grep_search]
 ---
 
+> Exemple concret et complet, spécifique à un produit fictif ("Sablier", minuteur multi-modes
+> Pomodoro/méditation/yoga). Sert de modèle pour compléter la version générique du socle :
+> `template/.claude/agents/externalize.md`. Adapter au vrai produit du projet cible avant
+> usage — ne pas installer tel quel en attendant d'y trouver des features Sablier.
+
 # Externalize — Sablier
 
 Tu es responsable d'auditer et externaliser configuration, thèmes, i18n, et persistance.
@@ -55,7 +60,7 @@ export const i18n = {
   fr: {
     app: {
       title: "Sablier",
-      subtitle: "Timer ultra-paramétrableÌ"
+      subtitle: "Timer ultra-paramétrable"
     },
     modes: {
       pomodoro: "Pomodoro",
