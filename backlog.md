@@ -13,10 +13,10 @@ arbitrage plus léger, non appliqué automatiquement.
 | FERME-1 | `design-system.md` / `ux-ui.md` non génériques (contenu Tailwind/shadcn d'une appli immo) | P1 | ✅ Résolu | `template/.claude/agents/design-system.md`, `ux-ui.md`, `examples/domain-immo/.claude/agents/` |
 | FERME-2 | Section "Exigences IHM" de `product-owner.md` hardcodée au même produit immo | P2 | ✅ Résolu | `template/.claude/agents/product-owner.md` |
 | FERME-3 | Chevauchement `design-system` / `ux-ui` (~40% de contenu dupliqué) | P3 | 🟡 Partiel | `examples/domain-immo/.claude/agents/design-system.md`, `ux-ui.md` |
-| FERME-4 | Incohérence de nommage `backlog-manager` (socle) vs `backlog-refinement` (agents spécifiques aux modules stack-java-spring / stack-python-supabase) | P2 | Ouvert | `catalog.md`, `examples/stack-java-spring/.claude/agents/backlog-refinement.md`, `examples/stack-python-supabase/.claude/agents/backlog-refinement.md` |
-| FERME-5 | Règle non documentée : quand créer un agent dédié vs un skill autonome | P3 | Ouvert | `README.md` ou `catalog.md` |
+| FERME-4 | Incohérence de nommage `backlog-manager` (socle) vs `backlog-refinement` (agents spécifiques aux modules stack-java-spring / stack-python-supabase) | P2 | ✅ Résolu | `catalog.md`, `examples/stack-java-spring/.claude/agents/backlog-refinement.md`, `examples/stack-python-supabase/.claude/agents/backlog-refinement.md` |
+| FERME-5 | Règle non documentée : quand créer un agent dédié vs un skill autonome | P3 | ✅ Résolu | `README.md` ou `catalog.md` |
 | FERME-6 | Hiérarchie non documentée entre `audit` / `tech-debt` / `audit-360` | P3 | ✅ Résolu | `catalog.md` |
-| FERME-7 | Alias `name:` de skill différents du répertoire/catalog (`a11y`, `deps`, `perf`, `check`) | P3 | Ouvert | `catalog.md`, skills concernés |
+| FERME-7 | Alias `name:` de skill différents du répertoire/catalog (`a11y`, `deps`, `perf`, `check`) | P3 | ✅ Résolu | `catalog.md`, skills concernés |
 | FERME-8 | `tech-debt` redondant avec `audit-360` (sous-ensemble strict) | P2 | ✅ Résolu | supprimé, plan de remédiation absorbé dans `audit-360/SKILL.md` |
 | FERME-9 | `clean-tdd` mélangeait deux métiers (clean architecture + TDD) | P2 | ✅ Résolu | scindé en `tdd` (agent, Phase 2) + `improve-architecture` (audit de couches, applique désormais le refactoring) |
 | FERME-10 | `push` / `push-force` : deux fichiers pour un flag, convention incohérente avec `backlog-refinement --avancé` | P3 | ✅ Résolu | fusionnés dans `push/SKILL.md` (`--skip-tests`) |
@@ -29,10 +29,10 @@ arbitrage plus léger, non appliqué automatiquement.
 | FERME-17 | feature-i18n : `translations-react-python.md` doublon byte-identique de `translations.md` avec collision de `name:` | P1 | ✅ Résolu | supprimé |
 | FERME-18 | feature-i18n : règle anti-tiret-cadratin de `translations/SKILL.md` auto-contradictoire (caractère perdu) | P2 | ✅ Résolu | réécrit à l'identique de `traduction/SKILL.md` |
 | FERME-19 | domain-immo : contradiction directe entre `ux-ui.md` (`rounded-lg` pour cartes) et `design-system.md` (`rounded-xl` obligatoire, `rounded-lg` listé comme anti-pattern) | P1 | ✅ Résolu | `examples/domain-immo/.claude/agents/ux-ui.md` |
-| FERME-20 | stack-java-spring : plusieurs fichiers contiennent des détails d'un projet réel unique (Spring AI, Tika OCR, GraalVM, item `NATIVE-001`...) au-delà de "Java/Spring générique" | P2 | Ouvert | `examples/stack-java-spring/.claude/agents/{ci,docs-update,product-owner,backlog-refinement}.md`, `.claude/skills/{coverage,improve-architecture}/SKILL.md` |
-| FERME-21 | stack-python-supabase : `settings.json` mélange des hooks frontend (pnpm, `.jsx/.tsx`) dans un module documenté backend-only | P3 | Ouvert | `examples/stack-python-supabase/.claude/settings.json` |
-| FERME-22 | stack-java-spring : agent `backlog-refinement` spécialisé Maven sans skill dédié → `/backlog-refinement` invoque l'agent générique du socle à la place | P3 | Ouvert | `examples/stack-java-spring/` |
-| FERME-23 | Fuites domaine mineures : `fixture.md` (stack-python-supabase) utilise un modèle d'exemple `Lease` ; chevauchement partiel `postmortem`/`session-digest` (km-toolkit) | P3 | Ouvert | `examples/stack-python-supabase/.claude/agents/fixture.md`, `examples/km-toolkit/` |
+| FERME-20 | stack-java-spring : plusieurs fichiers contiennent des détails d'un projet réel unique (Spring AI, Tika OCR, GraalVM, item `NATIVE-001`...) au-delà de "Java/Spring générique" | P2 | ✅ Résolu | `examples/stack-java-spring/.claude/agents/{ci,docs-update,product-owner,backlog-refinement}.md`, `.claude/skills/{coverage,improve-architecture}/SKILL.md` |
+| FERME-21 | stack-python-supabase : `settings.json` mélange des hooks frontend (pnpm, `.jsx/.tsx`) dans un module documenté backend-only | P3 | ✅ Résolu | `examples/stack-python-supabase/.claude/settings.json` |
+| FERME-22 | stack-java-spring : agent `backlog-refinement` spécialisé Maven sans skill dédié → `/backlog-refinement` invoque l'agent générique du socle à la place | P3 | ✅ Résolu | `examples/stack-java-spring/` |
+| FERME-23 | Fuites domaine mineures : `fixture.md` (stack-python-supabase) utilise un modèle d'exemple `Lease` ; chevauchement partiel `postmortem`/`session-digest` (km-toolkit) | P3 | ✅ Résolu | `examples/stack-python-supabase/.claude/agents/fixture.md`, `examples/km-toolkit/` |
 
 ---
 
@@ -67,44 +67,36 @@ aucune checklist concrète. Reste présent côté **exemple** : les fichiers cop
 d'illustration, pas le socle propagé partout — mais à nettoyer si `examples/domain-immo/`
 est un jour utilisé comme référence à copier ailleurs.
 
-## FERME-4 — `backlog-manager` vs `backlog-refinement`
+## FERME-4 — `backlog-manager` vs `backlog-refinement` — ✅ Résolu
 
-Inchangé. Le socle a un agent `backlog-manager` (audit + priorisation + chiffrage). Les
-modules `stack-java-spring` et `stack-python-supabase` ont chacun un agent
-`backlog-refinement` (probablement un vestige d'un renommage `backlog-refinement` →
-`backlog-manager` fait dans le socle mais jamais répercuté dans les modules). Le skill socle
-`backlog-refinement` pointe vers `backlog-manager` avec une note invitant à préférer l'agent
-du module s'il est installé, mais la duplication de nom et de mission entre les deux agents
-mérite d'être nettoyée à la source :
-- soit renommer les agents des deux modules en `backlog-manager` (variante stack-spécifique
-  qui *surcharge* celui du socle),
-- soit documenter explicitement dans `catalog.md` que ce sont deux mécanismes distincts et
-  pourquoi.
+Les agents `backlog-refinement` de `stack-java-spring` et `stack-python-supabase` ont été
+renommés `backlog-manager` (même nom que l'agent générique du socle). Puisque l'installation
+d'un module copie ses fichiers dans le même `.claude/agents/`, ils **surchargent
+automatiquement** la version générique à l'installation — plus besoin de skill dédiée ni de
+cas particulier documenté. Le skill socle `backlog-refinement` (qui invoque déjà
+`subagent_type: backlog-manager`) fonctionne donc tel quel avec la version générique ou
+spécialisée, selon ce qui est installé. Le skill `backlog-refinement` redondant de
+`stack-python-supabase` a été supprimé (celui du socle suffit). `catalog.md` mis à jour.
 
-## FERME-5 — Règle agent vs skill non documentée
+## FERME-5 — Règle agent vs skill non documentée — ✅ Résolu
 
-Une dizaine de skills du socle (`api-client`, `data-quality`, `db-diagram`, `eda`, `migrate`,
-`notebook`, `schema`, `typing`, `ui-component`, `env-check`, `commit`, `test`…) embarquent
-toute leur logique directement dans le `SKILL.md`, sans agent dédié — alors que la majorité
-des autres skills ne sont qu'un déclencheur de 8-15 lignes pour un agent. Ce n'est pas un bug,
-mais aucun document n'explicite la règle de décision ("skill autonome si l'exécution est
-courte et déterministe ; agent dédié si l'analyse est longue et doit produire un rapport
-formel"). À ajouter dans `README.md` ou `catalog.md` pour guider la création de futurs modules
-(notamment via `/farm-init`, qui génère justement de nouveaux modules pour des stacks non
-couvertes).
+Ajouté dans `catalog.md` une section "Convention — agent dédié ou skill autonome ?" qui
+explicite la règle de décision (agent dédié + skill fine si l'analyse est longue et produit un
+rapport structuré ou des corrections étendues ; skill autonome si la procédure est courte et
+déterministe), pour guider la création de futurs modules via `/farm-init`.
 
 ## FERME-6 — Hiérarchie `audit` / `tech-debt` / `audit-360` non documentée — ✅ Résolu
 
 `catalog.md` documente désormais l'ensemble via la structure en 3 phases + audits globaux, et
 explique explicitement pourquoi `tech-debt` a disparu (voir FERME-8).
 
-## FERME-7 — Alias `name:` de skills divergents du répertoire
+## FERME-7 — Alias `name:` de skills divergents du répertoire — ✅ Résolu
 
 `accessibility/` → `name: a11y`, `dependencies/` → `name: deps`, `performance/` → `name: perf`,
 `pre-commit/` → `name: check`. Ce sont des alias de commande slash plus courts (`/a11y`,
-`/deps`, `/perf`…), pas des bugs en soi — mais `catalog.md` liste ces skills par leur nom de
-répertoire, ce qui peut dérouter. Décider : soit aligner les noms (`name:` = nom du
-répertoire), soit documenter explicitement les alias dans `catalog.md`.
+`/deps`, `/perf`…), pas des bugs en soi. Documentés explicitement dans `catalog.md`
+("Convention — alias de commandes courtes") avec un tableau répertoire ↔ commande, plutôt que
+de les aligner (l'alias court reste utile au clavier).
 
 ## FERME-8 — `tech-debt` redondant avec `audit-360` — ✅ Résolu
 
@@ -259,36 +251,39 @@ card (section, table, toolbar, modale, empty state) et liste explicitement `roun
 **Résolu** : `ux-ui.md` corrigé pour renvoyer vers `design-system.md` comme source de vérité
 sur les tokens de conteneurs plutôt que de dupliquer (et contredire) la règle.
 
-## FERME-20 — stack-java-spring : fuite d'un projet réel unique
+## FERME-20 — stack-java-spring : fuite d'un projet réel unique — ✅ Résolu
 
-Plusieurs fichiers (`ci`, `docs-update`, `product-owner`, `backlog-refinement`, `coverage`,
-`improve-architecture`) contiennent des détails d'un projet précis (Spring AI, Tika OCR, classe
+Plusieurs fichiers (`ci`, `docs-update`, `product-owner`, `backlog-manager`, `coverage`,
+`improve-architecture`) contenaient des détails d'un projet précis (Spring AI, Tika OCR, classe
 `OcrSpringAiApplicationTest`, modules `service-llm`/`service-tika`, bean `LlmConfiguration`,
-item backlog `NATIVE-001`, contrainte "runner ≥ 24 Go", GraalVM, Tesseract) qui dépassent
-largement "Java/Spring Boot/Maven générique". Pas traité dans cette passe — demande une
-réécriture de contenu plus large (plusieurs fichiers, décider ce qui est vraiment
-stack-générique vs spécifique au projet d'origine), du même ordre que FERME-1 sur
-design-system/ux-ui. Piste : extraire vers un exemple dédié (`examples/domain-*` ou un nouveau
-module) et généraliser via des placeholders `{{...}}`, comme `settings.local.json.example` du
-même module le fait déjà pour les chemins de test.
+item backlog `NATIVE-001`, contrainte "runner ≥ 24 Go", Tesseract) qui dépassaient largement
+"Java/Spring Boot/Maven générique".
 
-## FERME-21 — stack-python-supabase : `settings.json` mélange frontend/backend
+**Résolu** : contenu géré différemment de FERME-1 (pas d'extraction vers un module dédié, la
+matière ne le justifiait pas) — chaque mention spécifique remplacée par une découverte via
+`CLAUDE.md` (dépendances, profils Maven, prérequis système déclarés plutôt que supposés). Le
+concept générique et légitime de build natif GraalVM (réel dans l'écosystème Spring Boot,
+pas propre à un seul projet) est conservé comme exemple explicitement conditionnel ("si le
+projet en a un"). `coverage/SKILL.md` : le nom de classe de test spécifique remplacé par un
+motif d'exclusion générique à adapter. `improve-architecture/SKILL.md` : noms de modules Maven
+en dur remplacés par une découverte via `CLAUDE.md`.
 
-Les hooks (lignes ~91-107) incluent des règles frontend (pnpm, `.jsx`/`.tsx`, `/translations`)
-dans un module documenté comme backend-only. Suppose un monorepo full-stack + le module
-optionnel `feature-i18n`, non déclaré comme dépendance. Mineur, laissé en l'état.
+## FERME-21 — stack-python-supabase : `settings.json` mélange frontend/backend — ✅ Résolu
 
-## FERME-22 — stack-java-spring : `backlog-refinement` sans skill dédié
+Le hook `.jsx`/`.tsx` → `/translations` (frontend + module optionnel `feature-i18n` non
+déclaré) a été retiré de `settings.json`. Le hook `[DEPS]` générique (`requirements.txt`/
+`pyproject.toml`) est conservé sans le marqueur `package.json`, pour rester strictement
+backend.
 
-Le module a un agent `backlog-refinement` spécialisé Maven mais pas de skill propre — `/backlog-refinement`
-reste celui du socle (qui invoque `backlog-manager`), avec une simple note en fin de fichier
-socle invitant à préférer l'agent spécialisé s'il est installé. Recoupe FERME-4. Pas traité
-dans cette passe.
+## FERME-22 — stack-java-spring : `backlog-refinement` sans skill dédié — ✅ Résolu
 
-## FERME-23 — Fuites domaine mineures restantes
+Résolu par le même changement que FERME-4 : l'agent a été renommé `backlog-manager`, il
+surcharge automatiquement la version générique du socle à l'installation — aucun skill dédié
+n'est nécessaire.
 
-`examples/stack-python-supabase/.claude/agents/fixture.md` utilise un modèle d'exemple `Lease`
-(fuite légère `domain-immo`). `examples/km-toolkit/` : chevauchement partiel entre
-`postmortem` et `session-digest` (rôles proches — extraire le savoir d'une session/incident vers
-la KB — distinction correcte sur le déclencheur mais pas documentée). Mineurs, laissés en
-l'état.
+## FERME-23 — Fuites domaine mineures restantes — ✅ Résolu
+
+`examples/stack-python-supabase/.claude/agents/fixture.md` : l'exemple `Lease` remplacé par un
+exemple neutre (`User`). `examples/km-toolkit/` : note de distinction ajoutée dans
+`postmortem.md` et `session-digest.md` (incident avec impact identifiable → `postmortem` ;
+session complexe sans incident → `session-digest`).
