@@ -16,7 +16,7 @@ Vérifier si un framework e2e est installé (ex: Playwright, Cypress, etc. — i
 - Si absent : signaler que le framework e2e n'est pas installé et proposer la commande d'installation, puis arrêter.
 - Si présent : continuer.
 
-Chercher les fichiers de test e2e existants via `file_search` (pattern `**/*.e2e.{js,ts}` ou `**/e2e/**/*.{spec,test}.{js,ts}`).
+Chercher les fichiers de test e2e existants via `Glob` (pattern `**/*.e2e.{js,ts}` ou `**/e2e/**/*.{spec,test}.{js,ts}`).
 
 ### 1.2 Inventaire des flux critiques
 

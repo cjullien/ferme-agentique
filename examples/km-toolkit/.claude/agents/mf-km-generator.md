@@ -21,7 +21,7 @@ Pose une seule question structurée si les paramètres ne sont pas précisés :
 ## Phase 1 — Inventaire (prérequis de tout le reste)
 
 Vérifie si `docs/kb/docs/mf/inventory.md` existe et est récent (< 7 jours).
-- Si non : **exécute l'agent `mf-inventory`** en appelant `task` avec `agent_type: "mf-inventory"`.
+- Si non : **exécute l'agent `mf-inventory`** avec l'outil Agent (`subagent_type: mf-inventory`).
 - Si oui : utiliser l'existant.
 
 Rapport intermédiaire : `[1/6] Inventaire — {N} programmes, {N} copybooks, {N} JCL`

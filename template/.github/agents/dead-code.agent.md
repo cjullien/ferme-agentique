@@ -13,10 +13,10 @@ Commence par lire `CLAUDE.md` à la racine du projet pour identifier la stack te
 ## Stratégie de recherche (efficacité)
 
 Utiliser dans cet ordre :
-1. `grep_search` avec pattern précis — pour les imports, les clés i18n, les routes
-2. `file_search` — pour lister les fichiers par pattern avant de lire
-3. `read_file` — ne lire que les sections pertinentes
-Toujours vérifier l'usage dans TOUT le projet via grep_search avant de supprimer une fonction ou un composant.
+1. `Grep` avec pattern précis — pour les imports, les clés i18n, les routes
+2. `Glob` — pour lister les fichiers par pattern avant de lire
+3. `Read` — ne lire que les sections pertinentes
+Toujours vérifier l'usage dans TOUT le projet via `Grep` avant de supprimer une fonction ou un composant.
 
 ## Périmètre
 

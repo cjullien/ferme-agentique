@@ -237,7 +237,7 @@ Documenter la régénération dans `depgraph.md` via une admonition `!!! tip`.
 
 ## Phase 5 — Stratégie de rédaction (parallélisation)
 
-**Critique pour la productivité** : créer les pages **par batches parallèles** d'appels `create_file`. Exemple de batches :
+**Critique pour la productivité** : créer les pages **par batches parallèles** d'appels à l'outil `Write`. Exemple de batches :
 1. Batch 1 : configuration (`mkdocs.yml`, `requirements.txt`, `kb.sh`, `README.md`).
 2. Batch 2 : `docs/index.md` + 5 pages onboarding + 1 index onboarding.
 3. Batch 3 : 6 pages concepts + index.
@@ -267,7 +267,7 @@ Ne jamais traiter les pages une par une — perte de temps massive.
 1. `git --no-pager log --since="2 weeks ago" --oneline` → repérer les changements.
 2. `git --no-pager diff HEAD~10 -- src/ docs/specs/` → impacts.
 3. Lister `docs/kb/docs/**/*.md` et identifier les pages obsolètes (références à des fichiers/commandes supprimés, comportements modifiés).
-4. Édition **chirurgicale** via `replace_string_in_file` — ne pas réécrire les pages.
+4. Édition **chirurgicale** via l'outil `Edit` — ne pas réécrire les pages.
 5. `./kb.sh strict` → validation.
 
 ## Phase 8 — Restitution à l'utilisateur

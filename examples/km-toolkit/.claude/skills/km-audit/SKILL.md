@@ -1,13 +1,12 @@
 ---
 name: km-audit
 description: Audit de fraîcheur de la KB — croise l'historique des pages avec celui du code qu'elles décrivent. Signale pages périmées, liens morts, pages orphelines. Score par section.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance l'audit de fraîcheur de la KB via l'agent `km-audit`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "km-audit"`
+Utilise l'outil Agent avec `subagent_type: km-audit`, en lui transmettant :
 - un prompt demandant d'auditer la fraîcheur de la base de connaissances
 
 L'agent produit :

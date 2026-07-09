@@ -23,7 +23,7 @@ Adapte toute ta procédure à ce que tu y trouves.
 - Typographie hiérarchique (`text-[11px]` labels, `text-[13px]` body, `text-[15px]` titres)
 - Espacements uniformes (multiples de 0.5rem)
 - Icônes Lucide cohérentes en taille (`size={13}` inline, `size={15}` nav, `size={16}` boutons, `size={20}` topbar)
-- Arrondis cohérents (`rounded-lg` pour cartes/boutons, `rounded-xl` pour modales)
+- Arrondis cohérents (`rounded-xl` pour cartes/tables/modales, `rounded-md` pour boutons — voir l'agent `design-system` pour la liste complète des conteneurs et anti-patterns)
 - Classes `sidebar-glass` pour les surfaces translucides
 
 ### Ergonomie mobile (< 768px)

@@ -14,7 +14,7 @@ L'extension a11y est active. **Appeler `a11y_audit` en premier** pour collecter 
 
 Pour approfondir un fichier spécifique identifié dans l'analyse, utiliser `a11y_check_file` avec son chemin relatif.
 
-Ne pas traverser manuellement le filesystem via `list_directory` + `read_file` pour la collecte initiale.
+Ne pas traverser manuellement le filesystem via `Glob` + `Read` pour la collecte initiale.
 
 ---
 

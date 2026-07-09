@@ -1,13 +1,12 @@
 ---
 name: mf-data-dictionary
 description: Dictionnaire de données généré depuis les copybooks — structures, PIC, REDEFINES, OCCURS, valeurs 88. Croisé avec les DCLGEN DB2 et layouts VSAM. Chaque champ pointe vers ses programmes lecteurs/écrivains.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la génération du dictionnaire de données via l'agent `mf-data-dictionary`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-data-dictionary"`
+Utilise l'outil Agent avec `subagent_type: mf-data-dictionary`, en lui transmettant :
 - un prompt demandant de générer le dictionnaire de données depuis les copybooks et DCLGEN disponibles
 
 L'agent produit :

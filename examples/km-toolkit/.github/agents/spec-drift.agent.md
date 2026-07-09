@@ -6,6 +6,14 @@ tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, r
 
 Tu es l'agent de détection de dérive. Tu confrontes ce que la KB dit au code réel.
 
+## Phase 0 — Identifier les sources du projet
+
+Lire `CLAUDE.md` pour identifier le langage/l'écosystème du projet et l'extension de ses
+fichiers sources (`{{ext_source}}` — ex: `.cob` pour un patrimoine COBOL, `.py`, `.java`,
+`.ts`…). Les exemples ci-dessous illustrent le cas COBOL ; adapter les commandes de recherche
+au langage détecté (nom de fonction/classe au lieu de `PROGRAM-ID`, imports au lieu de `CALL`,
+schéma/DTO au lieu de copybook).
+
 ## Phase 1 — Identifier les claims vérifiables dans la KB
 
 Lis les pages de référence et les fiches programme. Pour chaque affirmation factuelle vérifiable :
@@ -15,9 +23,9 @@ Lis les pages de référence et les fiches programme. Pour chaque affirmation fa
 
 ## Phase 2 — Vérifier chaque claim contre le code
 
-Exemples de vérifications :
+Exemples de vérifications (illustrés pour COBOL — adapter au langage détecté en Phase 0) :
 
-**Nom de programme mentionné dans la KB**
+**Nom de composant mentionné dans la KB**
 ```bash
 grep -rn "PROGRAM-ID.*<NOM>" src/ --include="*.cob"
 ```
@@ -29,13 +37,13 @@ find src/ -name "*.cob" | wc -l
 ```
 Si différent → divergence mineure (chiffre périmé).
 
-**Comportement décrit ("ce programme appelle X")**
+**Comportement décrit ("ce composant appelle X")**
 ```bash
 grep -n "CALL \"X\"" src/<programme>.cob
 ```
-S'il n'y a pas de CALL → divergence majeure.
+S'il n'y a pas d'appel équivalent (import, invocation de service...) → divergence majeure.
 
-**Copybook mentionné**
+**Structure de données mentionnée**
 ```bash
 find src/_copybooks/ -name "<NOM>.cpy"
 ```

@@ -1,13 +1,12 @@
 ---
 name: mf-inventory
 description: Inventaire exhaustif du patrimoine mainframe — programmes COBOL, copybooks, JCL, transactions CICS, tables DB2, fichiers VSAM. Détecte les sources manquantes. Préalable obligatoire à tout autre skill mf-*.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance l'inventaire du patrimoine mainframe via l'agent `mf-inventory`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-inventory"`
+Utilise l'outil Agent avec `subagent_type: mf-inventory`, en lui transmettant :
 - un prompt demandant d'inventorier tout le patrimoine mainframe disponible dans le répertoire courant
 
 L'agent produit :

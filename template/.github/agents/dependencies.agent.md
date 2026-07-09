@@ -22,7 +22,7 @@ Via CLAUDE.md et l'arborescence :
 
 **Backend (Python) :**
 
-Utiliser `run_in_terminal` :
+Utiliser `Bash` :
 ```
 pip-audit --format=json
 # Si pip-audit indisponible : safety check --json
@@ -30,7 +30,7 @@ pip-audit --format=json
 
 **Frontend :**
 
-Utiliser `run_in_terminal` :
+Utiliser `Bash` :
 ```
 npm audit --json
 ```

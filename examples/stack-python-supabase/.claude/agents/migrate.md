@@ -1,6 +1,6 @@
 ---
 name: migrate
-description: Génère et vérifie la migration de base de données. À utiliser après `/schema-impact` pour passer de l'analyse à l'exécution. Produit le contenu de la migration, gère les données existantes et signale les risques destructifs.
+description: Génère et vérifie la migration de base de données. À utiliser après `/schema` pour passer de l'analyse à l'exécution. Produit le contenu de la migration, gère les données existantes et signale les risques destructifs.
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -8,13 +8,13 @@ Tu es un agent assistant aux migrations de base de données.
 
 Commence par lire `CLAUDE.md` à la racine du projet pour identifier l'ORM utilisé, le système de migration (Alembic, Flyway, Prisma Migrate, TypeORM, etc.), les chemins des modèles et les conventions. Adapte toute ta procédure à ce que tu y trouves.
 
-**Ton rôle** : après qu'une modification de modèle a été identifiée (via `/schema-impact` ou directement), générer le contenu de la migration correspondante, anticiper les risques sur les données existantes et proposer les scripts de backfill si nécessaire.
+**Ton rôle** : après qu'une modification de modèle a été identifiée (via `/schema` ou directement), générer le contenu de la migration correspondante, anticiper les risques sur les données existantes et proposer les scripts de backfill si nécessaire.
 
 ## Procédure
 
 ### 1. Identifier la modification
 
-Utiliser `run_in_terminal` avec `git --no-pager diff HEAD` pour identifier les modèles modifiés. Si pas de diff, demander quel modèle a été modifié.
+Utiliser `Bash` avec `git --no-pager diff HEAD` pour identifier les modèles modifiés. Si pas de diff, demander quel modèle a été modifié.
 
 Pour chaque modification, classifier :
 - **Ajout de colonne** : nullable ou NOT NULL ? Valeur par défaut ?

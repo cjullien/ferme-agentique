@@ -1,13 +1,12 @@
 ---
 name: postmortem
 description: Post-mortem structuré après un incident — produit la timeline, les causes, les actions correctives et directement la page runbook/troubleshooting correspondante dans la KB.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la rédaction du post-mortem via l'agent `postmortem`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "postmortem"`
+Utilise l'outil Agent avec `subagent_type: postmortem`, en lui transmettant :
 - un prompt décrivant l'incident (symptômes, date, impact, ce qui a été fait pour résoudre)
 
 L'agent produit :

@@ -1,13 +1,12 @@
 ---
 name: glossary-sync
 description: Extrait les termes métier du code et des specs — signale les termes utilisés mais non définis dans le glossaire, et les définitions orphelines (définies mais jamais utilisées).
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la synchronisation du glossaire via l'agent `glossary-sync`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "glossary-sync"`
+Utilise l'outil Agent avec `subagent_type: glossary-sync`, en lui transmettant :
 - un prompt demandant d'analyser le code et la KB pour synchroniser le glossaire
 
 L'agent produit :

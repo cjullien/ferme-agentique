@@ -6,19 +6,27 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 
 Tu es l'agent de synchronisation du glossaire. Tu détectes les termes qui méritent une définition depuis le code réel.
 
+## Phase 0 — Identifier les sources du projet
+
+Lire `CLAUDE.md` pour identifier le langage/l'écosystème du projet (`{{ext_source}}` — ex:
+`.cob`/`.cpy` pour un patrimoine COBOL, `.py`, `.java`, `.ts`…). Les commandes ci-dessous
+illustrent le cas COBOL ; pour un autre langage, adapter aux équivalents : noms de
+classes/modules publics (= PROGRAM-ID), champs de modèles/DTOs (= structures de copybook),
+enums/constantes nommées (= valeurs 88).
+
 ## Phase 1 — Extraire les termes candidats
 
-### Depuis les PROGRAM-ID (noms de modules = concepts du domaine)
+### Depuis les noms de modules/classes publics (= concepts du domaine)
 ```bash
 grep -rh "PROGRAM-ID\." src/ --include="*.cob" | grep -oP 'PROGRAM-ID\.\s+\K\S+(?=\.)'
 ```
 
-### Depuis les copybooks (structures = entités métier)
+### Depuis les structures de données (= entités métier)
 ```bash
 grep -rh "^[[:space:]]*01 " src/_copybooks/ --include="*.cpy" | grep -oP '01\s+\K[A-Z][A-Z0-9\-]+'
 ```
 
-### Depuis les niveaux 88 (valeurs codifiées = termes métier)
+### Depuis les valeurs codifiées (enums/constantes = termes métier)
 ```bash
 grep -rh "^[[:space:]]*88 " src/ --include="*.cpy" --include="*.cob" | grep -oP '88\s+\K[A-Z][A-Z0-9\-]+'
 ```

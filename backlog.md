@@ -20,6 +20,19 @@ arbitrage plus léger, non appliqué automatiquement.
 | FERME-8 | `tech-debt` redondant avec `audit-360` (sous-ensemble strict) | P2 | ✅ Résolu | supprimé, plan de remédiation absorbé dans `audit-360/SKILL.md` |
 | FERME-9 | `clean-tdd` mélangeait deux métiers (clean architecture + TDD) | P2 | ✅ Résolu | scindé en `tdd` (agent, Phase 2) + `improve-architecture` (audit de couches, applique désormais le refactoring) |
 | FERME-10 | `push` / `push-force` : deux fichiers pour un flag, convention incohérente avec `backlog-refinement --avancé` | P3 | ✅ Résolu | fusionnés dans `push/SKILL.md` (`--skip-tests`) |
+| FERME-11 | km-toolkit : `changelog`/`docs-update` collisionnent avec le socle, `changelog.md` est une fuite complète du domaine domain-immo | P1 | ✅ Résolu | `examples/km-toolkit/` |
+| FERME-12 | km-toolkit : 25/26 skills + `mf-km-generator.md` utilisent la syntaxe Copilot (`task`/`agent_type`) au lieu de Claude Code (`Agent`/`subagent_type`) — cassé côté Claude Code partout | P1 | ✅ Résolu | `examples/km-toolkit/.claude/skills/*/SKILL.md`, `mf-km-generator.md` |
+| FERME-13 | km-toolkit : `doc-coverage`/`spec-drift`/`glossary-sync` annoncés génériques dans `catalog.md` mais 100% câblés COBOL | P2 | ✅ Résolu | `examples/km-toolkit/.claude/agents/{doc-coverage,spec-drift,glossary-sync}.md` |
+| FERME-14 | Fuite de noms d'outils Copilot dans le corps de texte (`run_in_terminal`, `create_file`, `replace_string_in_file`, `read_file`, `list_directory`, `grep_search`, `file_search`) — non détectée par `validate_farm.py` (ne vérifie que le frontmatter `tools:`) | P2 | ✅ Résolu | 3 agents du socle (`dead-code`, `accessibility`, `dependencies`, `e2e`) + 3 dans `examples/` (`domain-immo/design-system`, `stack-python-supabase/{migrate,km-generator}`) |
+| FERME-15 | stack-python-supabase : `schema`/`schema-impact` et `db-diagram`/`mpd` — paires de fichiers strictement redondants | P2 | ✅ Résolu | doublons supprimés, références (`migrate.md`, `settings.json`) repointées vers les noms survivants |
+| FERME-16 | stack-python-supabase : `db-reset` refuse d'agir si PostgreSQL détecté alors que c'est la stack déclarée du module | P1 | ✅ Résolu | `examples/stack-python-supabase/.claude/skills/db-reset/SKILL.md` |
+| FERME-17 | feature-i18n : `translations-react-python.md` doublon byte-identique de `translations.md` avec collision de `name:` | P1 | ✅ Résolu | supprimé |
+| FERME-18 | feature-i18n : règle anti-tiret-cadratin de `translations/SKILL.md` auto-contradictoire (caractère perdu) | P2 | ✅ Résolu | réécrit à l'identique de `traduction/SKILL.md` |
+| FERME-19 | domain-immo : contradiction directe entre `ux-ui.md` (`rounded-lg` pour cartes) et `design-system.md` (`rounded-xl` obligatoire, `rounded-lg` listé comme anti-pattern) | P1 | ✅ Résolu | `examples/domain-immo/.claude/agents/ux-ui.md` |
+| FERME-20 | stack-java-spring : plusieurs fichiers contiennent des détails d'un projet réel unique (Spring AI, Tika OCR, GraalVM, item `NATIVE-001`...) au-delà de "Java/Spring générique" | P2 | Ouvert | `examples/stack-java-spring/.claude/agents/{ci,docs-update,product-owner,backlog-refinement}.md`, `.claude/skills/{coverage,improve-architecture}/SKILL.md` |
+| FERME-21 | stack-python-supabase : `settings.json` mélange des hooks frontend (pnpm, `.jsx/.tsx`) dans un module documenté backend-only | P3 | Ouvert | `examples/stack-python-supabase/.claude/settings.json` |
+| FERME-22 | stack-java-spring : agent `backlog-refinement` spécialisé Maven sans skill dédié → `/backlog-refinement` invoque l'agent générique du socle à la place | P3 | Ouvert | `examples/stack-java-spring/` |
+| FERME-23 | Fuites domaine mineures : `fixture.md` (stack-python-supabase) utilise un modèle d'exemple `Lease` ; chevauchement partiel `postmortem`/`session-digest` (km-toolkit) | P3 | Ouvert | `examples/stack-python-supabase/.claude/agents/fixture.md`, `examples/km-toolkit/` |
 
 ---
 
@@ -133,3 +146,149 @@ Deux fichiers séparés pour une différence d'un seul flag (sauter les tests), 
 `push-force/SKILL.md` supprimé du socle (`.claude/` et `.github/`) — au passage, son nom était
 trompeur : il ne faisait jamais de `git push --force`, seulement un push sans tests au
 préalable.
+
+---
+
+Items suivants issus d'un audit de cohérence et d'agnosticisme sur `template/` **et tous les
+modules `examples/`** (2026-07-09), via 4 agents d'audit parallèles + vérification manuelle des
+findings les plus surprenants avant correction.
+
+## FERME-11 — km-toolkit : collision de noms avec le socle + fuite domain-immo — ✅ Résolu
+
+`examples/km-toolkit/.claude/agents/changelog.md` et `docs-update.md` portaient les mêmes noms
+que les agents du socle, avec un contenu différent. `INSTALL.md` faisait un `cp -R` récursif
+sans détection de collision — installer km-toolkit sur un projet qui a déjà le socle écrasait
+silencieusement 2 agents génériques. `changelog.md` était en plus entièrement rédigé pour
+"l'application de gestion locative" (fuite du domaine `domain-immo`), sans rapport avec KM
+générique ni COBOL.
+
+**Résolu** : `docs-update.md`/skill supprimés de km-toolkit (celui du socle est utilisé tel
+quel, même rôle, pas de duplication). `changelog.md` renommé `newsletter` (valeur réelle
+différente : produit une newsletter HTML mensuelle, pas un `CHANGELOG.md`) et généricisé
+(catégories neutres pilotées par `CLAUDE.md` au lieu de baux/locataires). `INSTALL.md` et
+`catalog.md` mis à jour (24 agents / 25 skills), avec un avertissement explicite sur le risque
+de collision pour les futurs ajouts au module.
+
+## FERME-12 — km-toolkit : syntaxe Copilot dans les fichiers Claude Code — ✅ Résolu
+
+25 des 26 skills `.claude/skills/*/SKILL.md` de km-toolkit utilisaient `allowed-tools: task` et
+`` `agent_type: "X"` `` (syntaxe Copilot CLI) au lieu de `allowed-tools: Agent` et
+`` `subagent_type: X` `` (Claude Code) — identique dans les deux miroirs, donc cassé côté
+Claude Code sur la quasi-totalité du plus gros module de la ferme. Même bug dans l'agent
+`mf-km-generator.md` pour son invocation de `mf-inventory`. `validate_farm.py` ne le détecte
+pas : il ne vérifie que le frontmatter `tools:` des agents, pas ce genre de fuite dans le corps
+des skills.
+
+**Résolu** : script de correction ciblé sur les 25 skills (motif uniforme), correction manuelle
+de `mf-km-generator.md`. Vérifié : plus aucune occurrence de `` `task` ``/`agent_type:` dans
+tout le dépôt.
+
+## FERME-13 — km-toolkit : agents "qualité KB générique" 100% COBOL — ✅ Résolu
+
+`doc-coverage`, `spec-drift` et `glossary-sync` sont catégorisés dans `catalog.md` comme
+"contrôle qualité KB" — une couche explicitement distincte du dispositif mainframe `mf-*` — mais
+leurs commandes d'extraction étaient exclusivement câblées sur `.cob`/`.cpy`/`src/_copybooks/`
+sans aucune découverte via `CLAUDE.md`, inutilisables tels quels sur un projet KM non-COBOL.
+
+**Résolu** : ajout d'une Phase 0 "Identifier les sources du projet" (découverte du
+langage/écosystème via `CLAUDE.md`) dans les trois agents, commandes COBOL conservées comme
+exemple illustratif explicite plutôt que comme seul chemin possible.
+
+## FERME-14 — Fuites de noms d'outils Copilot dans le corps de texte — ✅ Résolu
+
+Au-delà de FERME-12 (km-toolkit), le même type de fuite existait ailleurs, non détecté par
+`validate_farm.py` (qui ne vérifie que le frontmatter `tools:` des agents) : `run_in_terminal`,
+`create_file`, `replace_string_in_file`, `read_file`, `list_directory`, `grep_search`,
+`file_search` mentionnés en dur dans le corps de 3 agents du **socle** (`dead-code.md`,
+`accessibility.md`, `dependencies.md`, `e2e.md`) et 2 modules `examples/`
+(`domain-immo/design-system.md`, `stack-python-supabase/{migrate,km-generator}.md`).
+
+**Résolu** : tous remplacés par les noms d'outils Claude Code (`Grep`, `Glob`, `Read`, `Bash`,
+`Write`, `Edit`). Balayage final sur tout le dépôt confirmant qu'il n'en reste aucun.
+
+## FERME-15 — stack-python-supabase : doublons `schema`/`schema-impact`, `db-diagram`/`mpd` — ✅ Résolu
+
+Deux paires de skills strictement redondants (même agent, corps quasi identique, seul le
+`name:` changeait) — `catalog.md` les présentait comme des alias alors que ce sont deux
+fichiers séparés à maintenir en double. `/schema-impact` était en fait le nom activement
+référencé ailleurs dans le module (`migrate.md`, hook `settings.json`), tandis que `/mpd`
+n'était référencé nulle part comme commande (seul le fichier de sortie s'appelle `mpd.md`,
+sans rapport).
+
+**Résolu** : gardé `schema` (cohérent avec le nom du skill générique du socle qu'il surcharge)
+et `db-diagram`, supprimé `schema-impact` et `mpd`. Références mises à jour dans `migrate.md`
+(agent + skill) et le hook de `settings.json`.
+
+## FERME-16 — stack-python-supabase : `db-reset` contredit la stack déclarée — ✅ Résolu
+
+Le module est "backend Python + ORM + Postgres/Supabase", mais `db-reset/SKILL.md` refusait
+d'agir si PostgreSQL était détecté et imposait SQLite avec des chemins en dur — à l'inverse de
+tous les autres skills du module qui découvrent tout via `CLAUDE.md`.
+
+**Résolu** : réécrit pour gérer les deux cas (SQLite local en mode démo, ou reset via le
+système de migration en place pour un Postgres/Supabase de dev), avec confirmation explicite
+obligatoire avant toute action destructive et interdiction du `DROP DATABASE`.
+
+## FERME-17 — feature-i18n : doublon `translations-react-python` — ✅ Résolu
+
+`translations-react-python.md` avait `name: translations` (collision directe avec
+`translations.md`) et était un doublon **byte-identique** de `translations.md` — aucun contenu
+spécifique React ou Python malgré son nom. La "variante React/Python" annoncée dans
+`catalog.md` était fictive.
+
+**Résolu** : fichier supprimé (`.claude` et `.github`), `catalog.md` corrigé.
+
+## FERME-18 — feature-i18n : règle auto-contradictoire — ✅ Résolu
+
+La règle anti-tiret-cadratin de `translations/SKILL.md` affichait littéralement le même
+caractère des deux côtés ("toujours `-`, jamais `-`") — le vrai tiret cadratin `—` avait été
+perdu, rendant la règle inapplicable. Gouvernance (`allowed-tools`, `disable-model-invocation`)
+également absente contrairement à l'alias `traduction/SKILL.md`.
+
+**Résolu** : réécrit à l'identique de `traduction/SKILL.md` (caractère correct + gouvernance
+alignée).
+
+## FERME-19 — domain-immo : contradiction `design-system` / `ux-ui` — ✅ Résolu
+
+Pas un simple chevauchement mais une vraie contradiction : `ux-ui.md` prescrivait `rounded-lg`
+pour les cartes/boutons, alors que `design-system.md` impose `rounded-xl` pour tous les types de
+card (section, table, toolbar, modale, empty state) et liste explicitement `rounded-lg`/
+`rounded-md` comme anti-pattern interdit sur un conteneur. Les boutons sont en réalité en
+`rounded-md` dans `design-system.md`, pas `rounded-lg` non plus.
+
+**Résolu** : `ux-ui.md` corrigé pour renvoyer vers `design-system.md` comme source de vérité
+sur les tokens de conteneurs plutôt que de dupliquer (et contredire) la règle.
+
+## FERME-20 — stack-java-spring : fuite d'un projet réel unique
+
+Plusieurs fichiers (`ci`, `docs-update`, `product-owner`, `backlog-refinement`, `coverage`,
+`improve-architecture`) contiennent des détails d'un projet précis (Spring AI, Tika OCR, classe
+`OcrSpringAiApplicationTest`, modules `service-llm`/`service-tika`, bean `LlmConfiguration`,
+item backlog `NATIVE-001`, contrainte "runner ≥ 24 Go", GraalVM, Tesseract) qui dépassent
+largement "Java/Spring Boot/Maven générique". Pas traité dans cette passe — demande une
+réécriture de contenu plus large (plusieurs fichiers, décider ce qui est vraiment
+stack-générique vs spécifique au projet d'origine), du même ordre que FERME-1 sur
+design-system/ux-ui. Piste : extraire vers un exemple dédié (`examples/domain-*` ou un nouveau
+module) et généraliser via des placeholders `{{...}}`, comme `settings.local.json.example` du
+même module le fait déjà pour les chemins de test.
+
+## FERME-21 — stack-python-supabase : `settings.json` mélange frontend/backend
+
+Les hooks (lignes ~91-107) incluent des règles frontend (pnpm, `.jsx`/`.tsx`, `/translations`)
+dans un module documenté comme backend-only. Suppose un monorepo full-stack + le module
+optionnel `feature-i18n`, non déclaré comme dépendance. Mineur, laissé en l'état.
+
+## FERME-22 — stack-java-spring : `backlog-refinement` sans skill dédié
+
+Le module a un agent `backlog-refinement` spécialisé Maven mais pas de skill propre — `/backlog-refinement`
+reste celui du socle (qui invoque `backlog-manager`), avec une simple note en fin de fichier
+socle invitant à préférer l'agent spécialisé s'il est installé. Recoupe FERME-4. Pas traité
+dans cette passe.
+
+## FERME-23 — Fuites domaine mineures restantes
+
+`examples/stack-python-supabase/.claude/agents/fixture.md` utilise un modèle d'exemple `Lease`
+(fuite légère `domain-immo`). `examples/km-toolkit/` : chevauchement partiel entre
+`postmortem` et `session-digest` (rôles proches — extraire le savoir d'une session/incident vers
+la KB — distinction correcte sur le déclencheur mais pas documentée). Mineurs, laissés en
+l'état.

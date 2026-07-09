@@ -1,13 +1,12 @@
 ---
 name: faq-harvest
 description: Mine les questions réellement posées dans les issues, tickets et revues de code — transforme les récurrentes en entrées FAQ et troubleshooting dans la KB.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la collecte des questions récurrentes via l'agent `faq-harvest`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "faq-harvest"`
+Utilise l'outil Agent avec `subagent_type: faq-harvest`, en lui transmettant :
 - un prompt indiquant où chercher (issues GitHub, tickets, commentaires de revues)
 
 L'agent produit :

@@ -1,13 +1,12 @@
 ---
 name: mf-anomaly-map
 description: Carte des zones à risque documentaire — programmes très appelés jamais modifiés, GO TO denses, code mort probable, sections démesurées. Priorise où l'effort de documentation est vital.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la détection des anomalies via l'agent `mf-anomaly-map`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-anomaly-map"`
+Utilise l'outil Agent avec `subagent_type: mf-anomaly-map`, en lui transmettant :
 - un prompt demandant de cartographier les zones à risque du patrimoine COBOL
 
 L'agent détecte et signale :

@@ -184,7 +184,7 @@ Quand la toolbar contient plus que le champ de recherche (filtres select, checkb
    - 🔴 Critique : token violé (couleur hex, `text-green-500` < 14px), tiret cadratin, string hardcodée.
    - 🟠 Majeur : conteneur non-standard, pattern datatable incomplet, touch target insuffisant.
    - 🟡 Mineur : taille d'icône non-standard, gap arbitraire, classe redondante.
-4. **Correction** chirurgicale via `replace_string_in_file`.
+4. **Correction** chirurgicale via `Edit`.
 5. **Validation** :
    - `cd frontend && pnpm eslint src/ --max-warnings 0` (jsx-a11y + react-hooks)
    - `cd frontend && pnpm test --run` (suite unitaire)
