@@ -32,7 +32,7 @@ Si aucun fichier CI n'est trouvé, signaler l'absence et proposer un template mi
 ### 2. Sécurité
 
 **🔴 Critique :**
-- Actions GitHub non pinnées à un SHA ou version majeure (ex: `uses: actions/checkout@main` → doit être `@v4`)
+- Actions GitHub non pinnées à une version (ex: `uses: actions/checkout@main` → doit être `@v4`)
 - Secrets passés en variable d'environnement en clair dans les logs
 - Permissions trop larges (`permissions: write-all`)
 - `pull_request_target` avec code de la PR (risque d'injection)
@@ -48,6 +48,13 @@ Si aucun fichier CI n'est trouvé, signaler l'absence et proposer un template mi
 - Jobs qui font la même chose en double
 - Steps inutiles ou commentés depuis longtemps
 - Dépendances entre jobs mal déclarées (`needs:`)
+
+### 3bis. Versions à jour (obligatoire)
+
+- Pour chaque action GitHub utilisée, vérifier la dernière version publiée (numéro de tag, ex: `v4.2.1`) via source externe factuelle (`gh api`/GitHub API/Marketplace), puis proposer la mise à jour.
+- Pinner sur le numéro de version (`@v4.2.1`), pas sur un SHA de commit.
+- Signaler en 🟡 toute action qui fonctionne encore mais cible un runtime runner déprécié (ex: Node 20 forcé sur Node 24), avec correction explicite.
+- Appliquer la même règle aux runtimes (`actions/setup-node`, `actions/setup-python`, etc.) : proposer la dernière majeure stable compatible avec le projet.
 
 ### ⚠️ Règle anti-faux-positifs - versions d'actions et runtimes
 

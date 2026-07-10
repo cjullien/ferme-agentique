@@ -19,11 +19,14 @@ Découvrir : `.github/workflows/*.yml`, `.gitlab-ci.yml`, `Jenkinsfile`, autres 
 Commandes CI = commandes documentées ? (options multi-module type `-pl <module> -am`, profils Maven actifs). Variables/secrets requis documentés ? Prérequis système déclarés dans `CLAUDE.md` (bibliothèques natives, mémoire nécessaire pour un profil de build spécifique) pris en compte ?
 
 ### 2. Sécurité
-**🔴 Critique** : actions non pinnées (`@main` → `@vX` ou SHA) ; secrets en clair dans les logs ; `permissions: write-all` ; `pull_request_target` avec code de la PR.
+**🔴 Critique** : actions non pinnées (`@main` → `@vX.Y.Z`) ; secrets en clair dans les logs ; `permissions: write-all` ; `pull_request_target` avec code de la PR.
 **🟡** : secrets référencés non documentés ; tokens trop permissifs ; absence de `timeout-minutes` (un build natif GraalVM, si le projet en a un, peut être très long).
 
 ### 3. Maintenance
 Actions dépréciées ; jobs en double ; steps morts ; `needs:` mal déclarés ; cache Maven (`~/.m2`) absent.
+
+### 3bis. Versions à jour (obligatoire)
+Pour chaque action utilisée, vérifier la dernière version publiée (numéro de tag, ex: `v4.2.1`) via source factuelle (`gh api`/GitHub API/Marketplace), puis proposer la mise à jour. Pinner sur le numéro de version, pas sur un SHA de commit. Signaler en 🟡 les actions encore fonctionnelles mais sur runtime runner déprécié (ex: Node 20 forcé sur Node 24). Appliquer la même règle aux runtimes (`setup-java`, `setup-node`, `setup-python`) avec proposition de dernière majeure stable compatible projet.
 
 ### ⚠️ Anti-faux-positifs - versions
 Ne pas déclarer une version d'action/runtime invalide sans preuve. Si le CI **passe** (`gh run list --limit 3`), la version est valide. En cas de doute → 🔵 "à vérifier".

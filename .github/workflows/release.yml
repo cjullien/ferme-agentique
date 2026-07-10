@@ -19,11 +19,11 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.0
+      - uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.0.0
+      - uses: actions/setup-python@v6.0.0
         with:
           python-version: "3.12"
 
@@ -61,7 +61,7 @@ jobs:
           git push origin "v$VERSION"
 
       - name: Créer la GitHub Release
-        uses: softprops/action-gh-release@7c4723f7a335432393329f8f1c564994ce50185d # v3
+        uses: softprops/action-gh-release@v3.0.1
         with:
           tag_name: v${{ steps.current.outputs.version }}
           name: v${{ steps.current.outputs.version }}
