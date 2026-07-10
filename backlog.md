@@ -7,7 +7,9 @@ BMAD-METHOD mais gardé plus léger (voir `catalog.md`), puis par un audit de co
 d'agnosticisme de tous les modules `examples/`, puis par un audit dédié à la **granularité**
 (taille/périmètre correct de chaque agent/skill, généricité du socle vs contextualisation
 réelle des exemples) mené le 2026-07-09 sur les 174 fichiers de la ferme via 5 revues
-parallèles. Les 45 items identifiés sont tous résolus (sauf FERME-46, décision documentée).
+parallèles, puis par une lecture personnelle exhaustive des 173 fichiers (agents + skills,
+socle et tous les modules `examples/`) menée le 2026-07-10 pour validation finale. Les 50
+items identifiés sont tous résolus (sauf FERME-46, décision documentée).
 
 ## Table des items
 
@@ -59,6 +61,10 @@ parallèles. Les 45 items identifiés sont tous résolus (sauf FERME-46, décisi
 | FERME-44 | stack-python-supabase : module nommé "supabase" mais seul skill Postgres présent est `neon-postgres` (produit alternatif) | P3 | ✅ Résolu | `catalog.md` clarifié |
 | FERME-45 | `farm-init/SKILL.md` : 223 lignes, mélangeait bootstrap/brainstorm/scaffolding/audit | P2 | ✅ Résolu | sous-processus de scaffolding extrait en skill `farm-new-module` |
 | FERME-46 | stack-python-supabase : `km-generator` (agent+skill) a peu de spécificité Python réelle, quasi-doublon de celui de km-toolkit | P3 | 🟡 Accepté | non modifié — permet le KM sans installer tout `km-toolkit`, voir détail |
+| FERME-47 | `audit.md` : `tools:` inclut `Write, Edit` alors que l'agent dit explicitement "Ne pas corriger — rapporter uniquement" | P3 | ✅ Résolu | `template/.claude/agents/audit.md` |
+| FERME-48 | `dead-code/SKILL.md` : trigger hardcode "Python + JS/TS" alors que l'agent sous-jacent est générique tout langage | P3 | ✅ Résolu | `template/.claude/skills/dead-code/SKILL.md` |
+| FERME-49 | `dependencies/SKILL.md` (`/deps`) : décrit encore "pip-audit (backend) et npm audit (frontend)" après la généralisation multi-écosystème de l'agent (FERME-34) | P2 | ✅ Résolu | `template/.claude/skills/dependencies/SKILL.md` |
+| FERME-50 | stack-python-supabase : `migrate/SKILL.md` — description à la grammaire cassée ("Génère la migration l'outil de migration...") | P3 | ✅ Résolu | `examples/stack-python-supabase/.claude/skills/migrate/SKILL.md` |
 
 ---
 
@@ -509,3 +515,49 @@ dispositif `km-toolkit` (24 agents), ce qui est un choix d'ergonomie légitime p
 ne veut qu'une doc générée sans le volet mainframe/qualité KB complet. Pas une fuite de
 généricité (le contenu reste agnostique), donc pas un problème de granularité au sens strict —
 à surveiller si les deux versions divergent un jour sur le même besoin.
+
+---
+
+# Lecture exhaustive de validation — 2026-07-10
+
+À la demande explicite de l'utilisateur ("lire chaque fichier pour valider son niveau de
+généricité et la logique de son contenu"), les 173 fichiers agents/skills de la ferme
+(71 dans `template/`, 102 dans `examples/`) ont été relus intégralement un par un, en direct
+(pas par délégation à des sous-agents), en plus des deux audits précédents. 4 problèmes
+supplémentaires trouvés, tous mineurs et corrigés :
+
+## FERME-47 — `audit.md` : `tools:` incohérent avec son contrat "rapport seul" — ✅ Résolu
+
+Le frontmatter déclarait `Write, Edit` alors que la procédure dit explicitement "Ne pas
+corriger — rapporter uniquement" (étape 5) et qu'aucune section de mise à jour de backlog ne
+justifie ces outils (contrairement à `owasp.md`/`accessibility.md` qui en ont une). **Résolu** :
+`tools:` réduit à `Read, Grep, Glob, Bash`, aligné sur `externalize.md` (même contrat).
+
+## FERME-48 — `dead-code/SKILL.md` : trigger non générique — ✅ Résolu
+
+Le skill listait "Imports inutilisés (Python + JS/TS)" alors que l'agent `dead-code.md`
+sous-jacent découvre le langage via `CLAUDE.md` et est déjà générique. **Résolu** : reformulé
+en "tout langage, découvert via CLAUDE.md".
+
+## FERME-49 — `dependencies/SKILL.md` (`/deps`) désynchronisé de son agent — ✅ Résolu
+
+FERME-34 a généralisé l'agent `dependencies.md` à Java/Go/Rust/Ruby, mais le skill
+déclencheur décrivait encore littéralement "Lancer pip-audit (backend) et npm audit
+(frontend)" — la correction de l'agent n'avait pas été répercutée dans son propre skill.
+**Résolu** : reformulé en renvoyant vers la liste multi-écosystème de l'agent.
+
+## FERME-50 — stack-python-supabase : `migrate/SKILL.md` — description à la grammaire cassée — ✅ Résolu
+
+`description: Génère la migration l'outil de migration après modification de modèle...` —
+phrase cassée, probablement un reliquat d'édition (mot "via" manquant). **Résolu** : corrigé en
+"Génère la migration via l'outil de migration après modification de modèle...".
+
+## Conclusion de la lecture exhaustive
+
+Sur 173 fichiers relus un par un, 169 étaient déjà corrects (confirmant la couverture des deux
+audits précédents) et 4 présentaient des défauts mineurs — tous des oublis de synchronisation
+lors de corrections précédentes (agent corrigé, skill associé oublié) plutôt que de nouveaux
+problèmes de fond. Aucune fuite de généricité ni incohérence de logique n'a été trouvée dans le
+contenu métier des modules `examples/` (légitimement spécifiques) ni dans le socle `template/`
+(vérifié agnostique). La ferme est jugée conforme à son objectif : socle 100% générique,
+modules `examples/` correctement contextualisés, avec la réserve documentée FERME-46.

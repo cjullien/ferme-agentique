@@ -1,6 +1,6 @@
 ---
 name: migrate
-description: Génère la migration l'outil de migration après modification de modèle - upgrade/downgrade, backfill, risques
+description: Génère la migration via l'outil de migration après modification de modèle - upgrade/downgrade, backfill, risques
 disable-model-invocation: true
 ---
 

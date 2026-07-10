@@ -1,7 +1,7 @@
 ---
 name: audit
 description: Pre-flight check avant audits spécialisés. Revue qualité, conventions et cohérence globale du diff.
-tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
+tools: [read_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 # Audit Pre-Flight

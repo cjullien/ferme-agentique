@@ -1,7 +1,7 @@
 ---
 name: audit
 description: Pre-flight check avant audits spécialisés. Revue qualité, conventions et cohérence globale du diff.
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: Read, Grep, Glob, Bash
 ---
 
 # Audit Pre-Flight
