@@ -1,18 +1,17 @@
 ---
 name: ux-ui
-description: Audit et amélioration UX/UI du frontend — cohérence visuelle, ergonomie mobile, design system, micro-interactions.
+description: Audit et amélioration UX/UI du frontend — cohérence visuelle, ergonomie, micro-interactions, par rapport aux conventions établies de ce projet.
 allowed-tools: Agent, Read, Grep, Glob, Bash, Edit, Write
 disable-model-invocation: true
 ---
 
 Lance un audit UX/UI complet via l'agent `ux-ui`.
 
-Utilise l'outil Agent avec `subagent_type: ux-ui` en transmettant un prompt demandant explicitement :
-- d'analyser le composant ou la page ciblée (ou tout le code source frontend si pas de périmètre précisé),
-- de relever les problèmes de cohérence visuelle (couleurs, tailles d'icônes, espacements, arrondis),
-- de vérifier l'ergonomie mobile (touch targets, responsive, overflow),
-- de vérifier le respect du design system (composants UI, tokens de design),
-- d'identifier les micro-interactions manquantes (loading, états vides, feedback),
-- une restitution structurée par sévérité (🔴 Critique / 🟠 Majeur / 🟡 Mineur),
-- d'appliquer les corrections chirurgicalement,
-- de s'assurer que les textes passent par i18n (`fr.js` + `en.js`).
+L'agent `ux-ui` du socle (`template/.claude/agents/ux-ui.md`) est un squelette générique : sa
+section "Périmètre à instancier" doit être complétée une fois, avec l'IA, à partir des
+conventions réelles de ce projet (voir la procédure décrite dans l'agent). Un exemple
+entièrement complété est disponible dans `examples/domain-immo/.claude/agents/ux-ui.md`.
+
+Une fois complété, ce skill déclenche l'agent avec le périmètre demandé (composant, page, ou
+tout le frontend par défaut) et restitue les findings classés par sévérité (🔴/🟠/🟡) ainsi
+que le résultat des corrections appliquées.

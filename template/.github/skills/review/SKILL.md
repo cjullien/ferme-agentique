@@ -14,16 +14,16 @@ Procédure :
 2. Lancer TOUJOURS :
    - Agent `audit` — revue qualité/sécurité/conventions sur le diff
 
-3. Lancer SI des fichiers de routeurs/controllers OU de couche API frontend sont modifiés :
+3. Lancer SI des fichiers de routeurs/controllers OU de couche API frontend sont modifiés ET SI l'agent est installé (`.claude/agents/api-contract.md`, module `stack-python-supabase`) :
    - Agent `api-contract` — vérifier que le contrat API reste cohérent
 
 4. Lancer SI des fichiers frontend (composants, pages) sont modifiés :
-   - Agent `a11y` — audit accessibilité limité aux fichiers modifiés
+   - Agent `accessibility` — audit accessibilité limité aux fichiers modifiés
 
 5. Lancer SI des fichiers d'authentification, de middleware ou de config sécurité sont modifiés :
    - Agent `owasp` — audit sécurité ciblé sur les fichiers sensibles modifiés
 
-6. Lancer SI des modèles de données sont modifiés :
+6. Lancer SI des modèles de données sont modifiés ET SI l'agent est installé (`.claude/agents/schema.md`, module `stack-python-supabase` — le socle n'a que le skill `schema`, sans agent dédié) :
    - Agent `schema` — analyse d'impact du changement de modèle
 
 7. **Toujours en dernier** — si la commande `/insights` est disponible dans cette session Claude Code, la lancer et lire son résultat :
@@ -38,6 +38,10 @@ Synthèse finale :
 [Findings regroupés par sévérité, tous agents confondus]
 [Patterns récurrents identifiés via /insights — si pertinents]
 [Verdict : ✅ Prêt à merger / ⚠️ Points à corriger / 🚫 Bloquant]
+
+> Cette revue reste volontairement légère et systématique (à lancer avant chaque merge). Pour
+> un gate formel avec traçabilité critères d'acceptation ↔ tests et profil de risque sur une
+> story ou une feature à enjeu (auth, paiement, données), lancer `/qa-gate` après cette revue.
 
 ## Mise à jour du backlog (si applicable)
 

@@ -12,21 +12,29 @@ Comme les autres modules `examples/`, deux versions miroir à contenu identique 
 ```
 km-toolkit/
 ├── .claude/
-│   ├── agents/    25 agents (.md)         — noms d'outils Claude Code (Read, Write, Edit, Bash, Grep, Glob)
-│   └── skills/    26 skills (SKILL.md)    — les déclencheurs invocables
+│   ├── agents/    24 agents (.md)         — noms d'outils Claude Code (Read, Write, Edit, Bash, Grep, Glob)
+│   └── skills/    24 skills (SKILL.md)    — les déclencheurs invocables
 ├── .github/
-│   ├── agents/    25 agents (.agent.md)   — noms d'outils Copilot (read_file, create_file...)
-│   └── skills/    26 skills (SKILL.md)    — identiques à .claude/skills/
+│   ├── agents/    24 agents (.agent.md)   — noms d'outils Copilot (read_file, create_file...)
+│   └── skills/    24 skills (SKILL.md)    — identiques à .claude/skills/
 ├── hooks.py       hook MkDocs             — moteur d'override universel
 ├── test_hooks.py  garde-fou du hook       — `python3 km-toolkit/test_hooks.py`
 └── INSTALL.md     ce fichier
 ```
 
-`zoom-out` est une skill autonome (sans agent dédié) → 26 skills pour 25 agents.
+Chaque agent a exactement une skill fine qui l'invoque (`/zoom-out` du socle couvre déjà le
+besoin de recadrage générique — km-toolkit ne le redéfinit pas).
 
 ## Installation (3 étapes)
 
 ### 1. Copier agents et skills
+
+⚠️ **Collision de noms avec le socle** : km-toolkit ne fournit **pas** son propre
+`docs-update` (il utilise celui du socle `template/` — même rôle, pas de duplication) et son
+agent de résumé mensuel s'appelle `newsletter` (pas `changelog`, pour ne pas entrer en
+collision avec l'agent `changelog` du socle qui produit un `CHANGELOG.md` plutôt qu'une
+newsletter HTML). Si votre projet a modifié ces noms localement, vérifiez qu'aucun autre nom
+de km-toolkit ne collisionne avant le `cp -R` — il n'y a pas de détection automatique.
 
 ```bash
 # Version Claude Code
@@ -91,12 +99,13 @@ arborescence diffère.
 `mf-data-lineage`, `mf-batch-map`, `mf-sme-interview`, `mf-modernization-bridge`,
 `mf-km-generator`.
 
-**Socle KM générique (8)** : `km-generator`, `docs-update`, `changelog`,
-`adr-capture`, `session-digest`, `postmortem`, `faq-harvest`, `glossary-sync`.
-*(+ `zoom-out` : skill autonome sans agent dédié.)*
+**Socle KM générique (7)** : `km-generator`, `newsletter`, `adr-capture`, `session-digest`,
+`postmortem`, `faq-harvest`, `glossary-sync`. *(`docs-update` n'est pas dupliqué ici — celui du
+socle `template/` est utilisé tel quel.)*
 
 **Contrôle qualité KB (5)** : `doc-coverage`, `spec-drift`, `km-audit`, `runbook-verify`,
-`onboarding-test`.
+`onboarding-test`. Génériques par construction (langage/écosystème découvert via `CLAUDE.md`),
+avec des exemples illustrés pour COBOL quand le dispositif mainframe est installé.
 
 ## Principe d'override (rappel)
 
@@ -105,6 +114,7 @@ arborescence diffère.
 
 ## Note sur les exemples
 
-4 agents (`mf-data-lineage`, `mf-modernization-bridge`, `km-audit`, `onboarding-test`)
-contiennent des exemples illustratifs issus du projet d'origine (noms de champs, de fichiers).
-Ce sont des exemples, pas de la logique — ils n'empêchent pas l'usage sur un autre patrimoine.
+7 agents (`mf-data-lineage`, `mf-modernization-bridge`, `km-audit`, `onboarding-test`,
+`doc-coverage`, `faq-harvest`, `postmortem`) contiennent des exemples illustratifs issus du
+projet d'origine (noms de champs, de fichiers, cas d'usage). Ce sont des exemples, pas de la
+logique — ils n'empêchent pas l'usage sur un autre patrimoine.

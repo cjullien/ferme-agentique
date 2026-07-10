@@ -1,6 +1,7 @@
 ---
 name: test-quality
 description: Audit qualité des tests — pyramide, anti-patterns, couverture fonctionnelle. Rapport uniquement, aucune modification de fichier.
+tools: [read_file, run_in_terminal, get_terminal_output, list_directory, file_search, grep_search, get_errors]
 ---
 
 Tu es un agent d'audit de la qualité des tests pour ce projet.

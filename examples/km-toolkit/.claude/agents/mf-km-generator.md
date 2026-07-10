@@ -21,7 +21,7 @@ Pose une seule question structurée si les paramètres ne sont pas précisés :
 ## Phase 1 — Inventaire (prérequis de tout le reste)
 
 Vérifie si `docs/kb/docs/mf/inventory.md` existe et est récent (< 7 jours).
-- Si non : **exécute l'agent `mf-inventory`** en appelant `task` avec `agent_type: "mf-inventory"`.
+- Si non : **exécute l'agent `mf-inventory`** avec l'outil Agent (`subagent_type: mf-inventory`).
 - Si oui : utiliser l'existant.
 
 Rapport intermédiaire : `[1/6] Inventaire — {N} programmes, {N} copybooks, {N} JCL`
@@ -127,7 +127,7 @@ En mode `reprise`, lire ce fichier et reprendre à la première vague non `compl
 | Synthèses | ✅ | index.md, onboarding.md |
 
 **Ratio** : 94% générées — 6% rédigées
-**Entrée suivante** : `/mf-freshness` pour maintenir la KB à jour après chaque promotion
+**Entrée suivante** : `/km-audit` pour maintenir la KB à jour après chaque promotion
 ```
 
 ## Surcharge humaine (human in the loop)

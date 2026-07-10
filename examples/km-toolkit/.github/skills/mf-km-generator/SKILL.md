@@ -1,13 +1,12 @@
 ---
 name: mf-km-generator
 description: Orchestre la génération complète de la KB mainframe — inventaire, graphe d'appels, fiches programme, dictionnaire, règles métier — par vagues priorisées. ~90% de pages générées, ~10% rédigées.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la génération orchestrée de la KB mainframe via l'agent `mf-km-generator`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-km-generator"`
+Utilise l'outil Agent avec `subagent_type: mf-km-generator`, en lui transmettant :
 - un prompt demandant de générer la base de connaissances complète du patrimoine mainframe
 
 L'agent orchestre les vagues dans l'ordre :

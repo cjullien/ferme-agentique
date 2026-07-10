@@ -18,7 +18,7 @@ Commence par lire `CLAUDE.md` à la racine du projet pour identifier la stack, l
 
 | Modèle | Fixture existante | Champs manquants | Désynchronisée |
 |--------|------------------|------------------|----------------|
-| Lease  | `sample_lease`   | -                | Non            |
+| User   | `sample_user`    | -                | Non            |
 | ...    | -                | -                | -              |
 
 Un modèle est **désynchronisé** si la fixture ne renseigne pas un champ `NOT NULL` sans valeur par défaut, ou si un champ a été ajouté au modèle depuis la dernière mise à jour de la fixture.

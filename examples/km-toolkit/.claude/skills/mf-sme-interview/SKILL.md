@@ -1,13 +1,12 @@
 ---
 name: mf-sme-interview
 description: Prépare et conduit l'interview d'un expert métier avant son départ — questions générées depuis la cartographie (zones denses, code sans doc, anomalies), réponses rangées dans les fiches.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la préparation d'interview expert via l'agent `mf-sme-interview`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-sme-interview"`
+Utilise l'outil Agent avec `subagent_type: mf-sme-interview`, en lui transmettant :
 - un prompt précisant le domaine ou les programmes à couvrir (ou "tous les programmes à risque")
 
 L'agent produit :

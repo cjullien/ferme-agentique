@@ -1,13 +1,12 @@
 ---
 name: runbook-verify
 description: Rejoue chaque runbook en dry-run — vérifie que les commandes, chemins et services nommés existent et sont cohérents. Marque les étapes cassées.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la vérification des runbooks via l'agent `runbook-verify`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "runbook-verify"`
+Utilise l'outil Agent avec `subagent_type: runbook-verify`, en lui transmettant :
 - un prompt demandant de vérifier tous les runbooks de `docs/kb/docs/runbooks/`
 
 L'agent produit :

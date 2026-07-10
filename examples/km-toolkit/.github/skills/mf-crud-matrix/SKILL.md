@@ -1,13 +1,12 @@
 ---
 name: mf-crud-matrix
 description: Matrice CRUD programmes × tables/fichiers — qui crée, lit, met à jour, supprime quoi. Socle des analyses d'impact et de la documentation par domaine.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la génération de la matrice CRUD via l'agent `mf-crud-matrix`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-crud-matrix"`
+Utilise l'outil Agent avec `subagent_type: mf-crud-matrix`, en lui transmettant :
 - un prompt demandant de construire la matrice CRUD entre programmes et ressources de données
 
 L'agent produit :

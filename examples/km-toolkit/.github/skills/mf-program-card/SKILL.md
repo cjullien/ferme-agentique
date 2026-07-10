@@ -1,13 +1,12 @@
 ---
 name: mf-program-card
 description: Génère les fiches d'identité de programmes COBOL — rôle déduit, entrées/sorties, appelants/appelés, tables accédées, volumétrie. Unité atomique de la KB mainframe, générée par lots.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la génération des fiches programme via l'agent `mf-program-card`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-program-card"`
+Utilise l'outil Agent avec `subagent_type: mf-program-card`, en lui transmettant :
 - un prompt demandant de générer les fiches d'identité pour tous les programmes COBOL (ou un sous-ensemble si précisé)
 
 L'agent produit pour chaque programme :

@@ -1,13 +1,12 @@
 ---
 name: onboarding-test
 description: Suit littéralement le parcours d'onboarding développeur et rapporte chaque étape qui échoue — comme un test d'intégration sur la documentation.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance le test du parcours d'onboarding via l'agent `onboarding-test`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "onboarding-test"`
+Utilise l'outil Agent avec `subagent_type: onboarding-test`, en lui transmettant :
 - un prompt demandant de suivre le parcours onboarding développeur depuis `docs/kb/docs/onboarding/developer.md`
 
 L'agent :

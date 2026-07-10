@@ -1,13 +1,12 @@
 ---
 name: mf-business-rules
 description: Extrait les règles métier enfouies dans le COBOL procédural — EVALUATE/IF imbriqués, tables de décision, constantes et valeurs 88. Restitue en langage naturel avec citation du paragraphe source.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance l'extraction des règles métier via l'agent `mf-business-rules`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-business-rules"`
+Utilise l'outil Agent avec `subagent_type: mf-business-rules`, en lui transmettant :
 - un prompt demandant d'extraire les règles métier depuis les programmes COBOL (ou un programme/domaine précis si spécifié)
 
 L'agent produit :

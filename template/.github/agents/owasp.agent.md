@@ -24,21 +24,21 @@ Analyse chaque catégorie dans l'ordre. Pour chaque finding, indique :
 - une recommandation concrète.
 
 ### A01 — Broken Access Control
-- Vérifier que toutes les routes sensibles ont `Depends(verify_token)` au bon niveau (routeur si possible)
+- Vérifier que toutes les routes sensibles ont un contrôle d'authentification au bon niveau (ex: `Depends()` FastAPI, `@PreAuthorize`/filtre de sécurité Spring, middleware Express/NestJS — mécanisme identifié via `CLAUDE.md`)
 - Vérifier l'absence d'IDOR (accès direct à un ID sans vérification d'appartenance)
 - Contrôler les règles CORS (origines, méthodes, headers)
 
 ### A02 — Cryptographic Failures
 - Vérifier qu'aucun secret n'est hardcodé dans le code
 - Vérifier que les secrets proviennent de la configuration / variables d'environnement
-- Vérifier que la comparaison des tokens se fait en temps constant (`secrets.compare_digest`)
+- Vérifier que la comparaison de tokens/secrets se fait en temps constant (ex: `secrets.compare_digest` Python, `MessageDigest.isEqual` Java, `crypto.timingSafeEqual` Node)
 - Vérifier l'absence d'algorithmes faibles (MD5/SHA1 pour mots de passe)
 - Vérifier que le JWT/token est en `sessionStorage` et non `localStorage` côté frontend
 
 ### A03 — Injection
 - SQL injection : vérifier l'usage de l'ORM (pas de SQL brut interpolé)
-- Command injection : vérifier `subprocess`, `os.system`, `eval()`
-- XSS : vérifier `dangerouslySetInnerHTML` et interpolations non échappées côté frontend
+- Command injection : vérifier l'exécution de commandes système (ex: `subprocess`/`os.system` Python, `ProcessBuilder`/`Runtime.exec` Java, `child_process` Node) et l'évaluation dynamique de code (`eval()`, `Function()`)
+- XSS : vérifier `dangerouslySetInnerHTML` (React) ou équivalent (`v-html` Vue, `[innerHTML]` Angular) et interpolations non échappées côté frontend
 
 ### A04 — Insecure Design
 - Vérifier la présence de protections sur endpoints sensibles (ex: login, envoi email)
@@ -53,7 +53,7 @@ Analyse chaque catégorie dans l'ordre. Pour chaque finding, indique :
 - Signaler les risques connus évidents côté versions déclarées
 
 ### A07 — Identification and Authentication Failures
-- Vérifier la robustesse de la vérification de token (`verify_token`)
+- Vérifier la robustesse de la fonction/middleware de vérification de token
 - Vérifier l'absence de token en query params
 - Vérifier la durée de vie et l'invalidation des sessions
 - Vérifier les messages d'erreur d'authentification (ne pas distinguer "utilisateur inconnu" de "mauvais mot de passe")
@@ -68,7 +68,7 @@ Analyse chaque catégorie dans l'ordre. Pour chaque finding, indique :
 - Vérifier l'absence de données sensibles dans les logs
 
 ### A10 — Server-Side Request Forgery (SSRF)
-- Vérifier les appels HTTP sortants (`requests`/`httpx`) pilotés par entrée utilisateur
+- Vérifier les appels HTTP sortants (ex: `requests`/`httpx` Python, `RestTemplate`/`WebClient` Java, `axios`/`fetch` Node) pilotés par entrée utilisateur
 - Vérifier que les URLs externes sont bornées par la config
 
 ## Format de sortie attendu

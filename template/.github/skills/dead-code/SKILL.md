@@ -7,7 +7,7 @@ description: Détecte et supprime le code mort, imports inutilisés, clés i18n 
 Lance une détection et suppression du code mort via l'agent `dead-code`.
 
 Utilise l'outil Agent avec `subagent_type: dead-code` pour analyser puis nettoyer :
-- Imports inutilisés (Python + JS/TS)
+- Imports inutilisés (tout langage, découvert via CLAUDE.md)
 - Fonctions, classes et composants jamais utilisés
 - Clés i18n orphelines (déclarées mais jamais référencées dans le JSX)
 - Blocs de code commentés

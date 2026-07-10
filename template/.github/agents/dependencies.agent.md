@@ -12,28 +12,31 @@ Commence par lire `CLAUDE.md` à la racine du projet pour identifier la stack te
 
 ## Identification des fichiers de dépendances
 
-Via CLAUDE.md et l'arborescence :
-- Backend : `requirements.txt`, `pyproject.toml`, `Pipfile`
-- Frontend : `package.json`, `pnpm-lock.yaml`, `package-lock.json`, `yarn.lock`
+Via CLAUDE.md et l'arborescence — exemples selon l'écosystème :
+- Python : `requirements.txt`, `pyproject.toml`, `Pipfile`
+- Node/JS/TS : `package.json`, `pnpm-lock.yaml`, `package-lock.json`, `yarn.lock`
+- Java/Kotlin : `pom.xml`, `build.gradle(.kts)`
+- Go : `go.mod`
+- Rust : `Cargo.toml`
+- Ruby : `Gemfile`
 
 ## Procédure
 
 ### 1. Audit des vulnérabilités
 
-**Backend (Python) :**
+Pour chaque écosystème identifié, utiliser l'outil d'audit correspondant (`Bash`) :
 
-Utiliser `run_in_terminal` :
-```
-pip-audit --format=json
-# Si pip-audit indisponible : safety check --json
-```
+| Écosystème | Commande |
+|---|---|
+| Python | `pip-audit --format=json` (repli : `safety check --json`) |
+| Node/JS/TS | `npm audit --json` (ou `pnpm audit --json` / `yarn audit --json`) |
+| Java/Kotlin (Maven) | `mvn org.owasp:dependency-check-maven:check` |
+| Java/Kotlin (Gradle) | `./gradlew dependencyCheckAnalyze` |
+| Go | `govulncheck ./...` |
+| Rust | `cargo audit` |
+| Ruby | `bundle audit check` |
 
-**Frontend :**
-
-Utiliser `run_in_terminal` :
-```
-npm audit --json
-```
+Si l'outil dédié n'est pas installé, le signaler plutôt que d'inventer un résultat.
 
 Classer les findings par sévérité : CRITICAL → HIGH → MODERATE → LOW
 

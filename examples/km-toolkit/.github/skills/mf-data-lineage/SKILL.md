@@ -1,13 +1,12 @@
 ---
 name: mf-data-lineage
 description: Suit un champ de données à travers les MOVE/COMPUTE entre programmes, fichiers et tables — "d'où vient cette valeur ?". Produit un diagramme de flux par champ critique.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance le traçage du lignage de données via l'agent `mf-data-lineage`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-data-lineage"`
+Utilise l'outil Agent avec `subagent_type: mf-data-lineage`, en lui transmettant :
 - un prompt précisant le champ à tracer (ex: "trace CLI-MONTANT depuis sa source jusqu'à sa sortie")
 
 L'agent produit :

@@ -1,12 +1,12 @@
 ---
 name: migrate
-description: Génère la migration l'outil de migration après modification de modèle - upgrade/downgrade, backfill, risques
+description: Génère la migration via l'outil de migration après modification de modèle - upgrade/downgrade, backfill, risques
 disable-model-invocation: true
 ---
 
 Génère et vérifie la migration de base de données via l'agent `migrate`.
 
-À utiliser après `/schema-impact` pour passer de l'analyse à l'exécution.
+À utiliser après `/schema` pour passer de l'analyse à l'exécution.
 
 Utilise l'outil Agent avec `subagent_type: migrate` pour :
 - Analyser la modification de modèle en cours (git diff)

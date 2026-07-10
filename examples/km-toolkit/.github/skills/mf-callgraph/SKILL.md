@@ -1,13 +1,12 @@
 ---
 name: mf-callgraph
 description: Graphe d'appels complet du patrimoine COBOL — CALL statiques et dynamiques, COPY/INCLUDE, liens JCL→programme. Produit une vue agrégée par domaine et une page interactive filtrable.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la génération du graphe d'appels via l'agent `mf-callgraph`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-callgraph"`
+Utilise l'outil Agent avec `subagent_type: mf-callgraph`, en lui transmettant :
 - un prompt demandant de construire le graphe d'appels complet du patrimoine COBOL
 
 L'agent produit :

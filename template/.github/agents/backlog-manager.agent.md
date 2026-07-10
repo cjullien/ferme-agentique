@@ -22,7 +22,7 @@ Tu es responsable de :
 
 1. **Lire backlog actuelle** : `docs/specs/backlog.md` (table + groupements)
 2. **Lire CLAUDE.md** : chercher liste d'items en cours, priorités mentionnées
-3. **Grep code source** : chercher TODO, FIXME, console.warn/error
+3. **Grep code source** : chercher TODO, FIXME, logs de debug (`console.warn/error`, `print`, `logger.debug` — selon le langage identifié via `CLAUDE.md`)
 4. **Lister issues GitHub** (si existantes) : croiser avec backlog
 5. **Générer rapport** :
    - Items qui existent en code mais pas en backlog

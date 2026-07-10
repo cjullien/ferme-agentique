@@ -9,7 +9,13 @@ Vérifie les classes de bugs déjà rencontrées dans ce dépôt :
 - une désynchronisation entre `.claude/` et `.github/` : agent ou skill
   présent d'un côté et absent de l'autre, ou corps de texte différent
   (le frontmatter `tools:` a le droit de différer, pas le reste) ;
-- un `settings.json` qui n'est pas un JSON valide.
+- un `settings.json` qui n'est pas un JSON valide ;
+- un corps de fichier `.claude/` (pas seulement le frontmatter `tools:`)
+  qui contient de la syntaxe Copilot (noms d'outils ou `agent_type:`) —
+  le bug trouvé sur 25/26 skills de km-toolkit (FERME-12), non détecté
+  par le check de frontmatter seul ;
+- un `subagent_type:` qui ne correspond à aucun agent réellement présent
+  dans le dépôt (socle ou un module `examples/`) — référence cassée.
 
 Usage :
     python3 scripts/validate_farm.py [--verbose]
@@ -20,6 +26,7 @@ avertissements n'affectent pas le code de sortie.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -37,6 +44,15 @@ COPILOT_TOOL_MARKERS = {
 # Noms d'outils Claude Code qui n'ont pas d'équivalent Copilot direct : leur
 # présence dans un `.agent.md` Copilot signale l'erreur inverse.
 CLAUDE_TOOL_MARKERS = {"Read", "Write", "Edit", "Bash", "Grep", "Glob"}
+
+# Fichiers .claude/ qui documentent intentionnellement les deux syntaxes
+# (Copilot ET Claude Code) côte à côte pour un usage cross-outil — pas un
+# bug de fichier copié sans traduction. Chemin relatif à ROOT.
+INTENTIONAL_DUAL_SYNTAX_FILES = {
+    "template/.claude/skills/audit-360/SKILL.md",
+}
+
+SUBAGENT_TYPE_RE = re.compile(r"subagent_type:\s*[\"']?([a-zA-Z0-9_-]+)")
 
 
 class Report:
@@ -163,6 +179,75 @@ def check_module_mirror_symmetry(module_dir: Path, report: Report) -> None:
         )
 
 
+def check_copilot_leaks_in_claude_body(report: Report) -> None:
+    """Cherche des noms d'outils Copilot ou de la syntaxe `agent_type:` dans le
+    CORPS (pas juste le frontmatter `tools:`) des fichiers `.claude/`. C'est la
+    classe de bug qui a affecté 25/26 skills de km-toolkit (FERME-12) : le
+    frontmatter était correct mais le corps invoquait encore la syntaxe Copilot,
+    invisible pour `check_tools_frontmatter`.
+    """
+    marker_re = re.compile(
+        r"\b(" + "|".join(re.escape(m) for m in COPILOT_TOOL_MARKERS) + r")\b"
+    )
+    agent_type_re = re.compile(r"\bagent_type\s*[:=]")
+
+    paths = list(ROOT.glob("template/.claude/agents/*.md"))
+    paths += list(ROOT.glob("template/.claude/skills/*/SKILL.md"))
+    for example_dir in sorted((ROOT / "examples").iterdir()):
+        if not example_dir.is_dir():
+            continue
+        paths += list(example_dir.glob(".claude/agents/*.md"))
+        paths += list(example_dir.glob(".claude/skills/*/SKILL.md"))
+
+    for path in paths:
+        rel = str(path.relative_to(ROOT))
+        if rel in INTENTIONAL_DUAL_SYNTAX_FILES:
+            continue
+        text = path.read_text(encoding="utf-8")
+        _, body = split_frontmatter(text)
+        tool_hits = sorted(set(marker_re.findall(body)))
+        has_agent_type = bool(agent_type_re.search(body))
+        if tool_hits or has_agent_type:
+            details = list(tool_hits)
+            if has_agent_type:
+                details.append("agent_type:")
+            report.error(
+                f"{rel}: corps de fichier contient de la syntaxe Copilot non "
+                f"traduite : {details}"
+            )
+
+
+def check_subagent_type_references(report: Report) -> None:
+    """Vérifie que chaque `subagent_type:` cité dans un skill/agent correspond à
+    un agent réellement présent quelque part dans le dépôt (socle ou un module
+    `examples/`) — les modules peuvent référencer un agent conditionnel d'un
+    autre module (cf. `audit-360`, `review`), donc la recherche est repo-wide,
+    pas limitée au module courant.
+    """
+    all_agent_names: set[str] = {p.stem for p in ROOT.glob("template/.claude/agents/*.md")}
+    for example_dir in (ROOT / "examples").iterdir():
+        if example_dir.is_dir():
+            all_agent_names |= {p.stem for p in example_dir.glob(".claude/agents/*.md")}
+
+    paths = list(ROOT.glob("template/.claude/skills/*/SKILL.md"))
+    paths += list(ROOT.glob("template/.claude/agents/*.md"))
+    for example_dir in sorted((ROOT / "examples").iterdir()):
+        if not example_dir.is_dir():
+            continue
+        paths += list(example_dir.glob(".claude/skills/*/SKILL.md"))
+        paths += list(example_dir.glob(".claude/agents/*.md"))
+
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        for match in SUBAGENT_TYPE_RE.finditer(text):
+            name = match.group(1)
+            if name not in all_agent_names:
+                report.error(
+                    f"{path.relative_to(ROOT)}: `subagent_type: {name}` ne correspond "
+                    f"à aucun agent existant (socle ou examples/)"
+                )
+
+
 def check_settings_json(report: Report) -> None:
     for path in ROOT.rglob("settings*.json"):
         try:
@@ -211,6 +296,8 @@ def main() -> int:
 
     check_settings_json(report)
     check_catalog_consistency(report)
+    check_copilot_leaks_in_claude_body(report)
+    check_subagent_type_references(report)
 
     if report.warnings:
         print(f"⚠️  {len(report.warnings)} avertissement(s) :")

@@ -15,63 +15,59 @@ Le projet est en production avec des utilisateurs réels. Chaque release (v1.0.1
 ## Périmètre
 
 ### À documenter
-- ✅ Nouvelles thèmes (couleurs sable, accents)
-- ✅ Améliorations UX (boutons, navigation, ergonomie)
-- ✅ Nouvelles fonctionnalités (ex: i18n, nouveaux réglages)
-- ✅ Optimisations (perf, batterie, offline)
-- ✅ Corrections bugs critiques
-- ✅ Accessibilité (WCAG improvements)
+- ✅ Nouvelles fonctionnalités visibles pour l'utilisateur
+- ✅ Améliorations UX (navigation, ergonomie, apparence)
+- ✅ Optimisations perceptibles par l'utilisateur (rapidité, fiabilité)
+- ✅ Corrections de bugs critiques
+- ✅ Accessibilité (améliorations WCAG)
 
 ### À ignorer
 - ❌ Refactoring interne
-- ❌ Dépendances npm (sauf sécurité majeure)
+- ❌ Mise à jour de dépendances (sauf correctif de sécurité majeur)
 - ❌ Tests ajoutés
-- ❌ Code cleanup
+- ❌ Nettoyage de code
 
 ## Format
 
 ```markdown
 # {{PROJET}} vX.Y.Z — Release Notes
 
-## 🎨 Thèmes & UI
-- Nouvelle couleur sable "Sunset" (version dark)
-- Contraste amélioré en mode clair (WCAG AA)
+## ✨ Nouveautés
+- Nouvelle fonctionnalité X, décrite en une phrase orientée bénéfice utilisateur
 
-## ⚡ Performance
-- Timer animation 40% plus fluide (60 FPS stable)
-- Bundle réduit de 12KB (offline cache optimisé)
+## ⚡ Améliorations
+- Gain concret perceptible par l'utilisateur (ex : "40% plus rapide au chargement")
 
-## 🔧 Fixes
-- Corriger pause/resume sur certains appareils iOS
-- Haptics maintenant disponible sur Android 11+
+## 🔧 Corrections
+- Bug corrigé, décrit du point de vue de l'utilisateur (pas la cause technique)
 
 ## ♿ Accessibilité
-- AriaLabels sur tous les boutons
-- Navigation au clavier complète
+- Amélioration d'accessibilité, si applicable
 
-## 📱 Offline
-- Sync localStorage amélioré (moins de latence)
-- Cache stratégie mise à jour
-
-## Merci!
-Version complète sur [GitHub Releases](...)
+## Merci !
+Détails complets sur [GitHub Releases](...)
 ```
+
+Les catégories ci-dessus sont un point de départ — adapter/renommer selon ce qui existe
+réellement dans le projet (ex : ajouter une catégorie dédiée si le produit a une dimension
+forte — mobile, offline, temps réel… — plutôt que de forcer les changements dans les
+catégories génériques).
 
 ## Procédure
 
-1. **Lire les commits** depuis dernière release (git log v1.0.0..HEAD)
+1. **Lire les commits** depuis dernière release (`git log <dernier tag>..HEAD`)
 2. **Extraire les features** (feat:, fix:, perf:, a11y:, style:, etc.)
-3. **Catégoriser** par domaine (Thèmes, Performance, Fixes, Accessibilité, etc.)
+3. **Catégoriser** par domaine pertinent pour ce projet (adapter les catégories ci-dessus)
 4. **Transformer en langage utilisateur** (jamais jargon technique)
 5. **Créer CHANGELOG.md** ou fichier `RELEASE_NOTES_vX.Y.Z.md`
 6. **Suggérer GitHub Release** pour publication
 
 ## Tone
 
-- **Positif** : "Nouvelles couleurs magnifiques" vs. "Couleurs ajoutées"
-- **Clair** : "Timer 40% plus fluide" vs. "Optimisation animation"
+- **Positif** : "Nouvelle interface plus claire" vs. "Interface modifiée"
+- **Clair** : formuler le gain concret plutôt que le terme technique
 - **Concis** : max 1 ligne par feature
-- **Non-technique** : jamais "React hooks", "bundle optimization", "CSS variables"
+- **Non-technique** : jamais de termes d'implémentation ("hooks", "bundle", "variables CSS"…)
 
 ## Workflow
 

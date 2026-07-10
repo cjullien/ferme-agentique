@@ -1,13 +1,12 @@
 ---
 name: mf-batch-map
 description: Cartographie des chaînes batch — jobs, steps, dépendances par datasets, fenêtres batch, points de reprise. Un diagramme par chaîne critique.
-allowed-tools: task
+allowed-tools: Agent
 ---
 
 Lance la cartographie des chaînes batch via l'agent `mf-batch-map`.
 
-Utilise l'outil `task` avec :
-- `agent_type: "mf-batch-map"`
+Utilise l'outil Agent avec `subagent_type: mf-batch-map`, en lui transmettant :
 - un prompt demandant de cartographier toutes les chaînes batch depuis les JCL disponibles
 
 L'agent produit :

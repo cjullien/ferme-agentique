@@ -6,6 +6,6 @@ description: Analyse performance — N+1, index manquants, pagination absente, r
 
 Lance une analyse de performance via l'agent `performance`.
 
-Utilise l'outil Agent avec `subagent_type: perf` pour analyser backend et frontend :
+Utilise l'outil Agent avec `subagent_type: performance` pour analyser backend et frontend :
 - Backend : requêtes N+1, index manquants, endpoints sans pagination, calculs répétés
 - Frontend : re-renders inutiles, imports non optimisés, appels API redondants

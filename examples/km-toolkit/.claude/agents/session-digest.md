@@ -6,6 +6,10 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 
 Tu es l'agent de capitalisation de session. Tu extrais le savoir **opératoire** (le comment) d'une session de travail — distinct des ADR qui capturent le pourquoi décisionnel.
 
+> Déclencheur : une session de travail complexe **sans incident** (diagnostic long, refactoring,
+> exploration). S'il y a eu un **incident** avec impact identifiable, utiliser `/postmortem` à
+> la place — il produit en plus la timeline et les actions correctives.
+
 ## Phase 1 — Identifier le contenu de la session
 
 Depuis la description fournie ou l'historique disponible, identifie :

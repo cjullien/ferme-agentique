@@ -13,16 +13,17 @@ Commence par lire `CLAUDE.md` à la racine du projet pour identifier la stack te
 ## Stratégie de recherche (efficacité)
 
 Utiliser dans cet ordre :
-1. `grep_search` avec pattern précis — pour les imports, les clés i18n, les routes
-2. `file_search` — pour lister les fichiers par pattern avant de lire
-3. `read_file` — ne lire que les sections pertinentes
-Toujours vérifier l'usage dans TOUT le projet via grep_search avant de supprimer une fonction ou un composant.
+1. `Grep` avec pattern précis — pour les imports, les clés i18n, les routes
+2. `Glob` — pour lister les fichiers par pattern avant de lire
+3. `Read` — ne lire que les sections pertinentes
+Toujours vérifier l'usage dans TOUT le projet via `Grep` avant de supprimer une fonction ou un composant.
 
 ## Périmètre
 
 Découvert via CLAUDE.md :
-- **Frontend** : répertoire source `/src` (React)
-- **Traductions** : fichiers i18n trouvés (fr/en)
+- **Frontend** : répertoire source frontend (chemin et framework identifiés via CLAUDE.md)
+- **Backend** : répertoire source backend, si présent
+- **Traductions** : fichiers i18n trouvés, quelle que soit leur structure (`locales/`, `i18n/`, `lang/`…)
 - **Documentation** : fichiers `.md` à la racine, dans `docs/` ou `docs/specs/`
 
 ## Processus en deux phases
@@ -37,51 +38,36 @@ Appliquer les suppressions/corrections dans l'ordre de risque croissant.
 
 ## Ce qu'il faut détecter et supprimer
 
-### Frontend React (JavaScript/JSX)
+### Frontend
 
 **Imports inutilisés**
 - `import X` ou `import { X } from Y` jamais utilisé dans le fichier
-- Exception : imports React, utils génériques réutilisables
+- Exception : imports du framework lui-même, utils génériques réutilisables
 
 **Fonctions et composants morts**
-- Composants définis mais jamais rendus (ni dans le code, ni dans les tests E2E)
-- Hooks custom jamais appelés
+- Composants définis mais jamais rendus ni importés ailleurs dans le projet (ni dans le code, ni dans les tests e2e)
+- Hooks/composables custom jamais appelés
+- Props/inputs déclarés mais jamais passés par aucun parent
 - Toujours grep dans tout le projet avant de supprimer
 
 **Clés i18n orphelines (si multi-langue activé)**
-- Clés définies dans `src/constants/i18n.js` mais jamais utilisées
-- `grep -r "t('app.unused_key')"` → si rien, orpheline
-- Clés manquantes : code utilise `t('missing_key')` mais clé non définie
+- Clés définies dans les fichiers de traduction mais jamais référencées dans les templates/vues
+- Grep la clé dans tout le code source → si rien, orpheline
+- Clés manquantes : le code référence une clé absente des fichiers de traduction (signaler séparément)
 
 **Variables mortes**
 - Variables assignées mais jamais lues
 - Constantes définies et jamais importées
 
 **Code commenté**
-- Blocs Python commentés (`# ancien code`, `# TODO remove`, etc.)
+- Blocs de code commentés (`// ancien code`, `# TODO remove`, etc.), quel que soit le langage
 - Conserver uniquement les commentaires qui expliquent le POURQUOI
 
 **TODO/FIXME obsolètes**
-- Commentaires `# TODO`, `# FIXME`, `# HACK` sans date ni ticket → signaler sans supprimer
+- Commentaires `TODO`, `FIXME`, `HACK` sans date ni ticket → signaler sans supprimer
 
 **Routes orphelines**
-- Endpoints déclarés dans les routers mais absents de la couche API frontend ET absents des tests
-
-### Frontend (JavaScript/composants)
-
-**Imports inutilisés**
-- `import X from 'Y'` jamais utilisé dans le fichier
-
-**Composants morts**
-- Composants définis mais jamais importés ailleurs dans le projet
-- Props déclarées mais jamais passées par aucun parent
-
-**Clés i18n orphelines**
-- Clés déclarées dans les fichiers de traduction mais jamais référencées dans le JSX/TSX
-- Clés utilisées dans le JSX mais absentes des fichiers de traduction (signaler séparément)
-
-**Code commenté**
-- Blocs JSX commentés, anciens composants en commentaire
+- Endpoints déclarés côté backend mais absents de la couche d'appel API frontend ET absents des tests
 
 ### Documentation
 

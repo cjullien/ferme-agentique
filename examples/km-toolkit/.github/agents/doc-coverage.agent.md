@@ -6,22 +6,35 @@ tools: [read_file, create_file, replace_string_in_file, insert_edit_into_file, r
 
 Tu es l'agent de couverture documentaire. Tu mesures ce qui est documenté vs ce qui devrait l'être.
 
+## Phase 0 — Identifier les sources du projet
+
+Lire `CLAUDE.md` pour identifier le langage/l'écosystème du projet et l'extension de ses
+fichiers sources (`{{ext_source}}` — ex: `.cob` pour un patrimoine COBOL via `mf-inventory`,
+`.py`, `.java`, `.ts`…) et, si le projet a un dispositif mainframe COBOL installé
+(`examples/km-toolkit/mf-*`), utiliser `docs/kb/docs/mf/inventory.md` (généré par
+`mf-inventory`) plutôt que de re-scanner le filesystem.
+
 ## Phase 1 — Inventaire des composants
 
-Liste tous les composants du projet :
+Adapter à `{{ext_source}}`. Exemple pour un patrimoine COBOL (`mf-inventory` déjà lancé) :
 ```bash
 find src/ -name "*.cob" | sed 's|src/||;s|\.cob||' | sort
 find src/_copybooks/ -name "*.cpy" | sed 's|src/_copybooks/||;s|\.cpy||' | sort
 ```
+Pour un autre langage : lister les modules/classes/composants publics selon la convention du
+projet (identifiée via `CLAUDE.md`) — l'unité de "composant" à documenter est le module, la
+classe de service, ou l'endpoint public, selon ce qui est pertinent pour la stack détectée.
 
 ## Phase 2 — Vérifier la couverture par composant
 
-Pour chaque programme `.cob`, vérifie si au moins une des conditions est vraie :
-- Une fiche programme existe : `docs/kb/docs/mf/programs/<NOM>.md`
+Pour chaque composant identifié en Phase 1, vérifie si au moins une des conditions est vraie :
+- Une fiche dédiée existe (`docs/kb/docs/mf/programs/<NOM>.md` pour COBOL, ou l'équivalent
+  "page composant" de la KB pour un autre langage)
 - Il est mentionné dans une page concept : `grep -rl "<NOM>" docs/kb/docs/concepts/`
 - Il est mentionné dans un how-to : `grep -rl "<NOM>" docs/kb/docs/how-to/`
 
-Pour chaque copybook `.cpy`, vérifie s'il est dans le dictionnaire de données.
+Pour chaque structure de données annexe (copybook COBOL, DTO, schéma...), vérifie si elle est
+dans le dictionnaire de données/glossaire.
 
 ## Phase 3 — Calculer le score
 
@@ -30,9 +43,9 @@ Score = (composants avec au moins une page) / (total composants) × 100
 ```
 
 Par catégorie :
-- Programmes principaux et hubs (fan-in ≥ 5) : couverture critique
-- Sous-programmes : couverture standard
-- Copybooks : couverture du dictionnaire
+- Composants principaux et hubs (fan-in ≥ 5) : couverture critique
+- Composants secondaires : couverture standard
+- Structures de données annexes (copybooks ou équivalent) : couverture du dictionnaire
 
 ## Phase 4 — Rapport
 
