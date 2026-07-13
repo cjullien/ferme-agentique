@@ -179,6 +179,11 @@ Variantes adaptées au build Maven & natif : agents `ci`, `docs-update`, `produc
 `backlog-manager` (variante Java/Spring/Maven — surcharge automatiquement celui du socle à
 l'installation, même nom, pas de skill dédiée nécessaire) ; skills `ci`, `coverage` (JaCoCo),
 `docs-update`, `improve-architecture`.
+Agents + skills `db-migrations` (idempotence des scripts Flyway — `CREATE TABLE`/`INDEX`/
+`ADD COLUMN` sans garde `IF NOT EXISTS`, cohérence prod/test) et `karate-tnr` (complète la
+couverture des TNR Karate pour tout endpoint HTTP nouveau/modifié, y compris parité entre
+plusieurs implémentations backend derrière le même contrat) — issus de POC-NB `ocr-spring-ai`
+(Java + Python derrière la même API, migrations Postgres/H2 partagées).
 + `settings.json` (permissions mvn/java/git/gh).
 
 ### `stack-web-vite/` — frontend Vite + React (PWA)
