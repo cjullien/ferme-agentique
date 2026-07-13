@@ -3,6 +3,16 @@
 > Deux versions miroir sont disponibles : **Claude Code** (`.claude/`) et **Copilot** (`.github/`).
 > Installer celle de l'outil utilisé — ou les deux (contenus identiques).
 
+## Installation rapide (CLI)
+
+```bash
+npx github:cjullien/ferme-agentique
+```
+
+Automatise les étapes 1 à 4 ci-dessous de façon interactive (socle, `CLAUDE.md`, brainstorm des
+modules, audit final) sans nécessiter Claude Code. Voir `cli/`. Les étapes manuelles ci-dessous
+restent valables pour un contrôle fin ou pour ajouter un module après coup.
+
 ## 1. Poser le socle générique
 
 ### Version Claude Code (`.claude/`)

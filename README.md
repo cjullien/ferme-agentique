@@ -74,8 +74,15 @@ python3 scripts/validate_farm.py                    # vérifie l'ensemble (miroi
 
 ## Démarrage rapide
 
-Voir `INSTALL.md`. En résumé : copier `template/.claude/` dans le nouveau projet, renommer
-`CLAUDE.template.md` → `CLAUDE.md` et le remplir, puis ajouter les modules `examples/` utiles.
+```bash
+npx github:cjullien/ferme-agentique
+```
+
+CLI interactive (`cli/`, zéro dépendance) qui reproduit `/farm-init` sans passer par Claude
+Code : copie le socle, remplit `CLAUDE.md`, brainstorme les modules `examples/` pertinents et
+audite la configuration finale. Alternative manuelle : voir `INSTALL.md` (copier `template/.claude/`
+dans le nouveau projet, renommer `CLAUDE.template.md` → `CLAUDE.md` et le remplir, puis ajouter
+les modules `examples/` utiles).
 
 ## Note
 

@@ -1,0 +1,17 @@
+{
+  "name": "ferme-agentic",
+  "version": "0.1.0",
+  "description": "CLI d'installation de la ferme agentique (agents/skills Claude Code & Copilot) sur un nouveau projet.",
+  "bin": {
+    "ferme-agentic": "cli/bin/ferme-agentic.js"
+  },
+  "files": [
+    "cli",
+    "template",
+    "examples"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}
