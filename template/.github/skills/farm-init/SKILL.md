@@ -1,7 +1,7 @@
 ---
 name: farm-init
 description: Point d'entrée universel de la ferme — détecte si le socle est installé, guide l'installation si nécessaire, brainstorme les modules à ajouter selon le projet, puis audite la configuration. À lancer en tout premier sur un projet vierge ou repris.
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: Bash, Read, Write, Edit, Glob, Grep, AskUserQuestion
 ---
 
 # Farm Init — Installation, brainstorm et audit
@@ -90,6 +90,8 @@ Remplir les placeholders dans `CLAUDE.md` au fur et à mesure des réponses.
 ## Phase 3 — Brainstorm modules
 
 > "Maintenant explorons les modules optionnels à ajouter. Je vais vous poser quelques questions sur votre projet pour vous recommander les plus utiles."
+
+**Obligatoire : poser chacune des 6 questions ci-dessous via l'outil `AskUserQuestion` (une question à la fois, attendre la réponse avant de passer à la suivante). Ne jamais supposer une réponse par défaut (ex: "pas de DB", "pas multilingue") ni sauter cette phase — c'est ce qui garantit que `feature-i18n`, `stack-web-vite`, etc. sont réellement proposés plutôt qu'omis silencieusement.**
 
 ### Questions de brainstorm
 
