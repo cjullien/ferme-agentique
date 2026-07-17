@@ -105,6 +105,12 @@ Poser ces questions une par une, en attendant la réponse :
 2. **Frontend** : "Y a-t-il un frontend ? Quel framework ?"
    - React/Vite → suggérer `stack-web-vite`
    - Autre → les skills `accessibility`, `design-system`, `ux-ui` du socle suffisent
+   - Si oui (quel que soit le framework) : l'agent `design-system` du socle est livré vide
+     (section "Périmètre à instancier" à remplir — voir `template/.claude/agents/design-system.md`).
+     Demander : "Voulez-vous instancier l'agent `design-system` maintenant à partir de 3-5
+     composants représentatifs du projet (tokens, composants de référence, anti-patterns) ?
+     Sans cette étape l'agent reste un squelette générique et ne sera jamais réellement appliqué."
+     Si oui, suivre la procédure décrite dans l'agent avant de poursuivre le brainstorm.
 
 3. **Internationalisation** : "L'application est-elle multilingue ?"
    - Oui → suggérer `feature-i18n`
