@@ -1,6 +1,6 @@
 ---
 name: farm-init
-description: Point d'entrée universel de la ferme — détecte si le socle est installé, guide l'installation si nécessaire, brainstorme les modules à ajouter selon le projet, puis audite la configuration. À lancer en tout premier sur un projet vierge ou repris.
+description: Point d'entrée universel de la ferme — détecte si le socle est installé, guide l'installation si nécessaire, brainstorme les modules à ajouter selon le projet, puis audite la configuration. À lancer en tout premier sur un projet vierge ou repris. Se déclenche aussi quand l'utilisateur fournit un chemin local ou une URL GitHub vers une "ferme agentique"/"ferme_agentic" et demande de l'utiliser/installer/initialiser sur le projet courant, même sans nommer "farm-init" explicitement.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, AskUserQuestion
 ---
 
