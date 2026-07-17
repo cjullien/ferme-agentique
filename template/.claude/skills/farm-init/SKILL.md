@@ -91,7 +91,7 @@ Remplir les placeholders dans `CLAUDE.md` au fur et à mesure des réponses.
 
 > "Maintenant explorons les modules optionnels à ajouter. Je vais vous poser quelques questions sur votre projet pour vous recommander les plus utiles."
 
-**Obligatoire : poser chacune des 6 questions ci-dessous via l'outil `AskUserQuestion` (une question à la fois, attendre la réponse avant de passer à la suivante). Ne jamais supposer une réponse par défaut (ex: "pas de DB", "pas multilingue") ni sauter cette phase — c'est ce qui garantit que `feature-i18n`, `stack-web-vite`, etc. sont réellement proposés plutôt qu'omis silencieusement.**
+**Obligatoire : poser chacune des 7 questions ci-dessous via l'outil `AskUserQuestion` (une question à la fois, attendre la réponse avant de passer à la suivante). Ne jamais supposer une réponse par défaut (ex: "pas de DB", "pas multilingue") ni sauter cette phase — c'est ce qui garantit que `feature-i18n`, `stack-web-vite`, etc. sont réellement proposés plutôt qu'omis silencieusement.**
 
 ### Questions de brainstorm
 
@@ -115,14 +115,21 @@ Poser ces questions une par une, en attendant la réponse :
 3. **Internationalisation** : "L'application est-elle multilingue ?"
    - Oui → suggérer `feature-i18n`
 
-4. **Mémoire décisionnelle** : "Avez-vous des décisions architecturales importantes à capturer et à retrouver facilement ?"
+4. **Documentation API** : "Le backend expose-t-il une API HTTP consommée par un client externe (frontend séparé, mobile, partenaires) ?"
+   - Oui → présenter le skill `api-docs` du socle (déjà installé) : audit et maintien de la doc
+     Swagger/OpenAPI (endpoints non documentés, schémas manquants, dérive spec/code). Demander :
+     "Voulez-vous lancer `api-docs` maintenant sur les endpoints existants pour établir un état
+     des lieux ?" Contrairement à `design-system`, cet agent est directement utilisable sans
+     instanciation préalable.
+
+5. **Mémoire décisionnelle** : "Avez-vous des décisions architecturales importantes à capturer et à retrouver facilement ?"
    - Oui → suggérer `feature-decision-index`
    - Si km-toolkit déjà envisagé → proposer à la place
 
-5. **Documentation structurée / Knowledge Base** : "Avez-vous besoin d'une documentation pilotée par agents (wiki, ADR, runbooks) ?"
+6. **Documentation structurée / Knowledge Base** : "Avez-vous besoin d'une documentation pilotée par agents (wiki, ADR, runbooks) ?"
    - Oui → suggérer `km-toolkit` avec lien vers son INSTALL.md
 
-6. **Coûts token** : "Travaillez-vous avec plusieurs agents en parallèle ou sur des tâches longues ?"
+7. **Coûts token** : "Travaillez-vous avec plusieurs agents en parallèle ou sur des tâches longues ?"
    - Oui → suggérer `finops`
 
 ### Pour chaque module recommandé
@@ -134,7 +141,7 @@ Si oui : copier agents + skills depuis `<FERME>/examples/<module>/` vers `.claud
 
 ### Question finale — stack non couverte
 
-Après les 6 questions, vérifier si la stack du projet correspond à un module existant de la ferme.
+Après les 7 questions, vérifier si la stack du projet correspond à un module existant de la ferme.
 
 **Stacks couvertes** : Python/FastAPI/Django, Java/Spring, Node/Vite/React, domaine immo.
 **Stacks non couvertes** : Go, .NET, Ruby/Rails, PHP, mobile (React Native, Flutter), Rust, Scala, Elixir, etc.

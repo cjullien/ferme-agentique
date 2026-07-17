@@ -9,7 +9,7 @@ les **modules** (`examples/`) sont ajoutés à la carte selon la stack et le dom
 
 ---
 
-## Socle générique — `template/` (21 agents · 50 skills, en versions `.claude/` et `.github/`)
+## Socle générique — `template/` (22 agents · 51 skills, en versions `.claude/` et `.github/`)
 
 Le socle est organisé autour du cycle de vie d'une feature — trois phases — plus une couche
 d'**audits globaux périodiques** qui balaient tout le code, sur le même principe que les audits
@@ -74,6 +74,7 @@ item de backlog simple peut aller directement de `product-owner` à `tdd` sans p
 | `dead-code` | Détecte/supprime code mort, imports, clés i18n orphelines |
 | `externalize` | Config à externaliser — env vars, i18n, thèmes, persistance |
 | `docs-update` | Synchronise README et docs avec le code |
+| `api-docs` | Audit et maintien de la doc API (Swagger/OpenAPI) — endpoints non documentés, schémas manquants, dérive spec/code |
 | `design-system`, `ux-ui` | Design system et UX/UI frontend — **squelettes génériques à compléter avec l'IA pour ce projet** (exemple complété dans `examples/domain-immo/`) |
 | `agent-maintainer` | Maintient la cohérence agents/skills de la ferme elle-même |
 
