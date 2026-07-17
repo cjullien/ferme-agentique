@@ -26,7 +26,15 @@ Procédure :
 6. Lancer SI des modèles de données sont modifiés ET SI l'agent est installé (`.claude/agents/schema.md`, module `stack-python-supabase` — le socle n'a que le skill `schema`, sans agent dédié) :
    - Agent `schema` — analyse d'impact du changement de modèle
 
-7. **Toujours en dernier** — si la commande `/insights` est disponible dans cette session Claude Code, la lancer et lire son résultat :
+7. Lancer SI `docs/specs/details/` existe et que le diff modifie un comportement métier (pas
+   uniquement refactor/style) :
+   - Comparer le comportement livré au scénario Given/When/Then du fichier spec concerné.
+   - Si le comportement diverge de la spec (nouveau cas non spécifié, règle de gestion modifiée) :
+     le signaler dans la synthèse et proposer de lancer `product-owner` (étape 0 — détection de
+     specs obsolètes) ou `docs-update` pour resynchroniser, plutôt que de laisser la spec dériver
+     silencieusement.
+
+8. **Toujours en dernier** — si la commande `/insights` est disponible dans cette session Claude Code, la lancer et lire son résultat :
    - Identifier les patterns récurrents signalés (erreurs fréquentes, fichiers souvent modifiés, anti-patterns répétés)
    - Si des patterns correspondent aux findings de la revue → les mentionner dans la synthèse comme **tendance à corriger structurellement**
    - Si `/insights` suggère des améliorations de workflow ou de config → les appliquer dans `CLAUDE.md` ou les agents concernés
@@ -49,6 +57,18 @@ Chemin par défaut : `docs/specs/backlog.md` (ou celui déclaré dans `CLAUDE.md
 
 Sinon, après la synthèse, lire `docs/specs/backlog.md` et y ajouter les findings 🔴/🟠 non encore présents.
 Puis mettre à jour la section `## Note qualité globale` avec la note recalculée sur 100 et la date.
+
+**Clôture de l'item livré (OBLIGATOIRE si verdict ✅ Prêt à merger)** : `review` est le dernier
+point systématique du cycle de vie d'une feature (contrairement à `qa-gate`, réservé aux zones
+à risque) — c'est donc ici, pas dans un futur rappel de `product-owner`, qu'il faut boucler le
+backlog :
+1. Identifier le ou les items du backlog résolus par ce diff (ID mentionné dans la branche, le
+   commit, la story `docs/specs/stories/`, ou déduit du périmètre fonctionnel touché).
+2. Les marquer `🟢 Done` (convention `backlog-manager`), ou appliquer l'étape "Post-implémentation"
+   de `product-owner` (barrer l'item, le déplacer dans la table des features livrées) si ce
+   projet utilise cette convention.
+3. Si aucun item correspondant n'est trouvé avec certitude, ne rien marquer et le signaler dans
+   la synthèse plutôt que de deviner.
 
 Grille de notation :
 | Axe | Poids |
